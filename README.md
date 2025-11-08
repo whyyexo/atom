@@ -43,7 +43,7 @@ This repository contains the base structure for **Atom**, a SaaS platform built 
    npm run dev
    ```
 
-Visit [`http://localhost:3000`](http://localhost:3000) to see the marketing homepage. Authenticated routes live under `/dashboard` and are protected by Clerk; custom Atom-branded sign-in/sign-up pages are provided under `/sign-in` and `/sign-up`.
+Visit [`http://localhost:3000`](http://localhost:3000) to see the marketing homepage. Authenticated routes live under `/dashboard` and are protected by Clerk; themed Clerk sign-in/sign-up screens are available under `/sign-in` and `/sign-up`.
 
 ### Key Paths
 

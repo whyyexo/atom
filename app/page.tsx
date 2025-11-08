@@ -28,12 +28,12 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-gradient-to-b from-background to-accent/20">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6">
-        <Link href="/" className="flex items-center gap-3 text-lg font-semibold">
+        <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
           <Image
             src="/ATOM_blanc.png"
             alt="Atom logo"
-            width={150}
-            height={40}
+            width={120}
+            height={32}
             priority
           />
         </Link>
@@ -42,13 +42,7 @@ export default function Home() {
             href="https://docs.atom.app"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            <Image
-              src="/ATOM_DOCS_blanc.png"
-              alt="Atom Docs"
-              width={110}
-              height={24}
-              className="brightness-110"
-            />
+            Docs
           </Link>
           <Link
             href="/sign-in"

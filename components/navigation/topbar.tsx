@@ -37,8 +37,8 @@ export function DashboardTopbar({
         <Image
           src="/ATOM_blanc.png"
           alt="Atom logo"
-          width={120}
-          height={28}
+          width={110}
+          height={26}
           priority
         />
         <div className="hidden flex-col text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground md:flex">
