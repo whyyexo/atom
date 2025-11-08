@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -27,18 +28,27 @@ export default function Home() {
   return (
     <div className="relative flex min-h-screen flex-col bg-gradient-to-b from-background to-accent/20">
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
-            ◎
-          </span>
-          <span>Atom</span>
+        <Link href="/" className="flex items-center gap-3 text-lg font-semibold">
+          <Image
+            src="/ATOM_blanc.png"
+            alt="Atom logo"
+            width={150}
+            height={40}
+            priority
+          />
         </Link>
         <div className="flex items-center gap-3 text-sm font-medium">
           <Link
             href="https://docs.atom.app"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Docs
+            <Image
+              src="/ATOM_DOCS_blanc.png"
+              alt="Atom Docs"
+              width={110}
+              height={24}
+              className="brightness-110"
+            />
           </Link>
           <Link
             href="/sign-in"
@@ -157,7 +167,15 @@ export default function Home() {
       </main>
       <footer className="border-t border-border/80 bg-background py-6">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Atom Labs. All rights reserved.</p>
+          <div className="flex items-center gap-3">
+            <Image
+              src="/A_blanc.png"
+              alt="Atom icon"
+              width={28}
+              height={28}
+            />
+            <p>© {new Date().getFullYear()} Atom Labs. All rights reserved.</p>
+          </div>
           <div className="flex items-center gap-4">
             <Link className="hover:text-foreground" href="/privacy">
               Privacy

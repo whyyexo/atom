@@ -1,5 +1,6 @@
 'use client';
 
+import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { Menu } from "lucide-react";
 import { type HTMLAttributes } from "react";
@@ -33,15 +34,19 @@ export function DashboardTopbar({
         >
           <Menu className="h-5 w-5" />
         </Button>
-        <div className="hidden flex-col text-sm md:flex">
-          <span className="font-medium text-foreground">Dashboard</span>
-          <span className="text-xs text-muted-foreground">
-            Track workspaces, agents, and conversations.
-          </span>
+        <Image
+          src="/ATOM_blanc.png"
+          alt="Atom logo"
+          width={120}
+          height={28}
+          priority
+        />
+        <div className="hidden flex-col text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground md:flex">
+          <span>AI Workspace Platform</span>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" className="border-border/70">
           Upgrade plan
         </Button>
         <UserButton afterSignOutUrl="/" />
