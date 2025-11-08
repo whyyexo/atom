@@ -1,18 +1,80 @@
-'use client';
+"use client";
 
-import { useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import { DashboardSidebar } from "@/components/navigation/sidebar";
 import { DashboardTopbar } from "@/components/navigation/topbar";
 import { Separator } from "@/components/ui/separator";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type DashboardShellProps = {
   children: React.ReactNode;
-  userEmail: string;
 };
 
-export function DashboardShell({ children, userEmail }: DashboardShellProps) {
+export function DashboardShell({ children }: DashboardShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadSession() {
+      setLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!isMounted) {
+        return;
+      }
+
+      if (!user) {
+        router.replace("/sign-in");
+        return;
+      }
+
+      setUserEmail(user.email ?? user.user_metadata?.email ?? "team@atom.app");
+      setLoading(false);
+    }
+
+    loadSession();
+
+    const {
+      data: authListener,
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!isMounted) return;
+      if (!session?.user) {
+        router.replace("/sign-in");
+      } else {
+        setUserEmail(
+          session.user.email ??
+            session.user.user_metadata?.email ??
+            "team@atom.app",
+        );
+        setLoading(false);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      authListener.subscription.unsubscribe();
+    };
+  }, [router, supabase]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-3 text-sm text-muted-foreground">
+          <span className="h-10 w-10 animate-spin rounded-full border-4 border-primary/30 border-t-primary" />
+          <p>Loading your workspace…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -37,7 +99,7 @@ export function DashboardShell({ children, userEmail }: DashboardShellProps) {
       <div className="flex w-full flex-1 flex-col">
         <DashboardTopbar
           onOpenSidebar={() => setSidebarOpen(true)}
-          userEmail={userEmail}
+          userEmail={userEmail ?? "team@atom.app"}
         />
         <main className="flex-1 bg-muted/40 p-6">
           <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
