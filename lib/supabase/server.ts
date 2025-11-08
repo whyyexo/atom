@@ -13,8 +13,12 @@ export function createSupabaseServerClient() {
     );
   }
 
+  const cookieStore = cookies();
+
   return createServerComponentClient(
-    { cookies },
+    {
+      cookies: () => cookieStore,
+    },
     {
       supabaseUrl,
       supabaseKey: supabaseAnonKey,
