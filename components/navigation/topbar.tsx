@@ -1,5 +1,6 @@
 'use client';
 
+import { UserButton } from "@clerk/nextjs";
 import { Menu } from "lucide-react";
 import { type HTMLAttributes } from "react";
 
@@ -43,9 +44,7 @@ export function DashboardTopbar({
         <Button variant="outline" size="sm">
           Upgrade plan
         </Button>
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
-          JL
-        </div>
+        <UserButton afterSignOutUrl="/" />
       </div>
     </header>
   );

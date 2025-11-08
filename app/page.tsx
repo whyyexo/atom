@@ -41,13 +41,13 @@ export default function Home() {
             Docs
           </Link>
           <Link
-            href="/dashboard"
+            href="/sign-in"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Dashboard
+            Sign in
           </Link>
           <Button asChild>
-            <Link href="/dashboard">Start your workspace</Link>
+            <Link href="/sign-up">Start your workspace</Link>
           </Button>
         </div>
       </header>
@@ -69,10 +69,10 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap items-center gap-3">
               <Button asChild size="lg">
-                <Link href="/dashboard">Start your workspace</Link>
+                <Link href="/sign-up">Start your workspace</Link>
               </Button>
               <Button variant="secondary" size="lg" asChild>
-                <Link href="/dashboard">View demo</Link>
+                <Link href="/sign-in">View demo</Link>
               </Button>
             </div>
             <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
@@ -123,7 +123,7 @@ export default function Home() {
                 </div>
               </div>
               <Button className="w-full" asChild>
-                <Link href="/dashboard">Start your workspace</Link>
+                <Link href="/sign-up">Start your workspace</Link>
               </Button>
             </CardContent>
           </Card>
