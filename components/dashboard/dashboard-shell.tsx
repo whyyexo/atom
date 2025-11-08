@@ -28,7 +28,6 @@ type DashboardShellProps = {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
@@ -98,94 +97,75 @@ export function DashboardShell({ children }: DashboardShellProps) {
     );
   }
 
+  const sidebarOffsetClass = sidebarCollapsed ? "md:ml-[84px]" : "md:ml-[248px]";
+
   return (
     <>
       <div className="relative flex min-h-screen bg-background">
         <DashboardSidebar
           isCollapsed={sidebarCollapsed}
           onToggleCollapsed={() => setSidebarCollapsed((prev) => !prev)}
-          onCloseMobile={() => setSidebarOpen(false)}
+          onCloseMobile={() => undefined}
           userEmail={userEmail}
           onSignOut={handleSignOut}
-          className="hidden md:flex"
+          className="fixed inset-y-0 left-0 hidden md:flex"
         />
-
-        <AnimatePresence>
-          {sidebarOpen && (
-            <>
-              <motion.div
-                className="fixed inset-0 z-40 bg-black/50 backdrop-blur md:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSidebarOpen(false)}
-              />
-              <DashboardSidebar
-                isCollapsed={false}
-                onToggleCollapsed={() => setSidebarCollapsed((prev) => !prev)}
-                onCloseMobile={() => setSidebarOpen(false)}
-                userEmail={userEmail}
-                onSignOut={handleSignOut}
-                className="fixed inset-y-0 left-0 z-50 w-[248px] md:hidden"
-              />
-            </>
-          )}
-        </AnimatePresence>
 
         <div
           className={cn(
             "flex w-full flex-1 flex-col transition-[margin] duration-300 ease-out",
-            sidebarCollapsed ? "md:ml-[84px]" : "md:ml-[248px]",
+            sidebarOffsetClass,
           )}
         >
           <DashboardTopbar
             className="sticky top-0 z-30"
-            onOpenSidebar={() => setSidebarOpen(true)}
             onOpenQuickActions={() => setIsCommandOpen(true)}
             pageTitle={pageTitle}
           />
 
-          <main className="flex-1 bg-gradient-to-br from-background via-background to-background/60 px-4 pb-12 pt-6 sm:px-6 lg:px-10">
+          <main className="flex-1 px-4 pb-12 pt-6 sm:px-6 lg:px-12">
             <AnimatePresence mode="wait">
               <motion.div
                 key={pathname}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="mx-auto flex w-full max-w-6xl flex-col gap-6"
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.24, ease: "easeOut" }}
+                className="mx-auto flex w-full max-w-6xl flex-col"
               >
-                {children}
+                <div className="relative flex min-h-[calc(100vh-7.5rem)] flex-col overflow-hidden rounded-[36px] border border-white/5 bg-white/[0.02] p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.7)] backdrop-blur">
+                  {children}
+                  <div className="mt-auto flex items-center justify-between pt-10 text-[11px] uppercase tracking-[0.32em] text-white/30">
+                    <span>© {new Date().getFullYear()} Atom Labs</span>
+                    <div className="flex items-center gap-6">
+                      <span>Docs</span>
+                      <span>Status</span>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </AnimatePresence>
           </main>
-          <footer className="flex items-center justify-between border-t border-border/60 bg-background/70 px-6 py-4 text-xs text-muted-foreground">
-            <span>© {new Date().getFullYear()} Atom Labs</span>
-            <div className="flex items-center gap-3">
-              <span>Docs</span>
-              <span>Status</span>
-            </div>
-          </footer>
         </div>
-    </div>
+      </div>
 
-    <Modal open={isCommandOpen} onOpenChange={setIsCommandOpen}>
-      <ModalContent
-        title="Quick command"
-        description="Draft a quick instruction for one of your agents."
-        footer={
-          <>
-            <Button variant="ghost" onClick={() => setIsCommandOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={() => setIsCommandOpen(false)}>Send</Button>
-          </>
-        }
-      >
-        <Input placeholder="Which agent should receive this?" />
-        <Textarea placeholder="Describe the action you want the agent to take..." className="min-h-[120px]" />
-      </ModalContent>
-    </Modal>
+      <Modal open={isCommandOpen} onOpenChange={setIsCommandOpen}>
+        <ModalContent
+          title="Quick command"
+          description="Draft a quick instruction for one of your agents."
+          footer={
+            <>
+              <Button variant="ghost" onClick={() => setIsCommandOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => setIsCommandOpen(false)}>Send</Button>
+            </>
+          }
+        >
+          <Input placeholder="Which agent should receive this?" />
+          <Textarea placeholder="Describe the action you want the agent to take..." className="min-h-[120px]" />
+        </ModalContent>
+      </Modal>
     </>
   );
 }

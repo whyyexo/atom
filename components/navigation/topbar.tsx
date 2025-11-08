@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Sparkles, Search, Moon, SunMedium, Menu } from "lucide-react";
+import { Sparkles, Search, Moon, SunMedium } from "lucide-react";
 import { type HTMLAttributes, useEffect, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,12 @@ import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
 type DashboardTopbarProps = HTMLAttributes<HTMLDivElement> & {
-  onOpenSidebar?: () => void;
   onOpenQuickActions: () => void;
   pageTitle: string;
 };
 
 export function DashboardTopbar({
   className,
-  onOpenSidebar,
   onOpenQuickActions,
   pageTitle,
   ...props
@@ -39,53 +37,45 @@ export function DashboardTopbar({
   return (
     <header
       className={cn(
-        "flex h-16 items-center justify-between border-b border-border/70 bg-background/90 px-4 backdrop-blur",
+        "flex h-20 items-center justify-between bg-transparent px-6",
         className,
       )}
       {...props}
     >
-      <div className="flex items-center gap-3">
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden"
-          onClick={onOpenSidebar}
-        >
-          <Menu className="h-5 w-5" />
-        </Button>
+      <div className="flex items-center gap-4">
         <motion.h1
           key={pageTitle}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="text-lg font-semibold tracking-tight text-foreground md:text-xl"
+          className="text-xl font-semibold tracking-tight text-white md:text-2xl"
         >
           {pageTitle}
         </motion.h1>
       </div>
       <div className="flex items-center gap-3">
-        <div className="relative hidden items-center gap-2 rounded-2xl border border-border/70 bg-muted/40 px-3 py-1.5 sm:flex">
-          <Search className="h-4 w-4 text-muted-foreground" />
+        <div className="relative hidden items-center gap-2 rounded-2xl border border-white/10 bg-white/[0.03] px-3 py-1.5 sm:flex">
+          <Search className="h-4 w-4 text-white/50" />
           <Input
             ref={searchRef}
             id="global-search"
             placeholder="Search or jump to..."
-            className="h-7 border-none bg-transparent p-0 text-sm focus-visible:ring-0"
+            className="h-7 border-none bg-transparent p-0 text-xs uppercase tracking-[0.18em] text-white/80 placeholder:text-white/40 focus-visible:ring-0"
           />
-          <span className="rounded-md bg-border/80 px-1.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-white/50">
             ⌘K
           </span>
         </div>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
-          className="hidden items-center gap-2 rounded-full border-border/70 bg-muted/30 text-sm font-medium text-foreground hover:bg-muted md:flex"
+          className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 text-xs font-medium uppercase tracking-[0.22em] text-white/90 hover:bg-white/[0.08] md:flex"
           onClick={onOpenQuickActions}
         >
           <Sparkles className="h-4 w-4 text-primary" />
-          Quick actions
+          Quick Actions
         </Button>
-        <Button variant="ghost" size="icon" className="rounded-full border border-border/60" onClick={toggleTheme}>
+        <Button variant="ghost" size="icon" className="rounded-full border border-white/10 bg-white/[0.04] text-white" onClick={toggleTheme}>
           <AnimatePresence mode="wait" initial={false}>
             {theme === "dark" ? (
               <motion.span
@@ -109,15 +99,6 @@ export function DashboardTopbar({
               </motion.span>
             )}
           </AnimatePresence>
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex items-center gap-2 rounded-full border border-border/70 bg-muted/30 text-sm text-foreground hover:bg-muted md:hidden"
-          onClick={onOpenQuickActions}
-        >
-          <Sparkles className="h-4 w-4 text-primary" />
-          AI
         </Button>
       </div>
     </header>
