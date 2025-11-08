@@ -85,7 +85,7 @@ export function DashboardSidebar({
                 href={item.href}
                 onClick={onCloseMobile}
                 className={cn(
-                  "group flex items-center gap-3 rounded-2xl px-3 py-2 text-sm font-medium transition-all hover:bg-muted/70 hover:text-foreground",
+                  "group flex items-center gap-3 rounded-2xl px-3 py-2 text-base font-medium transition-all hover:bg-muted/70 hover:text-foreground",
                   active ? "bg-muted text-foreground shadow-sm" : "text-muted-foreground",
                 )}
               >
@@ -93,7 +93,7 @@ export function DashboardSidebar({
                 <AnimatePresence initial={false}>
                   {!isCollapsed && (
                     <motion.span
-                      className="truncate"
+                      className="truncate text-base"
                       initial={{ opacity: 0, x: -6 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -4 }}
