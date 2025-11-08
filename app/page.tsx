@@ -168,7 +168,7 @@ export default function Home() {
               width={28}
               height={28}
             />
-            <p>© {new Date().getFullYear()} Atom Labs. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Atom Labs. All rights reserved.</p>
           </div>
           <div className="flex items-center gap-4">
             <Link className="hover:text-foreground" href="/privacy">
