@@ -6,7 +6,7 @@ This repository contains the base structure for **Atom**, a SaaS platform built 
 
 - Next.js 16 (App Router, TypeScript)
 - Tailwind CSS v4 + Shadcn-inspired UI primitives
-- Clerk for authentication
+- Supabase for authentication
 - Prisma ORM targeting PostgreSQL
 
 ### Getting Started
@@ -22,8 +22,12 @@ This repository contains the base structure for **Atom**, a SaaS platform built 
    Duplicate `.env.example` → `.env.local` (create the file) and set:
 
    - `DATABASE_URL` – PostgreSQL connection string
-   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
-   - `CLERK_SECRET_KEY`
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+   If you plan to run server-side admin workflows, also set:
+
+   - `SUPABASE_SERVICE_ROLE_KEY`
 
 3. **Generate Prisma client**
 
@@ -43,7 +47,7 @@ This repository contains the base structure for **Atom**, a SaaS platform built 
    npm run dev
    ```
 
-Visit [`http://localhost:3000`](http://localhost:3000) to see the marketing homepage. Authenticated routes live under `/dashboard` and are protected by Clerk; themed Clerk sign-in/sign-up screens are available under `/sign-in` and `/sign-up`.
+Visit [`http://localhost:3000`](http://localhost:3000) to see the marketing homepage. Authenticated routes live under `/dashboard` and rely on Supabase sessions; custom sign-in/sign-up screens are available under `/sign-in` and `/sign-up`.
 
 ### Key Paths
 

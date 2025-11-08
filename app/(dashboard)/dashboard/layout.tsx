@@ -1,60 +1,25 @@
-'use client';
+import { redirect } from "next/navigation";
 
-import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
-import { useState } from "react";
+import { DashboardShell } from "@/components/dashboard/dashboard-shell";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-import { DashboardSidebar } from "@/components/navigation/sidebar";
-import { DashboardTopbar } from "@/components/navigation/topbar";
-import { Separator } from "@/components/ui/separator";
-
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const supabase = createSupabaseServerClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  return (
-    <>
-      <SignedOut>
-        <RedirectToSignIn />
-      </SignedOut>
-      <SignedIn>
-        <div className="flex min-h-screen bg-background">
-          <div className="hidden w-64 md:flex">
-            <DashboardSidebar />
-          </div>
-          {sidebarOpen ? (
-            <div className="fixed inset-0 z-40 flex md:hidden">
-              <div className="w-72 max-w-full">
-                <DashboardSidebar />
-              </div>
-              <div
-                className="flex-1 bg-black/40"
-                onClick={() => setSidebarOpen(false)}
-              />
-            </div>
-          ) : null}
-          <div className="flex w-full flex-1 flex-col">
-            <DashboardTopbar onOpenSidebar={() => setSidebarOpen(true)} />
-            <main className="flex-1 bg-muted/40 p-6">
-              <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-                {children}
-              </div>
-            </main>
-            <Separator />
-            <footer className="flex items-center justify-between bg-background px-6 py-4 text-xs text-muted-foreground">
-              <span>© {new Date().getFullYear()} Atom Labs</span>
-              <div className="flex items-center gap-3">
-                <span>Docs</span>
-                <span>Status</span>
-              </div>
-            </footer>
-          </div>
-        </div>
-      </SignedIn>
-    </>
-  );
+  if (!session) {
+    redirect("/sign-in");
+  }
+
+  const userEmail = session.user.email ?? "team@atom.app";
+
+  return <DashboardShell userEmail={userEmail}>{children}</DashboardShell>;
 }
 
 

@@ -75,8 +75,3 @@ body {
   font-feature-settings: "rlig" 1, "calt" 1;
   font-family: var(--font-sans);
 }
-
-.cl-footer,
-.cl-powered-by {
-  display: none !important;
-}

@@ -1,5 +1,6 @@
-'use client';
+"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,13 +12,14 @@ export function DashboardSidebar() {
 
   return (
     <aside className="flex h-full flex-col border-r border-border/80 bg-card/60">
-      <div className="flex h-16 items-center gap-2 border-b border-border/80 px-4">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-semibold uppercase text-primary">
-          ◎
-        </span>
-        <span className="text-sm font-semibold tracking-tight text-foreground">
-          Atom
-        </span>
+      <div className="flex h-16 items-center gap-3 border-b border-border/80 px-4">
+        <Image
+          src="/ATOM_blanc.png"
+          alt="Atom logo"
+          width={110}
+          height={28}
+          priority
+        />
       </div>
       <nav className="flex flex-1 flex-col gap-1 p-3">
         {dashboardNav.map((item) => {
@@ -45,5 +47,3 @@ export function DashboardSidebar() {
     </aside>
   );
 }
-
-
