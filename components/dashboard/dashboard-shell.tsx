@@ -123,7 +123,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             pageTitle={pageTitle}
           />
 
-          <main className="flex-1 px-4 pb-12 pt-6 sm:px-6 lg:px-12">
+          <main className="flex-1 px-2 pb-10 pt-3 sm:px-3 lg:px-5">
             <AnimatePresence mode="wait">
               <motion.div
                 key={pathname}
@@ -131,9 +131,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.24, ease: "easeOut" }}
-                className="mx-auto flex w-full max-w-6xl flex-col"
+                className="flex w-full flex-col"
               >
-                <div className="relative flex min-h-[calc(100vh-7.5rem)] flex-col overflow-hidden rounded-[36px] border border-white/5 bg-white/[0.02] p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.7)] backdrop-blur">
+                <div className="relative flex min-h-[calc(100vh-5.5rem)] flex-col overflow-hidden rounded-[36px] border border-white/5 bg-white/[0.02] p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.7)] backdrop-blur">
                   {children}
                   <div className="mt-auto flex items-center justify-between pt-10 text-[11px] uppercase tracking-[0.32em] text-white/30">
                     <span>© {new Date().getFullYear()} Atom Labs</span>

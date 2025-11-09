@@ -132,7 +132,7 @@ export function DashboardSidebar({
             const isOpen = expanded[group.id];
             return (
               <div key={group.id} className="flex flex-col gap-2">
-                <div className="group flex items-center justify-between px-1">
+                <div className="group flex items-center gap-2 px-1">
                   <button
                     type="button"
                     onClick={() =>
@@ -141,9 +141,8 @@ export function DashboardSidebar({
                         [group.id]: !prev[group.id],
                       }))
                     }
-                    className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/40 transition hover:text-white/70"
+                    className="flex flex-1 items-center gap-2 rounded-lg px-2 py-1 text-[12px] font-semibold uppercase tracking-normal text-white/50 transition hover:text-white focus-visible:outline-none focus-visible:ring-0"
                   >
-                    <TriangleToggle open={isOpen} />
                     <AnimatePresence initial={false}>
                       {!isCollapsed && (
                         <motion.span
@@ -155,15 +154,16 @@ export function DashboardSidebar({
                         </motion.span>
                       )}
                     </AnimatePresence>
+                    <TriangleToggle open={isOpen} className="ml-auto text-white/60 group-hover:text-white" />
                   </button>
                   {group.allowCreate && !isCollapsed && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="invisible h-7 w-7 rounded-xl border border-white/10 text-white/60 transition group-hover:visible hover:text-white"
+                    <button
+                      type="button"
+                      aria-label="Create project"
+                      className="invisible flex h-4 w-4 items-center justify-center rounded-none text-white/60 transition group-hover:visible hover:text-white focus-visible:outline-none focus-visible:ring-0"
                     >
-                      <Plus className="h-3 w-3" />
-                    </Button>
+                      <Plus className="h-4 w-4" />
+                    </button>
                   )}
                 </div>
                 <AnimatePresence initial={false}>
@@ -187,7 +187,7 @@ export function DashboardSidebar({
                             href={item.href}
                             onClick={onCloseMobile}
                             className={cn(
-                              "group/item flex items-center gap-2 rounded-2xl px-3 py-1.5 text-[10px] font-medium transition-all",
+                              "group/item flex items-center gap-2 rounded-2xl px-3 py-2 text-[12px] font-medium transition-all",
                               active
                                 ? "bg-white/10 text-white shadow-sm"
                                 : "text-white/70 hover:bg-white/5 hover:text-white",
@@ -195,14 +195,14 @@ export function DashboardSidebar({
                           >
                             <Icon
                               className={cn(
-                                "h-3.5 w-3.5 shrink-0 text-white/60 transition group-hover/item:text-white",
+                                "h-4 w-4 shrink-0 text-white/60 transition group-hover/item:text-white",
                                 active && "text-white",
                               )}
                             />
                             <AnimatePresence>
                               {!isCollapsed && (
                                 <motion.span
-                                  className="truncate text-[11px] text-white"
+                                  className="truncate text-[12px] text-white"
                                   initial={{ opacity: 0, x: -4 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   exit={{ opacity: 0, x: -4 }}

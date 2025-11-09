@@ -14,7 +14,7 @@ export function TriangleToggle({ open, className }: TriangleToggleProps) {
       animate={{ rotate: open ? 90 : 0 }}
       transition={{ duration: 0.18, ease: "easeOut" }}
       className={cn(
-        "flex h-4 w-4 items-center justify-center rounded-sm bg-muted/80 text-muted-foreground transition-colors group-hover:text-primary",
+        "flex h-4 w-4 items-center justify-center text-white/50 transition-colors group-hover:text-white",
         className,
       )}
     >
