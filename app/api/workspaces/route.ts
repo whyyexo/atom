@@ -19,7 +19,7 @@ function normalizeSlug(input: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = await createSupabaseRouteClient();
+  const supabase = createSupabaseRouteClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
