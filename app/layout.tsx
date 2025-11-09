@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   title: "Atom – Build AI workspaces faster",
   description:
     "Atom is the operating system for AI-driven teams. Spin up agents, iterate on prompts, and collaborate with ease.",
+  icons: {
+    icon: "/Favicon_noir.png",
+    shortcut: "/Favicon_noir.png",
+  },
 };
 
 export default function RootLayout({
