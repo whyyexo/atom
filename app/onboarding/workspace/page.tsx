@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 import { WorkspaceOnboardingForm } from "./workspace-onboarding-form";
 import { prisma } from "@/lib/prisma";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
