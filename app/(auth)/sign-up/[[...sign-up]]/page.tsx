@@ -51,7 +51,7 @@ export default function SignUpPage() {
     }
 
     if (data.session) {
-      router.push("/onboarding/workspace");
+      router.push("/dashboard");
       router.refresh();
       return;
     }

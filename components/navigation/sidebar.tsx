@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { LogOut, Plus } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -14,8 +15,6 @@ import { cn } from "@/lib/utils";
 type SidebarProps = {
   onCloseMobile: () => void;
   userEmail: string;
-  workspaceName: string;
-  workspaceSlug: string;
   onSignOut: () => void;
   className?: string;
 };
@@ -28,15 +27,11 @@ const widthVariants = {
 export function DashboardSidebar({
   onCloseMobile,
   userEmail,
-  workspaceName,
-  workspaceSlug,
   onSignOut,
   className,
 }: SidebarProps) {
   const pathname = usePathname();
   const isCollapsed = false;
-  const workspacePath = workspaceSlug.trim() || "workspace";
-  const workspaceDisplayName = workspaceName || "Workspace";
   const initials =
     userEmail
       .split("@")[0]
@@ -111,15 +106,14 @@ export function DashboardSidebar({
         )}
       >
         <div className="flex h-16 items-center gap-3 border-b border-border/70 px-4">
-          <div className="flex flex-col">
-            <Link
-              href={`/workspace/${workspacePath}`}
-              className="text-sm font-semibold text-white transition hover:text-white"
-            >
-              {workspaceDisplayName}
-            </Link>
-            <span className="text-[11px] text-white/50">atom.app/workspace/{workspacePath}</span>
-          </div>
+          <Image
+            src="/ATOM_blanc.png"
+            alt="Atom logo"
+            width={120}
+            height={32}
+            priority
+            className="transition-all"
+          />
         </div>
 
         <nav className="flex flex-1 flex-col gap-3 px-3 py-6">
