@@ -13,10 +13,10 @@ export function TriangleToggle({ open, className }: TriangleToggleProps) {
     <motion.div
       animate={{ rotate: open ? 90 : 0 }}
       transition={{ duration: 0.18, ease: "easeOut" }}
-      className={cn("flex h-4 w-4 items-center justify-center text-white/50 transition-colors", className)}
+      className={cn("flex h-5 w-5 items-center justify-center text-white/50 transition-colors", className)}
     >
-      <svg width="6" height="6" viewBox="0 0 6 6" fill="currentColor">
-        <path d="M1 1.25L4.75 3 1 4.75V1.25Z" />
+      <svg width="7" height="7" viewBox="0 0 7 7" fill="currentColor">
+        <path d="M1.2 1.45L5.3 3.15 1.2 4.85V1.45Z" />
       </svg>
     </motion.div>
   );

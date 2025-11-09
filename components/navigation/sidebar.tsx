@@ -125,7 +125,7 @@ export function DashboardSidebar({ onCloseMobile, userEmail, onSignOut, classNam
                         [group.id]: !prev[group.id],
                       }))
                     }
-                    className="flex flex-1 items-center gap-1 rounded-lg pl-2 pr-1 py-[6px] text-[10px] font-semibold text-white/60 focus-visible:outline-none focus-visible:ring-0"
+                    className="flex flex-1 items-center gap-1 rounded-lg pl-2 pr-1 py-[6px] text-[11px] font-semibold text-white/60 focus-visible:outline-none focus-visible:ring-0"
                   >
                     <AnimatePresence initial={false}>
                       {!isCollapsed && (
