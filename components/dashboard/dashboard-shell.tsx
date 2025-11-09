@@ -27,7 +27,6 @@ type DashboardShellProps = {
 };
 
 export function DashboardShell({ children }: DashboardShellProps) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
@@ -97,14 +96,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
     );
   }
 
-  const sidebarOffsetClass = sidebarCollapsed ? "md:ml-[84px]" : "md:ml-[248px]";
-
   return (
     <>
       <div className="relative flex min-h-screen bg-background">
         <DashboardSidebar
-          isCollapsed={sidebarCollapsed}
-          onToggleCollapsed={() => setSidebarCollapsed((prev) => !prev)}
           onCloseMobile={() => undefined}
           userEmail={userEmail}
           onSignOut={handleSignOut}
@@ -113,8 +108,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
         <div
           className={cn(
-            "flex w-full flex-1 flex-col transition-[margin] duration-300 ease-out",
-            sidebarOffsetClass,
+            "flex w-full flex-1 flex-col md:ml-[248px]",
           )}
         >
           <DashboardTopbar

@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, LogOut, Plus } from "lucide-react";
+import { LogOut, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,8 +13,6 @@ import { dashboardNav } from "@/config/navigation";
 import { cn } from "@/lib/utils";
 
 type SidebarProps = {
-  isCollapsed: boolean;
-  onToggleCollapsed: () => void;
   onCloseMobile: () => void;
   userEmail: string;
   onSignOut: () => void;
@@ -26,15 +24,9 @@ const widthVariants = {
   collapsed: { width: 84 },
 };
 
-export function DashboardSidebar({
-  isCollapsed,
-  onToggleCollapsed,
-  onCloseMobile,
-  userEmail,
-  onSignOut,
-  className,
-}: SidebarProps) {
+export function DashboardSidebar({ onCloseMobile, userEmail, onSignOut, className }: SidebarProps) {
   const pathname = usePathname();
+  const isCollapsed = false;
   const initials =
     userEmail
       .split("@")[0]
@@ -117,22 +109,14 @@ export function DashboardSidebar({
             priority
             className={cn("transition-all", isCollapsed && "w-9")}
           />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onToggleCollapsed}
-            className="ml-auto hidden h-8 w-8 rounded-xl border border-border/60 md:flex"
-          >
-            {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
-          </Button>
         </div>
 
-        <nav className="flex flex-1 flex-col gap-4 px-3 py-6">
+        <nav className="flex flex-1 flex-col gap-3 px-3 py-6">
           {navGroups.map((group) => {
             const isOpen = expanded[group.id];
             return (
               <div key={group.id} className="flex flex-col gap-2">
-                <div className="group flex items-center gap-2 px-1">
+                <div className="group flex items-center px-1">
                   <button
                     type="button"
                     onClick={() =>
@@ -141,7 +125,7 @@ export function DashboardSidebar({
                         [group.id]: !prev[group.id],
                       }))
                     }
-                    className="flex flex-1 items-center gap-2 rounded-lg px-2 py-1 text-[12px] font-semibold uppercase tracking-normal text-white/50 transition hover:text-white focus-visible:outline-none focus-visible:ring-0"
+                    className="flex flex-1 items-center gap-1 rounded-lg pl-2 pr-1 py-[6px] text-[10px] font-semibold text-white/60 focus-visible:outline-none focus-visible:ring-0"
                   >
                     <AnimatePresence initial={false}>
                       {!isCollapsed && (
@@ -154,7 +138,7 @@ export function DashboardSidebar({
                         </motion.span>
                       )}
                     </AnimatePresence>
-                    <TriangleToggle open={isOpen} className="ml-auto text-white/60 group-hover:text-white" />
+                    <TriangleToggle open={isOpen} className="text-white/60" />
                   </button>
                   {group.allowCreate && !isCollapsed && (
                     <button
@@ -173,7 +157,7 @@ export function DashboardSidebar({
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.18 }}
-                      className="flex flex-col gap-1"
+                      className="flex flex-col gap-[2px]"
                     >
                       {group.items.map((item) => {
                         const matchingNav = dashboardNav.find((nav) => nav.href === item.href) ?? dashboardNav[0];
@@ -187,7 +171,7 @@ export function DashboardSidebar({
                             href={item.href}
                             onClick={onCloseMobile}
                             className={cn(
-                              "group/item flex items-center gap-2 rounded-2xl px-3 py-2 text-[12px] font-medium transition-all",
+                              "group/item flex items-center gap-2 rounded-xl px-2.5 py-1.5 text-[12px] font-medium transition-all",
                               active
                                 ? "bg-white/10 text-white shadow-sm"
                                 : "text-white/70 hover:bg-white/5 hover:text-white",
