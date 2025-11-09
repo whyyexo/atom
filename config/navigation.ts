@@ -1,11 +1,5 @@
 import type { LucideIcon } from "lucide-react";
-import {
-  Bot,
-  Home,
-  MessageSquare,
-  Settings,
-  Users,
-} from "lucide-react";
+import { Brain, ClipboardList, Home, Inbox, LandPlot, MessageSquare, Settings } from "lucide-react";
 
 export type NavigationItem = {
   title: string;
@@ -20,14 +14,24 @@ export const dashboardNav: NavigationItem[] = [
     icon: Home,
   },
   {
+    title: "Inbox",
+    href: "/dashboard/inbox",
+    icon: Inbox,
+  },
+  {
+    title: "My issues",
+    href: "/dashboard/my-issues",
+    icon: ClipboardList,
+  },
+  {
     title: "Workspaces",
     href: "/dashboard/workspaces",
-    icon: Users,
+    icon: LandPlot,
   },
   {
     title: "Agents",
     href: "/dashboard/agents",
-    icon: Bot,
+    icon: Brain,
   },
   {
     title: "Messages",
