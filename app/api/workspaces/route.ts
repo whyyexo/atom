@@ -1,5 +1,3 @@
-console.log("SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL);
-console.log("SERVICE_ROLE?", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY));
 import { NextRequest, NextResponse } from "next/server";
 
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -21,7 +19,7 @@ function normalizeSlug(input: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = createSupabaseRouteClient();
+  const supabase = await createSupabaseRouteClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
