@@ -26,10 +26,18 @@ type DashboardShellProps = {
   children: React.ReactNode;
 };
 
+type WorkspaceSummary = {
+  id: string;
+  name: string;
+  slug: string;
+};
+
 export function DashboardShell({ children }: DashboardShellProps) {
   const [userEmail, setUserEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [isCommandOpen, setIsCommandOpen] = useState(false);
+  const [workspace, setWorkspace] = useState<WorkspaceSummary | null>(null);
+  const [workspaceLoading, setWorkspaceLoading] = useState(true);
   const pathname = usePathname();
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
@@ -75,6 +83,56 @@ export function DashboardShell({ children }: DashboardShellProps) {
     };
   }, [router, supabase]);
 
+  useEffect(() => {
+    let active = true;
+
+    async function loadWorkspace() {
+      if (loading) return;
+      if (!userEmail) return;
+
+      setWorkspaceLoading(true);
+      try {
+        const response = await fetch("/api/workspaces/current", { cache: "no-store" });
+
+        if (!active) return;
+
+        if (response.status === 401) {
+          router.replace("/sign-in");
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to load workspace");
+        }
+
+        const data = (await response.json()) as { workspace: WorkspaceSummary | null };
+
+        if (!active) return;
+
+        if (!data.workspace) {
+          setWorkspace(null);
+          setWorkspaceLoading(false);
+          router.replace("/onboarding/workspace");
+          return;
+        }
+
+        setWorkspace(data.workspace);
+        setWorkspaceLoading(false);
+      } catch (error) {
+        if (!active) return;
+        console.error(error);
+        setWorkspace(null);
+        setWorkspaceLoading(false);
+      }
+    }
+
+    loadWorkspace();
+
+    return () => {
+      active = false;
+    };
+  }, [loading, userEmail, router]);
+
   const handleSignOut = async () => {
     await supabase.auth.signOut();
     router.replace("/sign-in");
@@ -85,15 +143,19 @@ export function DashboardShell({ children }: DashboardShellProps) {
     PAGE_TITLES[pathname?.split("/").slice(0, 3).join("/") ?? ""] ??
     "Overview";
 
-  if (loading || !userEmail) {
+  if (loading || !userEmail || workspaceLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4 text-sm text-muted-foreground">
           <Skeleton className="h-12 w-12 rounded-2xl" />
-          <p>Loading your workspace…</p>
+          <p>Loading your workspace...</p>
         </div>
       </div>
     );
+  }
+
+  if (!workspace) {
+    return null;
   }
 
   return (
@@ -102,6 +164,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <DashboardSidebar
           onCloseMobile={() => undefined}
           userEmail={userEmail}
+          workspaceName={workspace.name}
+          workspaceSlug={workspace.slug}
           onSignOut={handleSignOut}
           className="fixed inset-y-0 left-0 hidden md:flex"
         />

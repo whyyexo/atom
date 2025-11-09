@@ -51,7 +51,7 @@ export default function SignUpPage() {
     }
 
     if (data.session) {
-      router.push("/dashboard");
+      router.push("/onboarding/workspace");
       router.refresh();
       return;
     }
@@ -127,7 +127,7 @@ export default function SignUpPage() {
               <p className="text-sm font-medium text-primary">{info}</p>
             ) : null}
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Creating workspace..." : "Create account"}
+              {loading ? "Creating your account..." : "Create account"}
             </Button>
           </form>
         </CardContent>
