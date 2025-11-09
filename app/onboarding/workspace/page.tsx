@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 export const dynamic = "force-dynamic";
 
 import { WorkspaceOnboardingForm } from "./workspace-onboarding-form";
-import { prisma } from "@/lib/prisma";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export default async function WorkspaceOnboardingPage() {
@@ -12,20 +12,23 @@ export default async function WorkspaceOnboardingPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user?.email) {
+  if (!user?.id || !user.email) {
     redirect("/sign-in");
   }
 
-  let dbUser = await prisma.user.findUnique({
-    where: { email: user.email },
-    select: { id: true },
-  });
+  const admin = createSupabaseAdminClient();
+  const { data: profile } = await admin
+    .from("users")
+    .select("id")
+    .eq("auth_id", user.id)
+    .maybeSingle();
 
-  if (dbUser) {
-    const membership = await prisma.workspaceMember.findFirst({
-      where: { userId: dbUser.id },
-      select: { workspaceId: true },
-    });
+  if (profile) {
+    const { data: membership } = await admin
+      .from("workspace_members")
+      .select("workspace_id")
+      .eq("user_id", profile.id)
+      .maybeSingle();
 
     if (membership) {
       redirect("/dashboard");

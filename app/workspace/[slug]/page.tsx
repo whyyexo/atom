@@ -1,18 +1,16 @@
 import { notFound } from "next/navigation";
 
-import { prisma } from "@/lib/prisma";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 export default async function WorkspacePublicPage({ params }: { params: { slug: string } }) {
   const slug = params.slug.toLowerCase();
 
-  const workspace = await prisma.workspace.findUnique({
-    where: { slug },
-    select: {
-      name: true,
-      slug: true,
-      createdAt: true,
-    },
-  });
+  const admin = createSupabaseAdminClient();
+  const { data: workspace } = await admin
+    .from("workspaces")
+    .select("name, slug, created_at")
+    .eq("slug", slug)
+    .maybeSingle();
 
   if (!workspace) {
     notFound();
@@ -48,5 +46,4 @@ export default async function WorkspacePublicPage({ params }: { params: { slug: 
     </div>
   );
 }
-
 

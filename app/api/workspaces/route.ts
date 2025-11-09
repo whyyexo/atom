@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { prisma } from "@/lib/prisma";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { WorkspaceRow } from "@/types/supabase";
 
 type CreateWorkspaceBody = {
   name?: string;
@@ -23,7 +24,7 @@ export async function POST(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user?.email) {
+  if (!user?.id || !user.email) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -47,10 +48,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const existingSlug = await prisma.workspace.findUnique({
-    where: { slug },
-    select: { id: true },
-  });
+  const admin = createSupabaseAdminClient();
+
+  const { data: existingSlug, error: slugError } = await admin
+    .from("workspaces")
+    .select("id")
+    .eq("slug", slug)
+    .maybeSingle();
+
+  if (slugError && slugError.code !== "PGRST116") {
+    console.error("Slug check failed", slugError);
+    return NextResponse.json({ error: "Unable to verify workspace URL." }, { status: 500 });
+  }
 
   if (existingSlug) {
     return NextResponse.json(
@@ -59,42 +68,69 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  let dbUser = await prisma.user.findUnique({
-    where: { email: user.email },
-  });
+  const { data: profile, error: profileError } = await admin
+    .from("users")
+    .select("id")
+    .eq("auth_id", user.id)
+    .maybeSingle();
 
-  if (!dbUser) {
-    dbUser = await prisma.user.create({
-      data: {
-        email: user.email,
-        clerkId: user.id,
-        name:
-          (user.user_metadata?.full_name as string | undefined)?.trim() ??
-          user.email.split("@")[0],
-      },
-    });
+  let profileId = profile?.id;
+
+  if (profileError && profileError.code !== "PGRST116") {
+    console.error("Failed to fetch user profile", profileError);
+    return NextResponse.json({ error: "Unable to load user profile." }, { status: 500 });
   }
 
-  const workspace = await prisma.workspace.create({
-    data: {
+  if (!profileId) {
+    const { data: createdProfile, error: createProfileError } = await admin
+      .from("users")
+      .insert({
+        auth_id: user.id,
+        email: user.email,
+        display_name:
+          (user.user_metadata?.full_name as string | undefined)?.trim() ??
+          user.email.split("@")[0],
+      })
+      .select("id")
+      .single();
+
+    if (createProfileError || !createdProfile) {
+      console.error("Failed to create user profile", createProfileError);
+      return NextResponse.json({ error: "Unable to create user profile." }, { status: 500 });
+    }
+
+    profileId = createdProfile.id;
+  }
+
+  const { data: workspace, error: workspaceError } = await admin
+    .from("workspaces")
+    .insert({
       name,
       slug,
-      ownerId: dbUser.id,
-      members: {
-        create: {
-          userId: dbUser.id,
-          role: "OWNER",
-        },
-      },
-    },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    },
+      owner_id: profileId,
+    })
+    .select("id, name, slug")
+    .single();
+
+  if (workspaceError || !workspace) {
+    console.error("Failed to create workspace", workspaceError);
+    return NextResponse.json({ error: "Unable to create workspace." }, { status: 500 });
+  }
+
+  const { error: membershipError } = await admin.from("workspace_members").insert({
+    workspace_id: workspace.id,
+    user_id: profileId,
+    role: "OWNER",
   });
 
-  return NextResponse.json({ workspace }, { status: 201 });
+  if (membershipError) {
+    console.error("Failed to create membership", membershipError);
+    return NextResponse.json({ error: "Unable to create workspace membership." }, { status: 500 });
+  }
+
+  const workspaceResponse: Pick<WorkspaceRow, "id" | "name" | "slug"> = workspace;
+
+  return NextResponse.json({ workspace: workspaceResponse }, { status: 201 });
 }
 
 

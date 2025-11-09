@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { prisma } from "@/lib/prisma";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 
 function normalizeSlug(input: string) {
   return input
@@ -31,10 +31,20 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const existing = await prisma.workspace.findUnique({
-    where: { slug: normalized },
-    select: { id: true },
-  });
+  const admin = createSupabaseAdminClient();
+  const { data: existing, error } = await admin
+    .from("workspaces")
+    .select("id")
+    .eq("slug", normalized)
+    .maybeSingle();
+
+  if (error && error.code !== "PGRST116") {
+    console.error("Failed to check workspace slug", error);
+    return NextResponse.json(
+      { available: false, reason: "Unable to verify slug availability." },
+      { status: 500 },
+    );
+  }
 
   return NextResponse.json({
     available: !existing,

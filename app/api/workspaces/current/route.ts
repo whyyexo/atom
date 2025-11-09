@@ -1,46 +1,59 @@
 import { NextResponse } from "next/server";
 
-import { prisma } from "@/lib/prisma";
+import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export async function GET() {
-  const supabase = createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const supabase = createSupabaseServerClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user?.email) {
-    return NextResponse.json({ workspace: null }, { status: 200 });
+    if (!user?.id || !user.email) {
+      return NextResponse.json({ workspace: null }, { status: 200 });
+    }
+
+    const admin = createSupabaseAdminClient();
+    const { data: profile, error: profileError } = await admin
+      .from("users")
+      .select("id")
+      .eq("auth_id", user.id)
+      .maybeSingle();
+
+    if (profileError && profileError.code !== "PGRST116") {
+      console.error("Failed to fetch user profile", profileError);
+      return NextResponse.json({ error: "Unable to load workspace." }, { status: 500 });
+    }
+
+    if (!profile) {
+      return NextResponse.json({ workspace: null }, { status: 200 });
+    }
+
+    const { data: membership, error: membershipError } = await admin
+      .from("workspace_members")
+      .select("workspace:workspaces(id, name, slug)")
+      .eq("user_id", profile.id)
+      .order("created_at", { ascending: true })
+      .maybeSingle();
+
+    if (membershipError && membershipError.code !== "PGRST116") {
+      console.error("Failed to fetch workspace membership", membershipError);
+      return NextResponse.json({ error: "Unable to load workspace." }, { status: 500 });
+    }
+
+    if (!membership?.workspace) {
+      return NextResponse.json({ workspace: null }, { status: 200 });
+    }
+
+    return NextResponse.json({ workspace: membership.workspace }, { status: 200 });
+  } catch (error) {
+    console.error("Failed to fetch current workspace", error);
+    return NextResponse.json(
+      { error: "Unable to load workspace. Please try again or contact support." },
+      { status: 500 },
+    );
   }
-
-  const dbUser = await prisma.user.findUnique({
-    where: { email: user.email },
-    select: { id: true },
-  });
-
-  if (!dbUser) {
-    return NextResponse.json({ workspace: null }, { status: 200 });
-  }
-
-  const membership = await prisma.workspaceMember.findFirst({
-    where: { userId: dbUser.id },
-    include: {
-      workspace: {
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-      },
-    },
-    orderBy: { createdAt: "asc" },
-  });
-
-  if (!membership?.workspace) {
-    return NextResponse.json({ workspace: null }, { status: 200 });
-  }
-
-  return NextResponse.json({ workspace: membership.workspace }, { status: 200 });
 }
 
 
