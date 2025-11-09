@@ -1,7 +1,9 @@
+console.log("SUPABASE_URL", process.env.NEXT_PUBLIC_SUPABASE_URL ?? process.env.SUPABASE_URL);
+console.log("SERVICE_ROLE?", Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY));
 import { NextRequest, NextResponse } from "next/server";
 
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseRouteClient } from "@/lib/supabase/route";
 import { WorkspaceRow } from "@/types/supabase";
 
 type CreateWorkspaceBody = {
@@ -19,7 +21,7 @@ function normalizeSlug(input: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const supabase = createSupabaseServerClient();
+  const supabase = createSupabaseRouteClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
