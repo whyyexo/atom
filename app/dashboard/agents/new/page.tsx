@@ -52,7 +52,6 @@ export default function NewAgentPage() {
           <div className="grid gap-2">
             <Label htmlFor="workspace" className="text-sm">Workspace</Label>
             <Select
-              id="workspace"
               placeholder="Select workspace"
               options={["Growth Analytics", "Support Automation", "Compliance Review"]}
             />
@@ -60,7 +59,6 @@ export default function NewAgentPage() {
           <div className="grid gap-2">
             <Label htmlFor="model" className="text-sm">Model</Label>
             <Select
-              id="model"
               placeholder="Select model"
               options={["OpenAI gpt-4o-mini", "Anthropic Claude 3.5 Sonnet", "Google Gemini 2.0"]}
             />
@@ -77,7 +75,6 @@ export default function NewAgentPage() {
           <div className="grid gap-2">
             <Label htmlFor="visibility" className="text-sm">Visibility</Label>
             <Select
-              id="visibility"
               placeholder="Select visibility"
               options={["Workspace members", "Entire organization", "Private"]}
             />

@@ -73,7 +73,6 @@ export default function NewWorkspacePage() {
           <div className="grid gap-2">
             <Label htmlFor="visibility" className="text-sm">Visibility</Label>
             <Select
-              id="visibility"
               placeholder="Select visibility"
               options={["Private (invite only)", "Teams (org members)", "Public (org wide)"]}
             />
