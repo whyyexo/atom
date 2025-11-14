@@ -23,7 +23,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-manrope);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
   --font-mono: var(--font-geist-mono);
 
   --color-background: hsl(var(--background));
@@ -126,4 +127,24 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Landing page specific styles */
+@media (prefers-reduced-motion: no-preference) {
+  .parallax-slow {
+    will-change: transform;
+  }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.6));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
