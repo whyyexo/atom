@@ -6,21 +6,21 @@ import { tv, type VariantProps } from "tailwind-variants";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = tv({
-  base: "inline-flex items-center justify-center rounded-md text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+  base: "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   variants: {
     variant: {
-      default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+      default: "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md",
       secondary:
         "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-      ghost: "hover:bg-muted hover:text-foreground",
-      outline: "border border-input bg-transparent hover:bg-muted",
+      ghost: "hover:bg-muted/50 hover:text-foreground",
+      outline: "border border-border/50 bg-transparent hover:bg-muted/50",
       destructive:
-        "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:shadow-md",
     },
     size: {
       default: "h-10 px-4 py-2",
-      sm: "h-9 px-3",
-      lg: "h-11 px-5 text-base",
+      sm: "h-9 px-3 text-xs",
+      lg: "h-11 px-6 text-base",
       icon: "h-10 w-10",
     },
   },
