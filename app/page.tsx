@@ -1,21 +1,21 @@
-import { Blocks } from "@/components/landing/Blocks";
+import { CTA } from "@/components/landing/CTA";
 import { Features } from "@/components/landing/Features";
 import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
-import { Productivity } from "@/components/landing/Productivity";
-import { WorkspacePreview } from "@/components/landing/WorkspacePreview";
+import { Showcase } from "@/components/landing/Showcase";
+import { ValueProps } from "@/components/landing/ValueProps";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
       <Header />
       <main>
         <Hero />
+        <ValueProps />
+        <Showcase />
         <Features />
-        <WorkspacePreview />
-        <Blocks />
-        <Productivity />
+        <CTA />
       </main>
       <Footer />
     </div>

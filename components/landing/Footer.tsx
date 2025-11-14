@@ -7,19 +7,19 @@ import Link from "next/link";
 const footerLinks = [
   { label: "About", href: "/about" },
   { label: "Pricing", href: "/pricing" },
-  { label: "Discord", href: "/discord" },
+  { label: "Docs", href: "https://docs.atom.app" },
   { label: "Blog", href: "/blog" },
   { label: "Terms", href: "/terms" },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl py-16">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+    <footer className="border-t border-[#1c1c1c] bg-[#0a0a0a]">
+      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl py-12">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <Image src="/A_blanc.png" alt="Atom icon" width={24} height={24} />
-            <p className="text-sm text-gray-600">
+            <Image src="/A_blanc.png" alt="Atom icon" width={20} height={20} />
+            <p className="text-xs text-gray-500">
               © {new Date().getFullYear()} Atom Labs
             </p>
           </div>
@@ -29,7 +29,7 @@ export function Footer() {
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-xs text-gray-500 hover:text-gray-400 transition-colors"
               >
                 {link.label}
               </Link>
