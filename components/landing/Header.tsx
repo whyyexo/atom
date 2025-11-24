@@ -1,42 +1,52 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-[#1c1c1c] bg-[#0a0a0a]/80 backdrop-blur-sm">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <Image src="/ATOM_blanc.png" alt="Atom logo" width={90} height={26} priority />
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-white/80 dark:bg-black/80 backdrop-blur-xl"
+    >
+      <nav className="container-padding max-w-7xl mx-auto h-16 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/ATOM_blanc.png"
+            alt="ATOM"
+            width={100}
+            height={28}
+            className="h-7 w-auto dark:invert"
+            priority
+          />
+        </Link>
+
+        <div className="flex items-center gap-4">
+          <Link
+            href="#features"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
+          >
+            Features
           </Link>
-          
-          <nav className="hidden md:flex items-center gap-8">
-            <Link href="#showcase" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Demo
-            </Link>
-            <Link href="/pricing" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Pricing
-            </Link>
-            <Link href="https://docs.atom.app" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Docs
-            </Link>
-          </nav>
-          
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" asChild className="hidden sm:flex text-sm font-medium text-gray-400 hover:text-white border-0">
-              <Link href="/sign-in">Sign in</Link>
-            </Button>
-            <Button asChild className="rounded-xl h-9 px-4 text-sm font-medium bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link href="/sign-up">Get started</Link>
-            </Button>
-          </div>
+          <Link
+            href="#pricing"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
+          >
+            Pricing
+          </Link>
+          <Button asChild variant="ghost" size="sm">
+            <Link href="/sign-in">Sign In</Link>
+          </Button>
+          <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+            <Link href="/sign-up">Get Started</Link>
+          </Button>
         </div>
-      </div>
-    </header>
+      </nav>
+    </motion.header>
   );
 }

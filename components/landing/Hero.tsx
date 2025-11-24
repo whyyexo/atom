@@ -1,100 +1,109 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
-  const scrollToShowcase = () => {
-    const showcaseSection = document.getElementById("showcase");
-    showcaseSection?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] border-b border-[#1c1c1c]">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Content */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white via-white to-blue-50/30 dark:from-black dark:via-black dark:to-blue-950/20">
+      {/* Subtle background particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-400/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
+
+      <div className="relative z-10 container-padding max-w-5xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="space-y-8"
+        >
+          {/* Atom Logo Placeholder */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center mb-8"
+          >
+            <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-xl border border-white/20 dark:border-white/10 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-purple-500 opacity-80" />
+            </div>
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-foreground leading-[1.1]"
+          >
+            Think Better. Do More.
+            <br />
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              With ATOM.
+            </span>
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+          >
+            A minimal workspace built for clarity and flow.
+            <br />
+            Science-backed tools to help you focus, plan, and grow.
+          </motion.p>
+
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-            className="space-y-8"
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
           >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-white [font-family:var(--font-heading)] leading-[1.1]">
-              Your AI-driven life,
-              <br />
-              <span className="text-primary">organized.</span>
-            </h1>
-
-            <p className="text-[15px] text-gray-400 leading-relaxed max-w-xl">
-              Atom OS centralizes your calendar, goals, notes and habits — and actually helps you move forward.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4">
-              <Button asChild size="lg" className="rounded-xl h-12 px-6 text-[15px] font-medium bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link href="/sign-up">
-                  Start now
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                onClick={scrollToShowcase}
-                className="rounded-xl h-12 px-6 text-[15px] font-medium text-gray-400 hover:text-white border border-[#1c1c1c] hover:border-[#2a2a2a]"
-              >
-                <Play className="mr-2 h-4 w-4" />
-                View demo
-              </Button>
-            </div>
+            <Button
+              asChild
+              size="lg"
+              className="group h-12 px-8 text-base font-medium rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
+            >
+              <Link href="/sign-up">
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="h-12 px-8 text-base font-medium rounded-xl border-2 hover:bg-muted/50"
+            >
+              <Link href="#features">See Features</Link>
+            </Button>
           </motion.div>
-
-          {/* Clean UI Mockup */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-            className="hidden lg:block"
-          >
-            <div className="rounded-2xl border border-[#1c1c1c] bg-[#0f0f0f] shadow-[0_0_20px_rgba(0,0,0,0.3)] overflow-hidden">
-              {/* Mockup header */}
-              <div className="h-12 border-b border-[#1c1c1c] flex items-center px-4 gap-3">
-                <div className="h-2 w-2 rounded-full bg-[#2a2a2a]" />
-                <div className="h-2 w-2 rounded-full bg-[#2a2a2a]" />
-                <div className="h-2 w-2 rounded-full bg-[#2a2a2a]" />
-                <div className="flex-1" />
-                <div className="h-6 w-20 rounded bg-[#1c1c1c]" />
-              </div>
-              
-              {/* Mockup content */}
-              <div className="p-6 space-y-4">
-                <div className="space-y-2">
-                  <div className="h-4 w-32 rounded bg-[#1c1c1c]" />
-                  <div className="h-4 w-48 rounded bg-[#1c1c1c]" />
-                </div>
-                
-                <div className="grid grid-cols-3 gap-3 pt-4">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="space-y-2">
-                      <div className="h-20 rounded-lg border border-[#1c1c1c] bg-[#0a0a0a]" />
-                      <div className="h-3 w-full rounded bg-[#1c1c1c]" />
-                      <div className="h-3 w-3/4 rounded bg-[#1c1c1c]" />
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="pt-4 space-y-2">
-                  <div className="h-3 w-full rounded bg-[#1c1c1c]" />
-                  <div className="h-3 w-5/6 rounded bg-[#1c1c1c]" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2"
+        >
+          <div className="w-1 h-3 rounded-full bg-muted-foreground/50" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

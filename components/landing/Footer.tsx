@@ -1,40 +1,79 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
-
-const footerLinks = [
-  { label: "About", href: "/about" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Docs", href: "https://docs.atom.app" },
-  { label: "Blog", href: "/blog" },
-  { label: "Terms", href: "/terms" },
-];
+import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#1c1c1c] bg-[#0a0a0a]">
-      <div className="container mx-auto px-6 sm:px-8 lg:px-12 max-w-6xl py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <Image src="/A_blanc.png" alt="Atom icon" width={20} height={20} />
-            <p className="text-xs text-gray-500">
-              © {new Date().getFullYear()} Atom Labs
+    <footer className="border-t border-border bg-white dark:bg-black">
+      <div className="container-padding max-w-7xl mx-auto py-12">
+        <div className="grid sm:grid-cols-4 gap-8 mb-8">
+          <div>
+            <Link href="/" className="flex items-center gap-2 mb-4">
+              <Image
+                src="/ATOM_blanc.png"
+                alt="ATOM"
+                width={100}
+                height={28}
+                className="h-7 w-auto dark:invert"
+              />
+            </Link>
+            <p className="text-sm text-muted-foreground">
+              Productivity, refined.
             </p>
           </div>
-          
-          <nav className="flex flex-wrap items-center justify-center gap-6">
-            {footerLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-xs text-gray-500 hover:text-gray-400 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4 text-sm">Product</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Pricing
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4 text-sm">Company</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Blog
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-foreground mb-4 text-sm">Legal</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Terms
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-border text-center text-sm text-muted-foreground">
+          <p>© {new Date().getFullYear()} ATOM. All rights reserved.</p>
         </div>
       </div>
     </footer>
