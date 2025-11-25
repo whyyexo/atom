@@ -4,6 +4,14 @@ import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import {
+  HomeIcon,
+  FolderIcon,
+  BrainIcon,
+  CheckSquareIcon,
+  FileTextIcon,
+  SettingsIcon,
+} from "@/components/icons/lineicons";
 
 type SidebarProps = {
   onCloseMobile: () => void;
@@ -13,12 +21,12 @@ type SidebarProps = {
 };
 
 const navigation = [
-  { name: "Overview", href: "/dashboard", icon: null },
-  { name: "Workspaces", href: "/dashboard/workspaces", icon: null },
-  { name: "Agents", href: "/dashboard/agents", icon: null },
-  { name: "Tasks", href: "/dashboard/tasks", icon: null },
-  { name: "Notes", href: "/dashboard/notes", icon: null },
-  { name: "Settings", href: "/dashboard/settings", icon: null },
+  { name: "Overview", href: "/dashboard", icon: HomeIcon },
+  { name: "Workspaces", href: "/dashboard/workspaces", icon: FolderIcon },
+  { name: "Agents", href: "/dashboard/agents", icon: BrainIcon },
+  { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquareIcon },
+  { name: "Notes", href: "/dashboard/notes", icon: FileTextIcon },
+  { name: "Settings", href: "/dashboard/settings", icon: SettingsIcon },
 ];
 
 export function DashboardSidebar({
@@ -52,18 +60,20 @@ export function DashboardSidebar({
       <nav className="flex-1 space-y-1 px-3 py-6">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
+          const Icon = item.icon;
           return (
             <Link
               key={item.name}
               href={item.href}
               onClick={onCloseMobile}
               className={cn(
-                "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
                   ? "bg-black/5 text-black"
                   : "text-black/60 hover:bg-black/5 hover:text-black"
               )}
             >
+              {Icon && <Icon className="h-4 w-4" />}
               {item.name}
             </Link>
           );

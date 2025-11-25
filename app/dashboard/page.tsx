@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
+import { HomeIcon } from "@/components/icons/lineicons";
 
 export default function DashboardPage() {
   const [activeView, setActiveView] = useState("Default view");
@@ -9,11 +10,14 @@ export default function DashboardPage() {
   return (
     <div className="flex h-full flex-col bg-white">
       <PageHeader
-        breadcrumb={["Dashboard"]}
+        breadcrumb={[{ label: "Dashboard", icon: <HomeIcon /> }]}
         title="Overview"
+        titleIcon={<HomeIcon />}
         views={["Default view", "My Tasks", "Active projects"]}
         activeView={activeView}
         onViewChange={setActiveView}
+        onEdit={() => console.log("Edit views")}
+        onCreate={() => console.log("Create new view")}
       />
 
       <div className="flex-1 space-y-8 p-8">

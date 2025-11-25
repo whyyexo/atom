@@ -2,22 +2,21 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/dashboard/page-header";
-import { BrainIcon, HomeIcon, ZapIcon } from "@/components/icons/lineicons";
+import { CheckSquareIcon, HomeIcon } from "@/components/icons/lineicons";
 
-export default function NewAgentPage() {
-  const [activeView, setActiveView] = useState("Template");
+export default function TasksPage() {
+  const [activeView, setActiveView] = useState("All tasks");
 
   return (
     <div className="flex h-full flex-col bg-white">
       <PageHeader
         breadcrumb={[
           { label: "Dashboard", icon: <HomeIcon /> },
-          { label: "Agents", icon: <BrainIcon /> },
-          { label: "New Agent", icon: <ZapIcon /> },
+          { label: "Tasks", icon: <CheckSquareIcon /> },
         ]}
-        title="New Agent"
-        titleIcon={<ZapIcon />}
-        views={["Template", "Custom", "Import"]}
+        title="Tasks"
+        titleIcon={<CheckSquareIcon />}
+        views={["All tasks", "My tasks", "Completed", "Overdue"]}
         activeView={activeView}
         onViewChange={setActiveView}
         onEdit={() => console.log("Edit views")}
@@ -26,9 +25,10 @@ export default function NewAgentPage() {
 
       <div className="flex-1 space-y-8 p-8">
         <div className="rounded-xl border border-black/10 bg-white p-6">
-          <p className="text-sm text-black/60">Create a new agent</p>
+          <p className="text-sm text-black/60">No tasks yet</p>
         </div>
       </div>
     </div>
   );
 }
+
