@@ -70,13 +70,23 @@ export function PremiumFooter() {
             </h3>
             <ul className="space-y-3 text-sm font-light text-[#333333]">
               <li>
-                <Link href="/privacy" className="transition-opacity hover:opacity-60">
-                  Privacy
+                <Link href="/legal/terms" className="transition-opacity hover:opacity-60">
+                  Terms of Service
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="transition-opacity hover:opacity-60">
-                  Terms
+                <Link href="/legal/privacy" className="transition-opacity hover:opacity-60">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/cookies" className="transition-opacity hover:opacity-60">
+                  Cookie Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/legal/acceptable-use" className="transition-opacity hover:opacity-60">
+                  Acceptable Use
                 </Link>
               </li>
             </ul>
@@ -90,22 +100,12 @@ export function PremiumFooter() {
             <ul className="space-y-3 text-sm font-light text-[#333333]">
               <li>
                 <a
-                  href="https://github.com"
+                  href="https://discord.gg/8YZBWnF776"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-opacity hover:opacity-60"
                 >
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-opacity hover:opacity-60"
-                >
-                  Twitter
+                  Discord
                 </a>
               </li>
             </ul>
