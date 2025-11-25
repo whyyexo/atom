@@ -55,11 +55,16 @@ function HeroSection() {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-4xl"
         >
-          <h1 className="text-5xl font-light leading-tight tracking-tight text-[#000000] sm:text-6xl lg:text-7xl">
-            Work Smarter. Stay Focused.
+          <h1 className="text-5xl font-semibold leading-tight tracking-tight text-[#000000] sm:text-6xl lg:text-7xl">
+            Work Smarter. Stay Focused. with a{" "}
+            <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">
+              science based
+            </span>{" "}
+            productivity app.
           </h1>
           <p className="mt-8 text-xl font-light leading-relaxed text-[#333333] sm:text-2xl">
-            Atom is a new kind of productivity workspace—simple, calm and powerful.
+            Built on cognitive science and behavioral research. A workspace that adapts to how your
+            mind actually works—not how productivity apps think it should.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button

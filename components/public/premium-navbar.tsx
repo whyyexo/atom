@@ -32,21 +32,24 @@ export function PremiumNavbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[rgba(0,0,0,0.95)] backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.25)]"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          isScrolled
+            ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+            : "bg-transparent"
         )}
         style={{
-          height: "44px",
+          height: "64px",
         }}
       >
         <nav className="mx-auto flex h-full max-w-[1180px] items-center justify-between px-6 lg:px-12">
           {/* Left: Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/ATOM_blanc.png"
+              src={isScrolled ? "/ATOM_noir.png" : "/ATOM_blanc.png"}
               alt="Atom"
               width={60}
               height={16}
-              className="h-4 w-auto"
+              className="h-5 w-auto"
               priority
             />
           </Link>
@@ -57,7 +60,12 @@ export function PremiumNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white/80 hover:text-white transition-colors duration-200"
+                className={cn(
+                  "transition-colors duration-200",
+                  isScrolled
+                    ? "text-[#000000]/80 hover:text-[#000000]"
+                    : "text-white/80 hover:text-white"
+                )}
               >
                 {link.label}
               </Link>
@@ -66,10 +74,15 @@ export function PremiumNavbar() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
-            {/* Sign In */}
+            {/* Sign In Button */}
             <Link
               href="/sign-in"
-              className="hidden text-sm font-normal text-white/80 hover:text-white transition-colors duration-200 md:block relative underline decoration-white/80 underline-offset-4"
+              className={cn(
+                "hidden rounded-full px-6 py-2 text-sm font-normal transition-all duration-200 md:block",
+                isScrolled
+                  ? "bg-[#0071e3] text-white hover:bg-[#0077ed]"
+                  : "bg-white/10 text-white backdrop-blur-sm border border-white/20 hover:bg-white/20"
+              )}
             >
               Sign in
             </Link>
@@ -77,7 +90,10 @@ export function PremiumNavbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white/80 md:hidden"
+              className={cn(
+                "md:hidden transition-colors",
+                isScrolled ? "text-[#000000]/80" : "text-white/80"
+              )}
               aria-label="Toggle menu"
             >
               <svg
@@ -150,7 +166,7 @@ export function PremiumNavbar() {
                   <Link
                     href="/sign-in"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-normal text-white/80 hover:text-white transition-colors relative underline decoration-white/80 underline-offset-4"
+                    className="mt-4 rounded-full bg-[#0071e3] px-6 py-3 text-base font-normal text-white hover:bg-[#0077ed] transition-colors text-center"
                   >
                     Sign in
                   </Link>
