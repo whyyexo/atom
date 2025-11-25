@@ -29,6 +29,7 @@ export default function SignInPage() {
         email,
         options: {
           shouldCreateUser: true,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 

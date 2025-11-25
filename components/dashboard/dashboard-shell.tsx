@@ -24,40 +24,24 @@ const PAGE_TITLES: Record<string, string> = {
 
 type DashboardShellProps = {
   children: React.ReactNode;
+  user: {
+    id: string;
+    email?: string;
+    user_metadata?: any;
+  };
 };
 
-export function DashboardShell({ children }: DashboardShellProps) {
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+export function DashboardShell({ children, user }: DashboardShellProps) {
+  const [userEmail, setUserEmail] = useState<string | null>(
+    user?.email ?? user?.user_metadata?.email ?? null
+  );
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
   useEffect(() => {
-    let isMounted = true;
-
-    async function loadSession() {
-      setLoading(true);
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!isMounted) return;
-      if (!user) {
-        router.replace("/sign-in");
-        return;
-      }
-
-      setUserEmail(user.email ?? user.user_metadata?.email ?? "team@atom.app");
-      setLoading(false);
-    }
-
-    loadSession();
-
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!isMounted) return;
-
       if (!session?.user) {
         router.replace("/sign-in");
         return;
@@ -66,11 +50,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
       setUserEmail(
         session.user.email ?? session.user.user_metadata?.email ?? "team@atom.app",
       );
-      setLoading(false);
     });
 
     return () => {
-      isMounted = false;
       data.subscription.unsubscribe();
     };
   }, [router, supabase]);
@@ -85,7 +67,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     PAGE_TITLES[pathname?.split("/").slice(0, 3).join("/") ?? ""] ??
     "Overview";
 
-  if (loading || !userEmail) {
+  if (!userEmail) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="flex flex-col items-center gap-4 text-sm text-muted-foreground">
