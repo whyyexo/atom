@@ -100,6 +100,26 @@ export function PremiumFooter() {
             <ul className="space-y-3 text-sm font-light text-[#333333]">
               <li>
                 <a
+                  href="https://github.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-60"
+                >
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-opacity hover:opacity-60"
+                >
+                  Twitter (X)
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://discord.gg/8YZBWnF776"
                   target="_blank"
                   rel="noopener noreferrer"
