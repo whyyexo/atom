@@ -103,7 +103,7 @@ export function PageHeader({
               {onCreate && (
                 <button
                   onClick={onCreate}
-                  className="rounded-lg p-1.5 text-black/60 hover:bg-black/5 hover:text-black transition-colors ml-1"
+                  className="rounded-lg p-1.5 text-black/60 hover:bg-black/5 hover:text-black transition-colors"
                   aria-label="Create new view"
                 >
                   <Plus className="h-4 w-4" />
