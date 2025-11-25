@@ -35,7 +35,7 @@ export function PremiumNavbar() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
             ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
-            : "bg-black/40 backdrop-blur-md"
+            : "bg-transparent"
         )}
         style={{
           height: "64px",
@@ -45,7 +45,7 @@ export function PremiumNavbar() {
           {/* Left: Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src={isScrolled ? "/ATOM_noir.png" : "/ATOM_blanc.png"}
+              src="/ATOM_noir.png"
               alt="Atom"
               width={60}
               height={16}
@@ -60,12 +60,7 @@ export function PremiumNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={cn(
-                  "transition-colors duration-200",
-                  isScrolled
-                    ? "text-[#000000]/80 hover:text-[#000000]"
-                    : "text-white hover:text-white drop-shadow-lg font-medium"
-                )}
+                className="text-[#000000]/80 hover:text-[#000000] transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -77,12 +72,7 @@ export function PremiumNavbar() {
             {/* Sign In Button */}
             <Link
               href="/sign-in"
-              className={cn(
-                "hidden rounded-full px-6 py-2 text-sm font-normal transition-all duration-200 md:block",
-                isScrolled
-                  ? "bg-[#0071e3] text-white hover:bg-[#0077ed]"
-                  : "bg-white/30 text-white backdrop-blur-sm border border-white/40 hover:bg-white/40 shadow-lg font-medium"
-              )}
+              className="hidden rounded-full bg-[#0071e3] px-6 py-2 text-sm font-normal text-white hover:bg-[#0077ed] transition-all duration-200 md:block"
             >
               Sign in
             </Link>
@@ -90,10 +80,7 @@ export function PremiumNavbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={cn(
-                "md:hidden transition-colors",
-                isScrolled ? "text-[#000000]/80" : "text-white/80"
-              )}
+              className="md:hidden text-[#000000]/80 transition-colors"
               aria-label="Toggle menu"
             >
               <svg
