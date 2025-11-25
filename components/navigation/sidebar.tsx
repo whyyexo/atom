@@ -39,13 +39,13 @@ export function DashboardSidebar({
   return (
     <aside
       className={cn(
-        "flex w-[240px] flex-col border-r border-white/5 bg-black",
+        "flex w-[240px] flex-col border-r border-black/10 bg-white",
         className
       )}
     >
       {/* Logo */}
-      <div className="flex h-16 items-center border-b border-white/5 px-6">
-        <span className="text-lg font-semibold tracking-tight text-white">Atom</span>
+      <div className="flex h-16 items-center border-b border-black/10 px-6">
+        <span className="text-lg font-semibold tracking-tight text-black">Atom</span>
       </div>
 
       {/* Navigation */}
@@ -60,8 +60,8 @@ export function DashboardSidebar({
               className={cn(
                 "flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-white/5 text-white"
-                  : "text-white/60 hover:bg-white/5 hover:text-white"
+                  ? "bg-black/5 text-black"
+                  : "text-black/60 hover:bg-black/5 hover:text-black"
               )}
             >
               {item.name}
@@ -71,17 +71,17 @@ export function DashboardSidebar({
       </nav>
 
       {/* User section */}
-      <div className="border-t border-white/5 p-4">
+      <div className="border-t border-black/10 p-4">
         <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-medium text-white">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black/10 text-xs font-medium text-black">
             {initials}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="truncate text-sm font-medium text-white">{userEmail}</p>
+            <p className="truncate text-sm font-medium text-black">{userEmail}</p>
           </div>
           <button
             onClick={onSignOut}
-            className="rounded-lg p-1.5 text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+            className="rounded-lg p-1.5 text-black/60 hover:bg-black/5 hover:text-black transition-colors"
             aria-label="Sign out"
           >
             <LogOut className="h-4 w-4" />

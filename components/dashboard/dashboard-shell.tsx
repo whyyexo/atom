@@ -1,20 +1,10 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { DashboardSidebar } from "@/components/navigation/sidebar";
-import { DashboardTopbar } from "@/components/navigation/topbar";
 import { cn } from "@/lib/utils";
-
-const PAGE_TITLES: Record<string, string> = {
-  "/dashboard": "Overview",
-  "/dashboard/agents": "Agents",
-  "/dashboard/agents/new": "New Agent",
-  "/dashboard/workspaces": "Workspaces",
-  "/dashboard/settings": "Settings",
-};
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -28,13 +18,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
     console.log("Sign out");
   };
 
-  const pageTitle =
-    PAGE_TITLES[pathname ?? ""] ??
-    PAGE_TITLES[pathname?.split("/").slice(0, 3).join("/") ?? ""] ??
-    "Overview";
-
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-white">
       <DashboardSidebar
         onCloseMobile={() => undefined}
         userEmail={userEmail}
@@ -43,12 +28,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
       />
 
       <div className={cn("flex w-full flex-1 flex-col md:ml-[240px]")}>
-        <DashboardTopbar
-          className="sticky top-0 z-30 border-b border-white/5 bg-black/80 backdrop-blur-xl"
-          onOpenQuickActions={() => {}}
-          pageTitle={pageTitle}
-        />
-
         <main className="flex-1">
           <AnimatePresence mode="wait">
             <motion.div
