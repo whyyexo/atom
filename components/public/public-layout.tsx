@@ -5,7 +5,7 @@ export function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-white text-[#000000] font-[var(--font-inter)]">
       <PremiumNavbar />
-      <main className="pt-14">{children}</main>
+      <main className="pt-[52px]">{children}</main>
       <PremiumFooter />
     </div>
   );
