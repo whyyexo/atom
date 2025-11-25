@@ -31,7 +31,7 @@ const supportBlocks = [
 
 const donationSteps = [
   "Revenue is collected monthly",
-  "5% is allocated to our Impact Fund",
+  "2% is allocated to our Impact Fund",
   "Approved organizations receive quarterly donations",
   "We publish transparent summaries at the end of each year",
 ];
@@ -67,7 +67,7 @@ export default function ImpactPage() {
                   isDark ? "text-white/80" : "text-[#333333]"
                 )}
               >
-                5% of Atom's revenue is dedicated to supporting educational and knowledge-driven
+                2% of Atom's revenue is dedicated to supporting educational and knowledge-driven
                 organizations.
               </p>
             </section>

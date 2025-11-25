@@ -16,12 +16,7 @@ export default function PricingPage() {
       <section className="py-16 md:py-32" id="pricing">
         <div className="mx-auto max-w-[1180px] px-6 lg:px-12">
           <div className="mx-auto flex max-w-3xl flex-col text-center">
-            <h2
-              className={cn(
-                "mb-3 text-3xl font-semibold md:mb-4 lg:mb-6 lg:text-4xl",
-                isDark ? "text-white" : "text-[#000000]"
-              )}
-            >
+            <h2 className="mb-3 text-3xl font-semibold text-[#000000] md:mb-4 lg:mb-6 lg:text-4xl">
               Simple, transparent pricing
             </h2>
             <p
@@ -85,7 +80,7 @@ export default function PricingPage() {
           >
             <Heart className="h-4 w-4 text-[#000000]" />
             <p className="text-sm font-light text-[#000000]">
-              <span className="text-[#0071e3]">5%</span> of all revenue is donated to social and{" "}
+              <span className="text-[#0071e3]">2%</span> of all revenue is donated to social and{" "}
               <Link
                 href="/impact"
                 className="text-[#0071e3] underline decoration-[#0071e3] underline-offset-2 hover:text-[#0077ed] transition-colors"

@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -74,14 +73,6 @@ export function PremiumNavbar() {
             >
               Sign in
             </Link>
-
-            {/* Get Started CTA - Blue like Apple, rounded */}
-            <Button
-              className="hidden rounded-full bg-[#0071e3] text-white px-3 py-1 text-xs font-normal transition-all duration-200 hover:bg-[#0077ed] md:flex"
-              asChild
-            >
-              <Link href="/sign-up">Get Started</Link>
-            </Button>
 
             {/* Mobile menu button */}
             <button
@@ -164,17 +155,6 @@ export function PremiumNavbar() {
                     Sign in
                   </Link>
                 </nav>
-
-                <div className="mt-auto space-y-4">
-                  <Button
-                    className="w-full rounded-full bg-[#0071e3] text-white px-4 py-2 text-sm font-normal hover:bg-[#0077ed] transition-colors"
-                    asChild
-                  >
-                    <Link href="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
-                      Get Started
-                    </Link>
-                  </Button>
-                </div>
               </div>
             </motion.div>
           </>
