@@ -1,20 +1,11 @@
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-
-export const dynamic = "force-dynamic";
-
-export default async function DashboardPage() {
-  const supabase = createSupabaseServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+export default function DashboardPage() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1 space-y-8 p-8">
         <div>
           <h1 className="text-3xl font-semibold">Welcome back</h1>
           <p className="text-muted-foreground mt-2">
-            {user?.email ? `Signed in as ${user.email}` : "Loading..."}
+            Your productivity dashboard
           </p>
         </div>
 

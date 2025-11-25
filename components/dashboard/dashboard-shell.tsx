@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useMemo, useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { DashboardSidebar } from "@/components/navigation/sidebar";
 import { DashboardTopbar } from "@/components/navigation/topbar";
@@ -10,8 +10,6 @@ import { Modal, ModalContent } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Skeleton } from "@/components/ui/skeleton";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 const PAGE_TITLES: Record<string, string> = {
@@ -24,59 +22,22 @@ const PAGE_TITLES: Record<string, string> = {
 
 type DashboardShellProps = {
   children: React.ReactNode;
-  user: {
-    id: string;
-    email?: string;
-    user_metadata?: any;
-  };
 };
 
-export function DashboardShell({ children, user }: DashboardShellProps) {
-  const [userEmail, setUserEmail] = useState<string | null>(
-    user?.email ?? user?.user_metadata?.email ?? null
-  );
+export function DashboardShell({ children }: DashboardShellProps) {
   const [isCommandOpen, setIsCommandOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
-  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const userEmail = "user@atom.app"; // Placeholder email
 
-  useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session?.user) {
-        router.replace("/sign-in");
-        return;
-      }
-
-      setUserEmail(
-        session.user.email ?? session.user.user_metadata?.email ?? "team@atom.app",
-      );
-    });
-
-    return () => {
-      data.subscription.unsubscribe();
-    };
-  }, [router, supabase]);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.replace("/sign-in");
+  const handleSignOut = () => {
+    // Placeholder - will be implemented later
+    console.log("Sign out");
   };
 
   const pageTitle =
     PAGE_TITLES[pathname ?? ""] ??
     PAGE_TITLES[pathname?.split("/").slice(0, 3).join("/") ?? ""] ??
     "Overview";
-
-  if (!userEmail) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-4 text-sm text-muted-foreground">
-          <Skeleton className="h-12 w-12 rounded-2xl" />
-          <p>Loading your dashboard...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
