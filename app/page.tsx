@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { PricingCard } from "@/components/ui/pricing";
 import { PublicLayout } from "@/components/public/public-layout";
 
 
@@ -193,21 +194,41 @@ function PricingSection() {
           viewport={{ once: true, amount: 0.2 }}
           variants={subtleFade}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-md rounded-lg border border-[rgba(0,0,0,0.08)] bg-white p-12 text-center"
+          className="rounded-xl flex flex-col justify-between border border-[rgba(0,0,0,0.08)] p-1 bg-white"
         >
-          <h3 className="text-3xl font-semibold text-[#000000]">Pro</h3>
-          <div className="mt-6 text-5xl font-light text-[#000000]">
-            $6.99<span className="text-xl font-light text-[#333333]">/month</span>
+          <div className="flex flex-col gap-4 md:flex-row">
+            <PricingCard
+              title="Free"
+              price="$0 / mo"
+              description="Everything you need to get started"
+              buttonVariant="outline"
+              features={[
+                "Unlimited notes and documents",
+                "Up to 3 projects",
+                "Basic AI features",
+                "Community support",
+              ]}
+            />
+            <PricingCard
+              title="Pro"
+              price="$6.99 / mo"
+              description="Unlock AI actions and unlimited projects"
+              buttonVariant="default"
+              highlight
+              features={[
+                "Unlimited notes and documents",
+                "Unlimited projects and workspaces",
+                "Real-time collaboration",
+                "Export to markdown, PDF, and more",
+                "Priority support",
+                "Advanced AI automation",
+                "Unlimited AI actions",
+                "Custom integrations",
+                "Advanced analytics",
+                "Team management",
+              ]}
+            />
           </div>
-          <p className="mt-6 text-base font-light leading-relaxed text-[#333333]">
-            Unlock AI actions and unlimited projects
-          </p>
-          <Button
-            className="mt-10 w-full rounded-full bg-[#0071e3] px-8 py-3 text-base font-normal text-white hover:bg-[#0077ed] border-0"
-            asChild
-          >
-            <Link href="/sign-up">Upgrade</Link>
-          </Button>
         </motion.div>
       </div>
     </section>

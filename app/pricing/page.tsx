@@ -19,12 +19,7 @@ export default function PricingPage() {
             <h2 className="mb-3 text-3xl font-semibold text-[#000000] md:mb-4 lg:mb-6 lg:text-4xl">
               Simple, transparent pricing
             </h2>
-            <p
-              className={cn(
-                "lg:text-lg mb-6 md:mb-8 lg:mb-12 font-light",
-                isDark ? "text-white/80" : "text-[#333333]"
-              )}
-            >
+            <p className="lg:text-lg mb-6 md:mb-8 lg:mb-12 font-light text-[#000000]">
               Choose the plan that works for you. Start free, upgrade when you're ready.
             </p>
           </div>
