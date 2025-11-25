@@ -1,12 +1,12 @@
-import { PublicFooter } from "./public-footer";
-import { PublicNavigation } from "./public-navigation";
+import { PremiumFooter } from "./premium-footer";
+import { PremiumNavbar } from "./premium-navbar";
 
 export function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-white text-[#000000] font-[var(--font-inter)]">
-      <PublicNavigation />
+    <div className="min-h-screen bg-white dark:bg-black text-[#000000] dark:text-white font-[var(--font-inter)]">
+      <PremiumNavbar />
       <main className="pt-20">{children}</main>
-      <PublicFooter />
+      <PremiumFooter />
     </div>
   );
 }
