@@ -32,29 +32,23 @@ export function PremiumNavbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[rgba(0,0,0,0.8)]",
-          isScrolled && "backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.25)]"
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-[rgba(0,0,0,0.8)] backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.25)]"
         )}
         style={{
-          height: isScrolled ? "44px" : "52px",
+          height: "44px",
         }}
       >
         <nav className="mx-auto flex h-full max-w-[1180px] items-center justify-between px-6 lg:px-12">
           {/* Left: Logo */}
           <Link href="/" className="flex items-center">
-            <motion.div
-              animate={{ scale: isScrolled ? 1.05 : 1.0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Image
-                src="/ATOM_blanc.png"
-                alt="Atom"
-                width={80}
-                height={21}
-                className="h-5 w-auto"
-                priority
-              />
-            </motion.div>
+            <Image
+              src="/ATOM_blanc.png"
+              alt="Atom"
+              width={60}
+              height={16}
+              className="h-4 w-auto"
+              priority
+            />
           </Link>
 
           {/* Center: Navigation Links */}
@@ -80,9 +74,9 @@ export function PremiumNavbar() {
               Login
             </Link>
 
-            {/* Get Started CTA - Blue like Apple */}
+            {/* Get Started CTA - Blue like Apple, rounded */}
             <Button
-              className="hidden rounded-md bg-[#0071e3] text-white px-4 py-1.5 text-sm font-normal transition-all duration-200 hover:bg-[#0077ed] md:flex"
+              className="hidden rounded-full bg-[#0071e3] text-white px-4 py-1.5 text-sm font-normal transition-all duration-200 hover:bg-[#0077ed] md:flex"
               asChild
             >
               <Link href="/sign-up">Get Started</Link>
@@ -138,9 +132,9 @@ export function PremiumNavbar() {
                   <Image
                     src="/ATOM_blanc.png"
                     alt="Atom"
-                    width={80}
-                    height={21}
-                    className="h-5 w-auto"
+                    width={60}
+                    height={16}
+                    className="h-4 w-auto"
                   />
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
@@ -172,7 +166,7 @@ export function PremiumNavbar() {
 
                 <div className="mt-auto space-y-4">
                   <Button
-                    className="w-full rounded-md bg-[#0071e3] text-white px-4 py-2 text-sm font-normal hover:bg-[#0077ed] transition-colors"
+                    className="w-full rounded-full bg-[#0071e3] text-white px-4 py-2 text-sm font-normal hover:bg-[#0077ed] transition-colors"
                     asChild
                   >
                     <Link href="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>

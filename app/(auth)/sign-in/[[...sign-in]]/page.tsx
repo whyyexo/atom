@@ -106,7 +106,7 @@ export default function SignInPage() {
 
                   <Button
                     type="submit"
-                    className="w-full rounded-full border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-[#000000] dark:bg-white px-8 py-3 text-base font-normal text-white dark:text-black hover:bg-[#333333] dark:hover:bg-[#e0e0e0]"
+                    className="w-full rounded-full bg-[#0071e3] text-white px-8 py-3 text-base font-normal hover:bg-[#0077ed] border-0"
                   >
                     Continue
                   </Button>
