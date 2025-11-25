@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Moon, Sun } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 
 const productLinks = [
@@ -20,7 +20,6 @@ export function PremiumNavbar() {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,17 +44,24 @@ export function PremiumNavbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] py-3"
+          ? "bg-white/80 backdrop-blur-xl border-b border-[rgba(0,0,0,0.08)] py-3"
           : "bg-transparent py-5"
       )}
     >
       <nav className="mx-auto flex max-w-[1180px] items-center justify-between px-6 lg:px-12">
-        <Link href="/" className="text-lg font-bold uppercase tracking-[0.5px] text-[#000000] dark:text-white">
-          ATOM
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/ATOM_noir.png"
+            alt="Atom"
+            width={120}
+            height={32}
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 text-sm font-normal text-[#333333] dark:text-[#cccccc] md:flex">
+        <div className="hidden items-center gap-8 text-sm font-normal text-[#333333] md:flex">
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setIsProductsOpen(!isProductsOpen)}
@@ -76,13 +82,13 @@ export function PremiumNavbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white/95 dark:bg-black/95 backdrop-blur-xl shadow-lg p-2"
+                  className="absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(0,0,0,0.08)] bg-white/95 backdrop-blur-xl shadow-lg p-2"
                 >
                   {productLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.04)]"
+                      className="block rounded-md px-3 py-2 text-sm transition-colors hover:bg-[rgba(0,0,0,0.04)]"
                       onClick={() => setIsProductsOpen(false)}
                     >
                       {link.label}
@@ -102,31 +108,8 @@ export function PremiumNavbar() {
 
         {/* Right side actions */}
         <div className="flex items-center gap-4">
-          {/* Theme Switcher */}
-          <button
-            onClick={toggleTheme}
-            className="hidden items-center justify-center rounded-full border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white/50 dark:bg-black/50 backdrop-blur-sm p-2 transition-all hover:bg-[rgba(0,0,0,0.04)] dark:hover:bg-[rgba(255,255,255,0.04)] md:flex"
-            aria-label="Toggle theme"
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={theme}
-                initial={{ opacity: 0, rotate: -90 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 }}
-              >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4 text-[#000000] dark:text-white" />
-                ) : (
-                  <Moon className="h-4 w-4 text-[#000000] dark:text-white" />
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </button>
-
           <Button
-            className="hidden rounded-full border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-[#000000] dark:bg-white px-6 py-2 text-sm font-normal text-white dark:text-black hover:bg-[#333333] dark:hover:bg-[#e0e0e0] md:flex"
+            className="hidden rounded-full border border-[rgba(0,0,0,0.08)] bg-[#000000] px-6 py-2 text-sm font-normal text-white hover:bg-[#333333] md:flex"
             asChild
           >
             <Link href="/sign-up">Get Started</Link>
@@ -135,7 +118,7 @@ export function PremiumNavbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-[#000000] dark:text-white"
+            className="md:hidden text-[#000000]"
             aria-label="Toggle menu"
           >
             <svg
@@ -164,18 +147,18 @@ export function PremiumNavbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-white/95 dark:bg-black/95 backdrop-blur-xl md:hidden"
+            className="border-t border-[rgba(0,0,0,0.08)] bg-white/95 backdrop-blur-xl md:hidden"
           >
             <div className="mx-auto max-w-[1180px] px-6 py-4 space-y-4">
               <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#666666] dark:text-[#999999]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#666666]">
                   Products
                 </p>
                 {productLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block text-sm font-normal text-[#333333] dark:text-[#cccccc] transition-opacity hover:opacity-60"
+                    className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -184,44 +167,26 @@ export function PremiumNavbar() {
               </div>
               <Link
                 href="/pricing"
-                className="block text-sm font-normal text-[#333333] dark:text-[#cccccc] transition-opacity hover:opacity-60"
+                className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing
               </Link>
               <Link
                 href="/sign-in"
-                className="block text-sm font-normal text-[#333333] dark:text-[#cccccc] transition-opacity hover:opacity-60"
+                className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Login
               </Link>
-              <div className="flex items-center justify-between pt-2">
-                <button
-                  onClick={toggleTheme}
-                  className="flex items-center gap-2 text-sm font-normal text-[#333333] dark:text-[#cccccc]"
-                >
-                  {theme === "dark" ? (
-                    <>
-                      <Sun className="h-4 w-4" />
-                      Light Mode
-                    </>
-                  ) : (
-                    <>
-                      <Moon className="h-4 w-4" />
-                      Dark Mode
-                    </>
-                  )}
-                </button>
-                <Button
-                  className="rounded-full border border-[rgba(0,0,0,0.08)] dark:border-[rgba(255,255,255,0.08)] bg-[#000000] dark:bg-white px-6 py-2 text-sm font-normal text-white dark:text-black hover:bg-[#333333] dark:hover:bg-[#e0e0e0]"
-                  asChild
-                >
-                  <Link href="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
-                    Get Started
-                  </Link>
-                </Button>
-              </div>
+              <Button
+                className="w-full rounded-full border border-[rgba(0,0,0,0.08)] bg-[#000000] px-6 py-2 text-sm font-normal text-white hover:bg-[#333333]"
+                asChild
+              >
+                <Link href="/sign-up" onClick={() => setIsMobileMenuOpen(false)}>
+                  Get Started
+                </Link>
+              </Button>
             </div>
           </motion.div>
         )}
@@ -229,4 +194,3 @@ export function PremiumNavbar() {
     </header>
   );
 }
-
