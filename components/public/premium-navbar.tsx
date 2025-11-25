@@ -44,8 +44,8 @@ export function PremiumNavbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-white/80 backdrop-blur-xl border-b border-[rgba(0,0,0,0.08)] py-3"
-          : "bg-transparent py-5"
+          ? "bg-[rgba(251,251,253,0.8)] backdrop-blur-[20px] border-b border-[rgba(0,0,0,0.05)] py-2"
+          : "bg-[rgba(251,251,253,0.72)] backdrop-blur-[20px] py-2"
       )}
     >
       <nav className="mx-auto flex max-w-[1180px] items-center justify-between px-6 lg:px-12">
@@ -53,15 +53,15 @@ export function PremiumNavbar() {
           <Image
             src="/ATOM_noir.png"
             alt="Atom"
-            width={120}
-            height={32}
-            className="h-8 w-auto"
+            width={80}
+            height={21}
+            className="h-5 w-auto"
             priority
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center gap-8 text-sm font-normal text-[#333333] md:flex">
+        <div className="hidden items-center gap-8 text-sm font-normal text-[#1d1d1f] md:flex">
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setIsProductsOpen(!isProductsOpen)}
@@ -82,7 +82,7 @@ export function PremiumNavbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(0,0,0,0.08)] bg-white/95 backdrop-blur-xl shadow-lg p-2"
+                  className="absolute left-0 top-full mt-2 w-48 rounded-lg border border-[rgba(0,0,0,0.05)] bg-[rgba(251,251,253,0.95)] backdrop-blur-[20px] shadow-lg p-2"
                 >
                   {productLinks.map((link) => (
                     <Link
@@ -118,7 +118,7 @@ export function PremiumNavbar() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-[#000000]"
+            className="md:hidden text-[#1d1d1f]"
             aria-label="Toggle menu"
           >
             <svg
@@ -147,18 +147,18 @@ export function PremiumNavbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-[rgba(0,0,0,0.08)] bg-white/95 backdrop-blur-xl md:hidden"
+            className="border-t border-[rgba(0,0,0,0.05)] bg-[rgba(251,251,253,0.95)] backdrop-blur-[20px] md:hidden"
           >
             <div className="mx-auto max-w-[1180px] px-6 py-4 space-y-4">
               <div className="space-y-2">
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#666666]">
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#86868b]">
                   Products
                 </p>
                 {productLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
+                    className="block text-sm font-normal text-[#1d1d1f] transition-opacity hover:opacity-60"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {link.label}
@@ -167,14 +167,14 @@ export function PremiumNavbar() {
               </div>
               <Link
                 href="/pricing"
-                className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
+                className="block text-sm font-normal text-[#1d1d1f] transition-opacity hover:opacity-60"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Pricing
               </Link>
               <Link
                 href="/sign-in"
-                className="block text-sm font-normal text-[#333333] transition-opacity hover:opacity-60"
+                className="block text-sm font-normal text-[#1d1d1f] transition-opacity hover:opacity-60"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Login
