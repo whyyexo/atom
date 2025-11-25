@@ -78,7 +78,7 @@ export function DashboardSidebar({
       )}
     >
       {/* Top bar with logo, settings, collapse */}
-      <div className="flex h-16 items-center justify-between px-4">
+      <div className="flex h-12 items-center justify-between px-4">
         {!isCollapsed && (
           <Image
             src="/Favicon_noir.png"
@@ -106,7 +106,7 @@ export function DashboardSidebar({
       </div>
 
       {/* Notification/Agenda space - closer to top */}
-      <div className="px-4 pt-2">
+      <div className="px-4">
         <div className="relative rounded-lg border border-black/10 bg-white/50 p-3 space-y-2 border-l-2 border-l-[#0071e3]">
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 text-black/60" />
@@ -120,7 +120,7 @@ export function DashboardSidebar({
       </div>
 
       {/* New button - closer to notification */}
-      <div className="px-4 pt-2 pb-4">
+      <div className="px-4 pt-1 pb-3">
         <button className="w-full rounded-lg bg-[#0071e3] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#0077ed] transition-colors flex items-center justify-center gap-2">
           <Plus className="h-4 w-4" />
           {!isCollapsed && "New"}
@@ -129,7 +129,7 @@ export function DashboardSidebar({
 
       {/* Search */}
       {!isCollapsed && (
-        <div className="px-4 pb-4">
+        <div className="px-4 pb-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40" />
             <input
