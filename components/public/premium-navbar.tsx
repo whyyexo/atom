@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Product", href: "/product" },
   { label: "Pricing", href: "/pricing" },
   { label: "Docs", href: "/docs" },
+  { label: "Science", href: "/science" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -76,7 +77,7 @@ export function PremiumNavbar() {
 
             {/* Get Started CTA - Blue like Apple, rounded */}
             <Button
-              className="hidden rounded-full bg-[#0071e3] text-white px-4 py-1.5 text-sm font-normal transition-all duration-200 hover:bg-[#0077ed] md:flex"
+              className="hidden rounded-full bg-[#0071e3] text-white px-3 py-1 text-xs font-normal transition-all duration-200 hover:bg-[#0077ed] md:flex"
               asChild
             >
               <Link href="/sign-up">Get Started</Link>
