@@ -47,17 +47,17 @@ export function PublicFooter() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-[#000000]">Legal</h3>
             <div className="flex flex-col space-y-3 text-sm font-light text-[#333333]">
-              <Link href="/legal" className="transition-opacity hover:opacity-60">
-                Legal
-              </Link>
               <Link href="/legal/terms" className="transition-opacity hover:opacity-60">
-                Terms
+                Terms of Service
               </Link>
               <Link href="/legal/privacy" className="transition-opacity hover:opacity-60">
-                Privacy
+                Privacy Policy
               </Link>
               <Link href="/legal/cookies" className="transition-opacity hover:opacity-60">
-                Cookies
+                Cookie Policy
+              </Link>
+              <Link href="/legal/acceptable-use" className="transition-opacity hover:opacity-60">
+                Acceptable Use
               </Link>
             </div>
           </div>
@@ -67,7 +67,7 @@ export function PublicFooter() {
             <h3 className="text-sm font-semibold text-[#000000]">Social</h3>
             <div className="flex flex-col space-y-3 text-sm font-light text-[#333333]">
               <a
-                href="https://discord.gg/atom"
+                href="https://discord.gg/8YZBWnF776"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="transition-opacity hover:opacity-60"
