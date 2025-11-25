@@ -35,7 +35,7 @@ export function PremiumNavbar() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
             ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
-            : "bg-transparent"
+            : "bg-black/20 backdrop-blur-sm"
         )}
         style={{
           height: "64px",
