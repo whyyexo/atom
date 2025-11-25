@@ -4,8 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { PricingCard } from "@/components/ui/pricing";
 import { PublicLayout } from "@/components/public/public-layout";
+import { Check } from "lucide-react";
 
 
 const features = [
@@ -197,37 +197,78 @@ function PricingSection() {
           className="rounded-xl flex flex-col justify-between border border-[rgba(0,0,0,0.08)] p-1 bg-white"
         >
           <div className="flex flex-col gap-4 md:flex-row">
-            <PricingCard
-              title="Free"
-              price="$0 / mo"
-              description="Everything you need to get started"
-              buttonVariant="outline"
-              features={[
-                "Unlimited notes and documents",
-                "Up to 3 projects",
-                "Basic AI features",
-                "Community support",
-              ]}
-            />
-            <PricingCard
-              title="Pro"
-              price="$6.99 / mo"
-              description="Unlock AI actions and unlimited projects"
-              buttonVariant="default"
-              highlight
-              features={[
-                "Unlimited notes and documents",
-                "Unlimited projects and workspaces",
-                "Real-time collaboration",
-                "Export to markdown, PDF, and more",
-                "Priority support",
-                "Advanced AI automation",
-                "Unlimited AI actions",
-                "Custom integrations",
-                "Advanced analytics",
-                "Team management",
-              ]}
-            />
+            {/* Free Plan */}
+            <div className="flex flex-col justify-between p-6 space-y-4 flex-1 bg-white rounded-xl border border-[rgba(0,0,0,0.08)]">
+              <div className="space-y-4">
+                <div>
+                  <h2 className="font-medium text-[#000000]">Free</h2>
+                  <span className="my-3 block text-2xl font-semibold text-[#000000]">$0 / mo</span>
+                  <p className="text-sm font-light text-[#000000]">Everything you need to get started</p>
+                </div>
+                <Button
+                  asChild
+                  className="w-full rounded-full border border-[rgba(0,0,0,0.08)] bg-transparent text-[#000000] hover:bg-[rgba(0,0,0,0.04)]"
+                  variant="outline"
+                >
+                  <Link href="/sign-up">Get Started</Link>
+                </Button>
+              </div>
+              <ul className="border-t border-[rgba(0,0,0,0.08)] pt-4 list-outside space-y-3 text-sm">
+                {[
+                  "Unlimited notes and documents",
+                  "Up to 3 projects",
+                  "Basic AI features",
+                  "Community support",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-2 text-[#000000]">
+                    <Check className="size-3 text-[#000000]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Pro Plan */}
+            <div className="flex flex-col justify-between p-6 space-y-4 w-full md:w-1/2 bg-white rounded-xl border border-[rgba(0,0,0,0.08)]">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="font-medium text-[#000000]">Pro</h2>
+                    <span className="my-3 block text-2xl font-semibold text-[#000000]">$6.99 / mo</span>
+                    <p className="text-sm font-light text-[#000000]">Unlock AI actions and unlimited projects</p>
+                  </div>
+                  <Button
+                    asChild
+                    className="w-full rounded-full bg-[#0071e3] text-white hover:bg-[#0077ed] border-0"
+                    variant="default"
+                  >
+                    <Link href="/sign-up">Get Started</Link>
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-medium text-[#000000]">Everything in Free, plus:</div>
+              </div>
+              <ul className="mt-4 list-outside space-y-3 text-sm">
+                {[
+                  "Unlimited notes and documents",
+                  "Unlimited projects and workspaces",
+                  "Real-time collaboration",
+                  "Export to markdown, PDF, and more",
+                  "Priority support",
+                  "Advanced AI automation",
+                  "Unlimited AI actions",
+                  "Custom integrations",
+                  "Advanced analytics",
+                  "Team management",
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-2 text-[#000000]">
+                    <Check className="size-3 text-[#000000]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </motion.div>
       </div>
