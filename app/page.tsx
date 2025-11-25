@@ -276,12 +276,12 @@ function PricingSection() {
         <div className="mt-12 flex items-center justify-center gap-3 border-t border-[#e5e5e5] pt-6">
           <Heart className="h-4 w-4 text-[#000000]" />
           <p className="text-sm font-light text-[#000000]">
-            <span className="text-[#0071e3]">2%</span> of all revenue is donated to social and{" "}
+            <span className="text-[#0071e3]">2%</span> of all revenue is donated to{" "}
             <Link
               href="/impact"
               className="text-[#0071e3] underline decoration-[#0071e3] underline-offset-2 hover:text-[#0077ed] transition-colors"
             >
-              educational organizations
+              social and educational organizations
             </Link>
             .
           </p>
