@@ -64,7 +64,7 @@ export function PremiumNavbar() {
                   "transition-colors duration-200",
                   isScrolled
                     ? "text-[#000000]/80 hover:text-[#000000]"
-                    : "text-white/80 hover:text-white"
+                    : "text-white hover:text-white drop-shadow-sm"
                 )}
               >
                 {link.label}
@@ -81,7 +81,7 @@ export function PremiumNavbar() {
                 "hidden rounded-full px-6 py-2 text-sm font-normal transition-all duration-200 md:block",
                 isScrolled
                   ? "bg-[#0071e3] text-white hover:bg-[#0077ed]"
-                  : "bg-white/10 text-white backdrop-blur-sm border border-white/20 hover:bg-white/20"
+                  : "bg-white/20 text-white backdrop-blur-sm border border-white/30 hover:bg-white/30 shadow-sm"
               )}
             >
               Sign in
