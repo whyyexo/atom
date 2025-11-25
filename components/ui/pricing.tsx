@@ -40,7 +40,7 @@ export function PricingCard({
             className={cn(
               "w-full rounded-full",
               buttonVariant === "default" 
-                ? "bg-[#000000] text-white hover:bg-[#333333] border border-[rgba(0,0,0,0.08)]"
+                ? "bg-[#0071e3] text-white hover:bg-[#0077ed] border-0"
                 : "border border-[rgba(0,0,0,0.08)] bg-transparent text-[#000000] hover:bg-[rgba(0,0,0,0.04)]"
             )}
             variant={buttonVariant}

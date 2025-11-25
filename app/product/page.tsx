@@ -88,7 +88,7 @@ export default function ProductPage() {
               </p>
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button
-                  className="rounded-full border border-[rgba(0,0,0,0.08)] bg-[#000000] px-8 py-3 text-base font-normal text-white hover:bg-[#333333]"
+                  className="rounded-full bg-[#0071e3] px-8 py-3 text-base font-normal text-white hover:bg-[#0077ed] border-0"
                   asChild
                 >
                   <Link href="/sign-up">Get Started</Link>
