@@ -70,7 +70,7 @@ export function PremiumNavbar() {
             {/* Sign In */}
             <Link
               href="/sign-in"
-              className="hidden text-sm font-normal text-[#0071e3] hover:text-[#0077ed] transition-colors duration-200 relative md:block after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#0071e3] hover:after:w-full after:transition-all after:duration-200"
+              className="hidden text-sm font-normal text-white/80 hover:text-[#0071e3] transition-colors duration-200 md:block"
             >
               Sign in
             </Link>
@@ -159,7 +159,7 @@ export function PremiumNavbar() {
                   <Link
                     href="/sign-in"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-lg font-normal text-[#0071e3] hover:text-[#0077ed] transition-colors"
+                    className="text-lg font-normal text-white/80 hover:text-[#0071e3] transition-colors"
                   >
                     Sign in
                   </Link>

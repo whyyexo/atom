@@ -5,6 +5,7 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { Heart } from "lucide-react";
 import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export default function PricingPage() {
   const { theme } = useTheme();
@@ -82,14 +83,16 @@ export default function PricingPage() {
               isDark ? "border-white/10" : "border-[#e5e5e5]"
             )}
           >
-            <Heart className={cn("h-4 w-4", isDark ? "text-white/60" : "text-[#666666]")} />
-            <p
-              className={cn(
-                "text-sm font-light",
-                isDark ? "text-white/60" : "text-[#666666]"
-              )}
-            >
-              5% of all revenue is donated to social and educational organizations.
+            <Heart className="h-4 w-4 text-[#000000]" />
+            <p className="text-sm font-light text-[#000000]">
+              <span className="text-[#0071e3]">5%</span> of all revenue is donated to social and{" "}
+              <Link
+                href="/impact"
+                className="text-[#0071e3] underline decoration-[#0071e3] underline-offset-2 hover:text-[#0077ed] transition-colors"
+              >
+                educational organizations
+              </Link>
+              .
             </p>
           </div>
         </div>
