@@ -160,19 +160,22 @@ function KanbanView({
                   key={task.id}
                   initial={{ opacity: 0, scale: 0.97 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  draggable
-                  onDragStart={(e) => handleDragStart(e, task.id)}
-                  className="rounded-lg border border-black/5 dark:border-white/5 bg-white dark:bg-black/50 p-3 shadow-sm hover:shadow-md transition-all duration-150 cursor-move"
                 >
-                  <div className="flex items-start gap-2 mb-2">
-                    <div
-                      className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5", priorityColors[task.priority])}
-                    />
-                    <p className="text-sm font-medium text-black dark:text-white flex-1">{task.title}</p>
+                  <div
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, task.id)}
+                    className="rounded-lg border border-black/5 dark:border-white/5 bg-white dark:bg-black/50 p-3 shadow-sm hover:shadow-md transition-all duration-150 cursor-move"
+                  >
+                    <div className="flex items-start gap-2 mb-2">
+                      <div
+                        className={cn("w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5", priorityColors[task.priority])}
+                      />
+                      <p className="text-sm font-medium text-black dark:text-white flex-1">{task.title}</p>
+                    </div>
+                    {task.dueDate && (
+                      <p className="text-xs text-black/50 dark:text-white/50">{task.dueDate}</p>
+                    )}
                   </div>
-                  {task.dueDate && (
-                    <p className="text-xs text-black/50 dark:text-white/50">{task.dueDate}</p>
-                  )}
                 </motion.div>
               ))}
               {columnTasks.length === 0 && (
