@@ -1,7 +1,7 @@
 "use client";
 
 import { Command } from "cmdk";
-import { Search, Home, FolderKanban, CheckSquare, Calendar, FileText, Users, Settings } from "lucide-react";
+import { Search, Home, FolderKanban, CheckSquare, Calendar, FileText, Users, Settings, BarChart3, Bell } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,6 +18,8 @@ const commands = [
   { id: "tasks", label: "Go to Tasks", icon: CheckSquare, href: "/dashboard/tasks" },
   { id: "calendar", label: "Go to Calendar", icon: Calendar, href: "/dashboard/calendar" },
   { id: "notes", label: "Go to Notes", icon: FileText, href: "/dashboard/notes" },
+  { id: "analytics", label: "Go to Analytics", icon: BarChart3, href: "/dashboard/analytics" },
+  { id: "notifications", label: "Go to Notifications", icon: Bell, href: "/dashboard/notifications" },
   { id: "team", label: "Go to Team", icon: Users, href: "/dashboard/team" },
   { id: "settings", label: "Go to Settings", icon: Settings, href: "/dashboard/settings" },
 ];

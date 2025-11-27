@@ -13,6 +13,8 @@ import {
   User,
   LogOut,
   ChevronDown,
+  BarChart3,
+  Bell,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,6 +35,8 @@ const mainNav = [
   { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
   { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
   { name: "Notes", href: "/dashboard/notes", icon: FileText },
+  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+  { name: "Notifications", href: "/dashboard/notifications", icon: Bell },
 ];
 
 const systemNav = [
@@ -192,14 +196,22 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                 transition={{ duration: 0.15 }}
                 className="absolute bottom-full left-0 right-0 mb-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-[#0a0a0a] shadow-lg p-1 space-y-0.5"
               >
-                <button className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left">
+                <Link
+                  href="/dashboard/settings"
+                  onClick={() => setIsUserMenuOpen(false)}
+                  className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
+                >
                   <User className="h-4 w-4" />
                   Profile
-                </button>
-                <button className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left">
+                </Link>
+                <Link
+                  href="/dashboard/settings"
+                  onClick={() => setIsUserMenuOpen(false)}
+                  className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
+                >
                   <Settings className="h-4 w-4" />
                   Settings
-                </button>
+                </Link>
                 <div className="border-t border-black/10 dark:border-white/10 my-1" />
                 {onSignOut && (
                   <button

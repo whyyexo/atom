@@ -62,7 +62,13 @@ export default function NotesPage() {
               Capture and organize your thoughts
             </p>
           </div>
-          <button className="flex items-center gap-2 rounded-lg bg-black dark:bg-white text-white dark:text-black px-4 py-2 text-sm font-medium hover:bg-black/90 dark:hover:bg-white/90 transition-all duration-150">
+          <button
+            onClick={() => {
+              // TODO: Open create note modal
+              console.log("Create note clicked");
+            }}
+            className="flex items-center gap-2 rounded-lg bg-black dark:bg-white text-white dark:text-black px-4 py-2 text-sm font-medium hover:bg-black/90 dark:hover:bg-white/90 transition-all duration-150"
+          >
             <Plus className="h-4 w-4" />
             New Note
           </button>

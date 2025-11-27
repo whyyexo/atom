@@ -78,14 +78,20 @@ export default function DashboardPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 pt-2">
-                    <button className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-150">
+                    <Link
+                      href="/dashboard/tasks"
+                      className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-150"
+                    >
                       <Plus className="h-4 w-4" />
                       Add Task
-                    </button>
-                    <button className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-150">
+                    </Link>
+                    <Link
+                      href="/dashboard/projects"
+                      className="flex items-center gap-2 rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-4 py-2 text-sm font-medium text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-150"
+                    >
                       <Plus className="h-4 w-4" />
                       Add Project
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
