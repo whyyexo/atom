@@ -28,6 +28,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (typeof document === "undefined") return;
     document.documentElement.classList.remove("light", "dark");
     document.documentElement.classList.add(theme);
+    document.documentElement.setAttribute("data-theme", theme);
     window.localStorage.setItem("atom-theme", theme);
   }, [theme]);
 
