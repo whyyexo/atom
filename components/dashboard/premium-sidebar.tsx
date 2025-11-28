@@ -6,7 +6,6 @@ import {
   CheckSquare,
   Calendar,
   FileText,
-  Users,
   Settings,
   Moon,
   Sun,
@@ -27,28 +26,28 @@ type PremiumSidebarProps = {
   userEmail?: string;
   userName?: string;
   onSignOut?: () => void;
+  workspaceSlug?: string;
 };
 
-const mainNav = [
-  { name: "Home", href: "/dashboard", icon: Home },
-  { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-  { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
-  { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
-  { name: "Notes", href: "/dashboard/notes", icon: FileText },
-  { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-  { name: "Notifications", href: "/dashboard/notifications", icon: Bell },
-];
-
 const systemNav = [
-  { name: "Team", href: "/dashboard/team", icon: Users },
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
+  { name: "Settings", href: "/workspace/[slug]/settings", icon: Settings },
 ];
 
-export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User", onSignOut }: PremiumSidebarProps) {
+export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User", onSignOut, workspaceSlug = "[slug]" }: PremiumSidebarProps) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
+
+  const mainNav = [
+    { name: "Home", href: `/workspace/${workspaceSlug}`, icon: Home },
+    { name: "Projects", href: `/workspace/${workspaceSlug}/projects`, icon: FolderKanban },
+    { name: "Tasks", href: `/workspace/${workspaceSlug}/tasks`, icon: CheckSquare },
+    { name: "Calendar", href: `/workspace/${workspaceSlug}/calendar`, icon: Calendar },
+    { name: "Notes", href: `/workspace/${workspaceSlug}/notes`, icon: FileText },
+    { name: "Analytics", href: `/workspace/${workspaceSlug}/analytics`, icon: BarChart3 },
+    { name: "Notifications", href: `/workspace/${workspaceSlug}/notifications`, icon: Bell },
+  ];
 
   const initials = userName
     .split(" ")
@@ -83,7 +82,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
     <aside className="fixed inset-y-0 left-0 z-50 w-[280px] flex flex-col border-r border-black/5 dark:border-white/5 bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl">
       {/* Logo */}
       <div className="flex h-16 items-center px-6">
-        <Link href="/dashboard" className="text-base font-semibold tracking-tight text-black dark:text-white">
+        <Link href={`/workspace/${workspaceSlug}`} className="text-base font-semibold tracking-tight text-black dark:text-white">
           Atom
         </Link>
       </div>
@@ -99,7 +98,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
           </div>
           <div className="space-y-0.5">
             {mainNav.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
               const Icon = item.icon;
               return (
                 <Link
@@ -128,12 +127,12 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
           </div>
           <div className="space-y-0.5">
             {systemNav.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname === item.href.replace("[slug]", workspaceSlug) || pathname.startsWith(item.href.replace("[slug]", workspaceSlug) + "/");
               const Icon = item.icon;
               return (
                 <Link
                   key={item.name}
-                  href={item.href}
+                  href={item.href.replace("[slug]", workspaceSlug)}
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
                     "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
@@ -197,7 +196,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                 className="absolute bottom-full left-0 right-0 mb-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-[#0a0a0a] shadow-lg p-1 space-y-0.5"
               >
                 <Link
-                  href="/dashboard/settings"
+                  href={`/workspace/${workspaceSlug}/settings`}
                   onClick={() => setIsUserMenuOpen(false)}
                   className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
                 >
@@ -205,7 +204,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                   Profile
                 </Link>
                 <Link
-                  href="/dashboard/settings"
+                  href={`/workspace/${workspaceSlug}/settings`}
                   onClick={() => setIsUserMenuOpen(false)}
                   className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
                 >
