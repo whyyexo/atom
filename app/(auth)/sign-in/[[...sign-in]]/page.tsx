@@ -24,12 +24,16 @@ export default function SignInPage() {
     setErrorMessage("");
 
     try {
+      // Get the redirect URL from environment or use current origin
+      const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                         (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+      
       // Send magic link (will create user if doesn't exist)
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
           shouldCreateUser: true,
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${redirectUrl}/auth/callback`,
         },
       });
 

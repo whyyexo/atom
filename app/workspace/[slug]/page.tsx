@@ -2,7 +2,9 @@ import { redirect } from "next/navigation";
 import { createServerClient } from "@/lib/supabase/server";
 import { DashboardHome } from "@/components/workspace/dashboard-home";
 
-export default async function WorkspacePage({ params }: { params: { slug: string } }) {
+export default async function WorkspacePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  
   const supabase = createServerClient();
   const {
     data: { user },
@@ -15,7 +17,7 @@ export default async function WorkspacePage({ params }: { params: { slug: string
   const { data: workspace } = await supabase
     .from("workspaces")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .eq("user_id", user.id)
     .single();
 

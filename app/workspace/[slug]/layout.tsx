@@ -8,8 +8,10 @@ export default async function WorkspaceLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const { slug } = await params;
+  
   const supabase = createServerClient();
   const {
     data: { user },
@@ -19,7 +21,7 @@ export default async function WorkspaceLayout({
     redirect("/login");
   }
 
-  const workspace = await getWorkspaceBySlug(params.slug);
+  const workspace = await getWorkspaceBySlug(slug);
 
   if (!workspace || workspace.user_id !== user.id) {
     redirect("/login");
