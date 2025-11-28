@@ -2,6 +2,7 @@ import { createServerClient as createSSRClient, type CookieOptions } from "@supa
 import { cookies } from "next/headers";
 
 export function createServerClient() {
+  // In Next.js route handlers and server components, cookies() returns ReadonlyRequestCookies synchronously
   const cookieStore = cookies();
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -14,18 +15,18 @@ export function createServerClient() {
   return createSSRClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       get(name: string) {
-        return cookieStore.get(name)?.value;
+        return (cookieStore as any).get(name)?.value;
       },
       set(name: string, value: string, options: CookieOptions) {
         try {
-          cookieStore.set({ name, value, ...options });
+          (cookieStore as any).set({ name, value, ...options });
         } catch (error) {
-          // Handle cookie setting errors
+          // Handle cookie setting errors (e.g., in middleware)
         }
       },
       remove(name: string, options: CookieOptions) {
         try {
-          cookieStore.set({ name, value: "", ...options });
+          (cookieStore as any).set({ name, value: "", ...options });
         } catch (error) {
           // Handle cookie removal errors
         }
