@@ -22,10 +22,19 @@ export default function LoginPage() {
       const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || 
                          (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
       
+      // Ensure we have the full URL with protocol
+      const fullRedirectUrl = redirectUrl.startsWith('http') 
+        ? redirectUrl 
+        : `http://${redirectUrl}`;
+      
+      const callbackUrl = `${fullRedirectUrl}/auth/callback`;
+      
+      console.log('🔗 Magic link redirect URL:', callbackUrl);
+      
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${redirectUrl}/auth/callback`,
+          emailRedirectTo: callbackUrl,
         },
       });
 
