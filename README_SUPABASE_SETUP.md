@@ -27,9 +27,12 @@ Create a `.env.local` file in the project root:
 NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
 Get these values from: Supabase Dashboard > Settings > API
+
+**Note:** `NEXT_PUBLIC_SITE_URL` is optional but recommended. It defaults to `window.location.origin` if not set. Set it to your production domain when deploying.
 
 ## Step 4: Install Dependencies
 
@@ -51,12 +54,19 @@ Alternatively, use the Node.js seed script:
 node supabase/seed.js
 ```
 
-## Step 6: Configure Auth Callback URL
+## Step 6: Configure Auth Callback URL (IMPORTANT!)
 
 1. Go to Supabase Dashboard > Authentication > URL Configuration
-2. Add to Redirect URLs:
-   - `http://localhost:3000/auth/callback` (for development)
-   - `https://your-domain.com/auth/callback` (for production)
+2. In the **Redirect URLs** section, add these URLs:
+   - `http://localhost:3000/auth/callback` (for local development)
+   - `http://localhost:3000/**` (wildcard for all localhost routes)
+   - `https://your-domain.com/auth/callback` (for production - replace with your actual domain)
+3. In the **Site URL** field, set:
+   - Development: `http://localhost:3000`
+   - Production: `https://your-domain.com`
+4. **Save** the configuration
+
+**Note:** The redirect URLs must match exactly what's in the magic link email. If you're developing locally, make sure `http://localhost:3000/auth/callback` is in the allowed list.
 
 ## Step 7: Run Development Server
 
@@ -117,10 +127,16 @@ supabase/
 - Verify RLS policies are enabled
 - Check that user_id matches in workspaces table
 
-### Auth callback not working
+### Auth callback not working / Redirects to localhost
+- **IMPORTANT:** Go to Supabase Dashboard > Authentication > URL Configuration
+- Add `http://localhost:3000/auth/callback` to Redirect URLs (if developing locally)
+- Make sure the URL matches exactly (including http vs https, port number)
+- Check Site URL is set to `http://localhost:3000` for development
 - Verify callback URL is added in Supabase Auth settings
 - Check that middleware.ts is properly configured
 - Ensure cookies are enabled in your browser
+- Try clearing browser cache and cookies
+- Check browser console for errors
 
 ## Production Deployment
 

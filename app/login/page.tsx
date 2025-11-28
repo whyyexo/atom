@@ -18,10 +18,14 @@ export default function LoginPage() {
     setMessage("");
 
     try {
+      // Get the redirect URL from environment or use current origin
+      const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || 
+                         (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+      
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          emailRedirectTo: `${redirectUrl}/auth/callback`,
         },
       });
 
