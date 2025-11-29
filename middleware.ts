@@ -92,7 +92,7 @@ export async function middleware(request: NextRequest) {
   ];
 
   // Legacy auth routes - redirect to new auth page
-  const legacyAuthRoutes = ["/login", "/sign-in", "/sign-up", "/register", "/auth/login", "/auth/register"];
+  const legacyAuthRoutes = ["/login", "/sign-in", "/sign-up", "/register"];
 
   // Check if route is public
   const isPublicRoute = publicRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
