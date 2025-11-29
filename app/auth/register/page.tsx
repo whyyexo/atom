@@ -119,7 +119,7 @@ function RegisterPageContent() {
           errorMsg.includes("user already exists") ||
           errorMsg.includes("email already registered")
         ) {
-          router.push(`/auth/login?email=${encodeURIComponent(email)}`);
+          window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
           return;
         }
         
@@ -127,25 +127,44 @@ function RegisterPageContent() {
         return;
       }
 
-      // If session exists, user is automatically verified
+      // Check if we have a session (user is logged in)
       if (data.session && data.user) {
+        // User is automatically logged in, redirect to dashboard
         window.location.href = "/dashboard";
         return;
       }
 
-      // If user was created but no session (email confirmation required)
+      // If user was created but no session, try to sign in immediately
       if (data.user && !data.session) {
-        setLoading(false);
-        setError("");
-        // Show success message
-        alert("Account created! Please check your email to verify your account.");
-        router.push("/auth/email");
+        // Try to sign in to get session
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) {
+          setLoading(false);
+          setError("Account created but failed to sign in. Please try signing in manually.");
+          return;
+        }
+
+        if (signInData.session && signInData.user) {
+          // Successfully signed in, redirect to dashboard
+          window.location.href = "/dashboard";
+          return;
+        }
+      }
+
+      // Fallback - try to get current session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        window.location.href = "/dashboard";
         return;
       }
 
-      // Fallback
+      // If still no session, show error
       setLoading(false);
-      setError("Account created but something went wrong. Please try signing in.");
+      setError("Account created but failed to sign in. Please try signing in manually.");
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
