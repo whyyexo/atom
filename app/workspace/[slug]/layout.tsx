@@ -18,13 +18,13 @@ export default async function WorkspaceLayout({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect("/auth/login");
   }
 
   const workspace = await getWorkspaceBySlug(slug);
 
   if (!workspace || workspace.user_id !== user.id) {
-    redirect("/login");
+    redirect("/auth/login");
   }
 
   return (
