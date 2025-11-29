@@ -18,7 +18,7 @@ const plans = [
       "Community support",
     ],
     cta: "Get Started",
-    href: "/sign-up",
+    href: "/signup",
     featured: false,
   },
   {
@@ -36,7 +36,7 @@ const plans = [
       "Early access to new features",
     ],
     cta: "Start Free Trial",
-    href: "/sign-up",
+    href: "/signup",
     featured: true,
   },
 ];

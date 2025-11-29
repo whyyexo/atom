@@ -10,7 +10,7 @@ const navLinks = [
   { label: "Features", href: "/features" },
   { label: "Pricing", href: "/pricing" },
   { label: "Docs", href: "/docs" },
-  { label: "Login", href: "/sign-in" },
+  { label: "Login", href: "/login" },
 ];
 
 export function PublicNavigation() {
@@ -52,7 +52,7 @@ export function PublicNavigation() {
             className="hidden rounded-full border border-[rgba(0,0,0,0.08)] bg-transparent px-6 py-2 text-sm font-normal text-[#000000] hover:bg-[rgba(0,0,0,0.04)] md:flex"
             asChild
           >
-            <Link href="/sign-up">Get Atom</Link>
+            <Link href="/signup">Get Atom</Link>
           </Button>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

@@ -54,7 +54,7 @@ export function Shell({ children }: ShellProps) {
 
       if (!isMounted) return;
       if (!user) {
-        router.replace("/sign-in");
+        router.replace("/login");
         return;
       }
 
@@ -68,7 +68,7 @@ export function Shell({ children }: ShellProps) {
       if (!isMounted) return;
 
       if (!session?.user) {
-        router.replace("/sign-in");
+        router.replace("/login");
         return;
       }
 

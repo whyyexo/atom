@@ -91,7 +91,7 @@ export default function ProductPage() {
                   className="rounded-full bg-[#0071e3] px-8 py-3 text-base font-normal text-white hover:bg-[#0077ed] border-0"
                   asChild
                 >
-                  <Link href="/sign-up">Get Started</Link>
+                  <Link href="/signup">Get Started</Link>
                 </Button>
                 <Button
                   variant="outline"

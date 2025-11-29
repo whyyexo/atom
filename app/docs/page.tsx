@@ -35,7 +35,7 @@ Atom is designed to help you think clearly and work efficiently. It brings toget
 
 ## Create an Account
 
-1. Visit the [sign up page](/sign-up)
+1. Visit the [sign up page](/signup)
 2. Enter your email address
 3. Check your inbox for a magic link
 4. Click the link to activate your account
