@@ -157,7 +157,7 @@ function LoginPageContent() {
                   <div className="text-center">
                     <Link
                       href="/auth/reset-password"
-                      className="text-[#0A84FF] text-[17px] font-medium hover:opacity-80 transition-opacity"
+                      className="text-[#0071e3] text-[17px] font-medium hover:opacity-80 transition-opacity"
                     >
                       Forgot password?
                     </Link>
@@ -177,7 +177,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <div className="h-8 w-8 border-2 border-[#0A84FF] border-t-transparent rounded-full animate-spin" />
+          <div className="h-8 w-8 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

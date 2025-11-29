@@ -26,11 +26,11 @@ export const IOSButton = forwardRef<HTMLButtonElement, IOSButtonProps>(
           "disabled:cursor-not-allowed disabled:opacity-50",
           "flex items-center justify-center",
           variant === "primary" && [
-            "bg-[#0A84FF] text-white",
-            "shadow-[0_4px_14px_rgba(10,132,255,0.39)]",
-            "hover:bg-[#0A84FF]/90",
-            "active:bg-[#0A84FF]/80",
-            "focus:ring-[#0A84FF]/50",
+            "bg-[#0071e3] text-white",
+            "shadow-[0_4px_14px_rgba(0,113,227,0.25)]",
+            "hover:bg-[#0077ed]",
+            "active:bg-[#0071e3]",
+            "focus:ring-[#0071e3]/50",
           ],
           variant === "secondary" && [
             "bg-[rgba(255,255,255,0.2)] text-gray-900",
@@ -40,9 +40,9 @@ export const IOSButton = forwardRef<HTMLButtonElement, IOSButtonProps>(
             "active:bg-[rgba(255,255,255,0.25)]",
           ],
           variant === "ghost" && [
-            "text-[#0A84FF]",
-            "hover:bg-[rgba(10,132,255,0.1)]",
-            "active:bg-[rgba(10,132,255,0.15)]",
+            "text-[#0071e3]",
+            "hover:bg-[rgba(0,113,227,0.1)]",
+            "active:bg-[rgba(0,113,227,0.15)]",
           ],
           className
         )}

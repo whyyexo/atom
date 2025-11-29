@@ -362,7 +362,7 @@ export default function RegisterPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <div className="h-8 w-8 border-2 border-[#0A84FF] border-t-transparent rounded-full animate-spin" />
+          <div className="h-8 w-8 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

@@ -18,6 +18,43 @@ function EmailPageContent() {
   const [error, setError] = useState("");
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
+  const checkUserExists = async (email: string): Promise<boolean> => {
+    try {
+      // Try to sign in with an invalid password
+      // Supabase returns "Invalid login credentials" for both wrong password AND non-existent user (security)
+      // But "Email not confirmed" definitely means user exists
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password: "check_user_exists_dummy_password_12345!@#$%",
+      });
+
+      if (signInError) {
+        const errorMsg = signInError.message.toLowerCase();
+        
+        // "Email not confirmed" definitely means user exists
+        if (errorMsg.includes("email not confirmed") || errorMsg.includes("email address not confirmed")) {
+          return true;
+        }
+        
+        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
+        // For security, Supabase doesn't distinguish between these
+        // We'll assume user exists if we get this error (better to redirect to login than create duplicate)
+        if (errorMsg.includes("invalid login credentials") || errorMsg.includes("incorrect password")) {
+          return true; // Likely exists - redirect to login
+        }
+        
+        // Other errors might mean user doesn't exist
+        return false;
+      }
+
+      // No error (shouldn't happen with dummy password) - assume user doesn't exist
+      return false;
+    } catch (err) {
+      // On any error, assume user doesn't exist to avoid blocking new users
+      return false;
+    }
+  };
+
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -29,15 +66,24 @@ function EmailPageContent() {
       return;
     }
 
-    // Show loading shimmer
-    await new Promise(resolve => setTimeout(resolve, 600));
-    
-    // Don't check if user exists - let the registration/login flow handle it
-    // This avoids the 400 error from Supabase
-    // User will be redirected appropriately based on whether account exists
-    // Use window.location for immediate redirect
-    const redirectUrl = `/auth/register?email=${encodeURIComponent(email)}`;
-    window.location.href = redirectUrl;
+    try {
+      // Show loading shimmer
+      await new Promise(resolve => setTimeout(resolve, 600));
+      
+      // Check if user exists
+      const userExists = await checkUserExists(email);
+      
+      if (userExists) {
+        // User exists - redirect to login
+        window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
+      } else {
+        // New user - redirect to register
+        window.location.href = `/auth/register?email=${encodeURIComponent(email)}`;
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+      setLoading(false);
+    }
   };
 
   const handleSocialLogin = async (provider: "apple" | "google" | "github") => {
@@ -164,7 +210,7 @@ export default function EmailPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <div className="h-8 w-8 border-2 border-[#0A84FF] border-t-transparent rounded-full animate-spin" />
+          <div className="h-8 w-8 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >
