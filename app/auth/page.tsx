@@ -105,9 +105,14 @@ function AuthPageContent() {
 
       if (data.user) {
         const redirect = searchParams.get("redirect");
-        router.push(redirect || "/dashboard");
-        router.refresh();
+        // Use window.location for immediate redirect
+        window.location.href = redirect || "/dashboard";
+        return;
       }
+      
+      // If no user but no error, something went wrong
+      setLoading(false);
+      setError("Something went wrong. Please try again.");
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
@@ -146,23 +151,40 @@ function AuthPageContent() {
       });
 
       if (signUpError) {
-        setError(signUpError.message || "Failed to create account");
+        const errorMsg = signUpError.message.toLowerCase();
         setLoading(false);
+        
+        // If email already exists, offer to sign in instead
+        if (
+          errorMsg.includes("already registered") ||
+          errorMsg.includes("user already exists") ||
+          errorMsg.includes("email already registered")
+        ) {
+          setError("This email is already registered. Please sign in instead.");
+          // Extract name from email for sign in
+          const name = extractNameFromEmail(email);
+          setUserDisplayName(name);
+          setIsExistingUser(true);
+          setStep("password");
+          return;
+        }
+        
+        setError(signUpError.message || "Failed to create account");
         return;
       }
 
       // If session exists, user is automatically verified
       if (data.session) {
         const redirect = searchParams.get("redirect");
-        router.push(redirect || "/dashboard");
-        router.refresh();
+        // Use window.location for immediate redirect
+        window.location.href = redirect || "/dashboard";
         return;
       }
 
       // Otherwise, show success and redirect
       const redirect = searchParams.get("redirect");
-      router.push(redirect || "/dashboard");
-      router.refresh();
+      // Use window.location for immediate redirect
+      window.location.href = redirect || "/dashboard";
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
