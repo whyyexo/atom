@@ -29,19 +29,15 @@ function EmailPageContent() {
       return;
     }
 
-    try {
-      // Show loading shimmer
-      await new Promise(resolve => setTimeout(resolve, 600));
-      
-      // Don't check if user exists - let the registration/login flow handle it
-      // This avoids the 400 error from Supabase
-      // User will be redirected appropriately based on whether account exists
-      // Use window.location for immediate redirect
-      window.location.href = `/auth/register?email=${encodeURIComponent(email)}`;
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-      setLoading(false);
-    }
+    // Show loading shimmer
+    await new Promise(resolve => setTimeout(resolve, 600));
+    
+    // Don't check if user exists - let the registration/login flow handle it
+    // This avoids the 400 error from Supabase
+    // User will be redirected appropriately based on whether account exists
+    // Use window.location for immediate redirect
+    const redirectUrl = `/auth/register?email=${encodeURIComponent(email)}`;
+    window.location.href = redirectUrl;
   };
 
   const handleSocialLogin = async (provider: "apple" | "google" | "github") => {
