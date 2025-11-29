@@ -48,42 +48,6 @@ function AuthPageContent() {
     return username.charAt(0).toUpperCase() + username.slice(1).split(/[._-]/)[0];
   };
 
-  const checkEmailExists = async (email: string): Promise<boolean> => {
-    try {
-      // Try to sign in with an invalid password
-      // Supabase doesn't reveal if user exists for security, but we can check specific errors
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password: "invalid_check_password_12345!@#$",
-      });
-
-      if (signInError) {
-        const errorMsg = signInError.message.toLowerCase();
-        
-        // These errors definitely mean user exists:
-        if (
-          errorMsg.includes("email not confirmed") ||
-          errorMsg.includes("email address not confirmed")
-        ) {
-          return true;
-        }
-        
-        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
-        // For security, Supabase doesn't distinguish between these
-        // We'll be conservative and assume user doesn't exist
-        // User will get proper error message when they try to sign in with real password
-        return false;
-      }
-      
-      // Shouldn't happen with invalid password, but if it does, assume user doesn't exist
-      return false;
-    } catch (err) {
-      // On error, assume user doesn't exist
-      console.error("Error checking email:", err);
-      return false;
-    }
-  };
-
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -95,24 +59,13 @@ function AuthPageContent() {
       return;
     }
 
-    try {
-      const exists = await checkEmailExists(email);
-      setIsExistingUser(exists);
-      
-      if (exists) {
-        // Existing user - extract name from email for display
-        const name = extractNameFromEmail(email);
-        setUserDisplayName(name);
-        setStep("password");
-      } else {
-        // New user - go to name step
-        setStep("name");
-      }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    // Don't check if email exists - let the user proceed
+    // If they're creating an account and email exists, they'll get an error at signup
+    // If they're signing in and email doesn't exist, they'll get an error at signin
+    // For now, default to new user flow (name step)
+    // User can always go back if they meant to sign in
+    setStep("name");
+    setLoading(false);
   };
 
   const handleNameSubmit = async (e: React.FormEvent) => {
@@ -268,6 +221,11 @@ function AuthPageContent() {
             {step === "password" && "Enter your password"}
             {step === "create-password" && "Create your password"}
           </p>
+          {step === "email" && (
+            <p className="text-sm text-gray-500 font-light mt-2">
+              New here? We'll create an account for you.
+            </p>
+          )}
         </div>
 
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 sm:p-10">
