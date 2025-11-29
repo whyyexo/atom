@@ -27,7 +27,7 @@ export function CTA() {
 
           <div className="pt-4">
             <Button asChild size="lg" className="rounded-xl h-12 px-8 text-[15px] font-medium bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link href="/sign-up">
+              <Link href="/signup">
                 Get started
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>

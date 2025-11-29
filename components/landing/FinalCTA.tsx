@@ -59,7 +59,7 @@ export function FinalCTA() {
               size="lg"
               className="group h-14 px-10 text-lg font-medium rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transition-all"
             >
-              <Link href="/sign-up">
+              <Link href="/signup">
                 Start your flow
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
