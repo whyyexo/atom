@@ -52,37 +52,22 @@ function EmailPageContent() {
 
   const checkUserExists = async (email: string): Promise<boolean> => {
     try {
-      // Try to sign in with an invalid password
-      // Supabase returns "Invalid login credentials" for both wrong password AND non-existent user (security)
-      // But "Email not confirmed" definitely means user exists
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password: "check_user_exists_dummy_password_12345!@#$%",
+      // Use API route to check if user exists (more reliable server-side check)
+      const response = await fetch("/api/auth/check-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (signInError) {
-        const errorMsg = signInError.message.toLowerCase();
-        
-        // "Email not confirmed" definitely means user exists
-        if (errorMsg.includes("email not confirmed") || errorMsg.includes("email address not confirmed")) {
-          return true;
-        }
-        
-        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
-        // For security, Supabase doesn't distinguish between these
-        // However, in practice, if we get this error, it's more likely the user exists
-        // (since most attempts are from existing users with wrong passwords)
-        // We'll assume user exists to avoid redirecting existing users to register
-        if (errorMsg.includes("invalid login credentials") || errorMsg.includes("incorrect password")) {
-          return true; // Assume user exists - redirect to login
-        }
-        
-        // Other errors might mean user doesn't exist
+      if (!response.ok) {
+        // On error, assume user doesn't exist to avoid blocking new users
         return false;
       }
 
-      // No error (shouldn't happen with dummy password) - assume user doesn't exist
-      return false;
+      const data = await response.json();
+      return data.exists === true;
     } catch (err) {
       // On any error, assume user doesn't exist to avoid blocking new users
       return false;

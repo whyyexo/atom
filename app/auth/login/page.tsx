@@ -58,34 +58,22 @@ function LoginPageContent() {
   // Verify if user actually exists before showing "Welcome back"
   const verifyUserExists = async (email: string): Promise<boolean> => {
     try {
-      // Try to sign in with a dummy password to check if user exists
-      // Supabase returns specific errors that can help us determine if user exists
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password: "dummy_check_password_12345!@#$%",
+      // Use API route to check if user exists (more reliable server-side check)
+      const response = await fetch("/api/auth/check-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
       });
 
-      if (signInError) {
-        const errorMsg = signInError.message.toLowerCase();
-        
-        // "Email not confirmed" means user definitely exists
-        if (errorMsg.includes("email not confirmed") || errorMsg.includes("email address not confirmed")) {
-          return true;
-        }
-        
-        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
-        // However, if we're on the login page, it means checkUserExists returned true,
-        // so we can be more confident the user exists. We'll show "Welcome back" in this case.
-        if (errorMsg.includes("invalid login credentials") || errorMsg.includes("incorrect password")) {
-          return true; // User likely exists since we got redirected here
-        }
-        
-        // Other errors - assume user doesn't exist
+      if (!response.ok) {
+        // On error, assume user doesn't exist to avoid false positives
         return false;
       }
 
-      // No error (shouldn't happen with dummy password) - assume user doesn't exist
-      return false;
+      const data = await response.json();
+      return data.exists === true;
     } catch (err) {
       // On any error, assume user doesn't exist to avoid false positives
       return false;
