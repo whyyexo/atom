@@ -18,9 +18,41 @@ function LoginPageContent() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [shimmerLoading, setShimmerLoading] = useState(true);
+  const [checkingSession, setCheckingSession] = useState(true);
   const [error, setError] = useState("");
   const [firstName, setFirstName] = useState("");
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.user) {
+          // User is already logged in, redirect to dashboard
+          router.replace("/dashboard");
+          return;
+        }
+      } catch (err) {
+        // Ignore errors
+      } finally {
+        setCheckingSession(false);
+      }
+    };
+
+    checkSession();
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        router.replace("/dashboard");
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router, supabase]);
 
   useEffect(() => {
     const emailParam = searchParams.get("email");
@@ -76,6 +108,15 @@ function LoginPageContent() {
       setLoading(false);
     }
   };
+
+  // Show loading while checking session
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="h-8 w-8 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">

@@ -8,6 +8,8 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Create browser client with SSR support
+// Session persistence is automatically handled by @supabase/ssr via cookies
+// The session persists across page reloads and browser restarts
 export function createSupabaseBrowserClient() {
   return createBrowserClient(supabaseUrl, supabaseAnonKey);
 }
