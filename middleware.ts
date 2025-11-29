@@ -76,12 +76,8 @@ export async function middleware(request: NextRequest) {
     "/legal/terms",
     "/legal/cookies",
     "/legal/acceptable-use",
-    "/auth",
-    "/auth/email",
-    "/auth/login",
-    "/auth/register",
-    "/auth/reset-password",
-    "/auth/update-password",
+    "/login",
+    "/signup",
     "/auth/callback",
   ];
 
@@ -91,31 +87,20 @@ export async function middleware(request: NextRequest) {
     "/workspace",
   ];
 
-  // Legacy auth routes - redirect to new auth page
-  const legacyAuthRoutes = ["/login", "/sign-in", "/sign-up", "/register"];
-
   // Check if route is public
   const isPublicRoute = publicRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
-  
-  // Check if route is legacy auth route
-  const isLegacyAuthRoute = legacyAuthRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
   
   // Check if route is protected
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-  // Handle legacy auth routes - redirect to new auth email page
-  if (isLegacyAuthRoute) {
-    return NextResponse.redirect(new URL("/auth/email", request.url));
-  }
-
-  // Redirect authenticated users away from auth pages
-  if (pathname.startsWith("/auth") && pathname !== "/auth/callback" && user) {
+  // Redirect authenticated users away from login/signup pages
+  if ((pathname === "/login" || pathname === "/signup") && user) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // Protect dashboard and workspace routes
   if (isProtectedRoute && !user) {
-    const redirectUrl = new URL("/auth/email", request.url);
+    const redirectUrl = new URL("/login", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }
@@ -127,7 +112,7 @@ export async function middleware(request: NextRequest) {
 
   // For any other route, require authentication
   if (!user) {
-    const redirectUrl = new URL("/auth/email", request.url);
+    const redirectUrl = new URL("/login", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }

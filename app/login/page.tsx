@@ -1,120 +1,130 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { supabase } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import { useState, FormEvent, useMemo, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Mail, Lock, Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  useEffect(() => {
+    const message = searchParams.get("message");
+    if (message) {
+      setError(message);
+    }
+  }, [searchParams]);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
     setLoading(true);
-    setMessage("");
 
     try {
-      // Get the redirect URL from environment or use current origin
-      const redirectUrl = process.env.NEXT_PUBLIC_SITE_URL || 
-                         (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
-      
-      // Ensure we have the full URL with protocol
-      const fullRedirectUrl = redirectUrl.startsWith('http') 
-        ? redirectUrl 
-        : `http://${redirectUrl}`;
-      
-      const callbackUrl = `${fullRedirectUrl}/auth/callback`;
-      
-      console.log('🔗 Magic link redirect URL:', callbackUrl);
-      
-      const { error } = await supabase.auth.signInWithOtp({
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
         email,
-        options: {
-          emailRedirectTo: callbackUrl,
-        },
+        password,
       });
 
-      if (error) {
-        setMessage(error.message);
-      } else {
-        setMessage("Check your email for the login link!");
+      if (signInError) {
+        setError(signInError.message || "Invalid email or password");
+        setLoading(false);
+        return;
       }
-    } catch (error: any) {
-      setMessage(error?.message || "An error occurred");
-    } finally {
+
+      if (data.user) {
+        const redirect = searchParams.get("redirect");
+        router.push(redirect || "/dashboard");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-[#fdfdfd] dark:bg-[#0a0a0a] flex items-center justify-center p-4">
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
-      >
-        <div className="rounded-xl border border-black/5 dark:border-white/5 bg-white dark:bg-black/50 p-8 shadow-sm">
-          <div className="mb-8 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-white mb-2">
-              Atom
-            </h1>
-            <p className="text-sm text-black/50 dark:text-white/50">
-              Sign in with your email to continue
-            </p>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-black/70 dark:text-white/70 mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-2 text-sm text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-black/20 dark:focus:ring-white/20"
-                disabled={loading}
-              />
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
+          <CardDescription className="text-center">
+            Enter your email and password to access your account
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="pl-10"
+                  disabled={loading}
+                />
+              </div>
             </div>
 
-            {message && (
-              <div
-                className={`text-sm p-3 rounded-lg ${
-                  message.includes("Check your email")
-                    ? "bg-green-50 dark:bg-green-950/20 text-green-700 dark:text-green-400"
-                    : "bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-400"
-                }`}
-              >
-                {message}
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="pl-10"
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            {error && (
+              <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
+                {error}
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-black dark:bg-white text-white dark:text-black px-4 py-2 text-sm font-medium hover:bg-black/90 dark:hover:bg-white/90 transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? "Sending..." : "Send Magic Link"}
-            </button>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </Button>
           </form>
 
-          <div className="mt-6 text-center">
-            <Link
-              href="/"
-              className="text-sm text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white transition-colors"
-            >
-              ← Back to home
+          <div className="mt-4 text-center text-sm">
+            <span className="text-gray-600">Don't have an account? </span>
+            <Link href="/signup" className="text-blue-600 hover:underline font-medium">
+              Sign up
             </Link>
           </div>
-        </div>
-      </motion.div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
-
