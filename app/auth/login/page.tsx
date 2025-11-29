@@ -21,6 +21,7 @@ function LoginPageContent() {
   const [checkingSession, setCheckingSession] = useState(true);
   const [error, setError] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [userExists, setUserExists] = useState(false);
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
   // Check if user is already logged in
@@ -54,20 +55,55 @@ function LoginPageContent() {
     };
   }, [router, supabase]);
 
+  // Verify if user actually exists before showing "Welcome back"
+  const verifyUserExists = async (email: string): Promise<boolean> => {
+    try {
+      // Try to sign in with a dummy password to check if user exists
+      // Supabase returns specific errors that can help us determine if user exists
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password: "dummy_check_password_12345!@#$%",
+      });
+
+      if (signInError) {
+        const errorMsg = signInError.message.toLowerCase();
+        
+        // "Email not confirmed" means user definitely exists
+        if (errorMsg.includes("email not confirmed") || errorMsg.includes("email address not confirmed")) {
+          return true;
+        }
+        
+        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
+        // For security, we'll be conservative and assume user might not exist
+        // Only show "Welcome back" if we're very confident
+        return false;
+      }
+
+      // No error (shouldn't happen with dummy password) - assume user doesn't exist
+      return false;
+    } catch (err) {
+      // On any error, assume user doesn't exist to avoid false positives
+      return false;
+    }
+  };
+
   useEffect(() => {
     const emailParam = searchParams.get("email");
     if (emailParam) {
-      setEmail(decodeURIComponent(emailParam));
-    }
-
-    // Simulate loading shimmer
-    setTimeout(() => {
+      const decodedEmail = decodeURIComponent(emailParam);
+      setEmail(decodedEmail);
+      
+      // Verify user exists before showing "Welcome back"
+      verifyUserExists(decodedEmail).then((exists) => {
+        setUserExists(exists);
+        if (exists) {
+          extractFirstNameFromEmail(decodedEmail);
+        }
+        setShimmerLoading(false);
+      });
+    } else {
       setShimmerLoading(false);
-      // Try to get user metadata to extract first name
-      if (emailParam) {
-        extractFirstNameFromEmail(decodeURIComponent(emailParam));
-      }
-    }, 600);
+    }
   }, [searchParams]);
 
   const extractFirstNameFromEmail = (email: string) => {
@@ -163,15 +199,21 @@ function LoginPageContent() {
                       transition={{ delay: 0.2 }}
                       className="text-3xl font-semibold text-gray-900 tracking-tight"
                     >
-                      Welcome back,{" "}
-                      <motion.span
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-                        className="inline-block bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
-                      >
-                        {firstName || email.split("@")[0]}
-                      </motion.span>
+                      {userExists && firstName ? (
+                        <>
+                          Welcome back,{" "}
+                          <motion.span
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.4, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                            className="inline-block bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+                          >
+                            {firstName}
+                          </motion.span>
+                        </>
+                      ) : (
+                        "Sign in to your account"
+                      )}
                     </motion.h1>
                     <p className="text-[17px] text-gray-600 font-normal">
                       Enter your password to continue

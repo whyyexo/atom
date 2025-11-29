@@ -70,9 +70,12 @@ function EmailPageContent() {
         
         // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
         // For security, Supabase doesn't distinguish between these
-        // We'll assume user exists if we get this error (better to redirect to login than create duplicate)
+        // To avoid false positives (showing "Welcome back" to non-existent users),
+        // we'll be conservative and assume user doesn't exist unless we're certain
+        // This means new users will go to register, which is safer
         if (errorMsg.includes("invalid login credentials") || errorMsg.includes("incorrect password")) {
-          return true; // Likely exists - redirect to login
+          // Be conservative - don't assume user exists to avoid false "Welcome back" messages
+          return false;
         }
         
         // Other errors might mean user doesn't exist
