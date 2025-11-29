@@ -62,13 +62,16 @@ function EmailPageContent() {
       });
 
       if (!response.ok) {
+        console.error("API check-user failed:", response.status, response.statusText);
         // On error, assume user doesn't exist to avoid blocking new users
         return false;
       }
 
       const data = await response.json();
+      console.log("User check result:", data);
       return data.exists === true;
     } catch (err) {
+      console.error("Error checking user:", err);
       // On any error, assume user doesn't exist to avoid blocking new users
       return false;
     }

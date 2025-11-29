@@ -15,10 +15,11 @@ export async function POST(request: NextRequest) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+    // If service key is not available, use fallback immediately
     if (!supabaseUrl || !supabaseServiceKey) {
-      console.error("Missing Supabase environment variables");
-      // Fallback to conservative approach
-      return NextResponse.json({ exists: false, user: null });
+      console.log("Service key not available, using fallback method");
+      const fallbackResult = await fallbackCheck(email, supabaseUrl || "");
+      return NextResponse.json(fallbackResult);
     }
 
     // Use service role key to check if user exists directly in the database
@@ -30,36 +31,54 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Query the auth.users table directly using admin API
-    const { data: users, error } = await supabaseAdmin.auth.admin.listUsers();
+    // Try to get user by email using admin API
+    // First, try to list users and search (with pagination handling)
+    let allUsers: any[] = [];
+    let page = 1;
+    let hasMore = true;
 
-    if (error) {
-      console.error("Error fetching users:", error);
-      // Fallback: try signInWithPassword method
-      const fallbackResult = await fallbackCheck(email, supabaseUrl);
-      return NextResponse.json(fallbackResult);
+    while (hasMore) {
+      const { data: usersData, error: listError } = await supabaseAdmin.auth.admin.listUsers({
+        page,
+        perPage: 1000,
+      });
+
+      if (listError) {
+        console.error("Error fetching users:", listError);
+        // Fallback: try signInWithPassword method
+        const fallbackResult = await fallbackCheck(email, supabaseUrl);
+        return NextResponse.json(fallbackResult);
+      }
+
+      if (usersData?.users) {
+        allUsers = allUsers.concat(usersData.users);
+        // Check if there are more pages
+        hasMore = usersData.users.length === 1000;
+        page++;
+      } else {
+        hasMore = false;
+      }
     }
 
     // Check if email exists in the users list
-    const userExists = users.users.some((user) => 
+    const foundUser = allUsers.find((user) => 
       user.email?.toLowerCase() === email.toLowerCase()
     );
 
-    if (userExists) {
-      const user = users.users.find((u) => 
-        u.email?.toLowerCase() === email.toLowerCase()
-      );
+    if (foundUser) {
       return NextResponse.json({ 
         exists: true, 
         user: { 
-          email: user?.email,
-          id: user?.id,
-          metadata: user?.user_metadata
+          email: foundUser.email,
+          id: foundUser.id,
+          metadata: foundUser.user_metadata
         } 
       });
     }
 
-    return NextResponse.json({ exists: false, user: null });
+    // User not found in list, try fallback method
+    const fallbackResult = await fallbackCheck(email, supabaseUrl);
+    return NextResponse.json(fallbackResult);
   } catch (error) {
     console.error("Error checking user:", error);
     // On error, assume user doesn't exist to avoid false positives
@@ -96,13 +115,41 @@ async function fallbackCheck(email: string, supabaseUrl: string): Promise<{ exis
         return { exists: true, user: { email } };
       }
       
-      // "Invalid login credentials" - can't be sure, assume false to avoid false positives
-      return { exists: false, user: null };
+      // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
+      // However, in practice, if we get this error, it's MORE LIKELY the user exists
+      // (since most login attempts are from existing users with wrong passwords)
+      // We'll assume user exists to avoid blocking legitimate users
+      // This is a trade-off: we might show "Welcome back" to non-existent users,
+      // but we won't block existing users from logging in
+      if (
+        errorMsg.includes("invalid login credentials") ||
+        errorMsg.includes("incorrect password") ||
+        errorMsg.includes("invalid password")
+      ) {
+        return { exists: true, user: { email } };
+      }
+      
+      // Other specific errors that indicate user doesn't exist
+      if (
+        errorMsg.includes("user not found") ||
+        errorMsg.includes("email not found") ||
+        errorMsg.includes("no user found") ||
+        errorMsg.includes("user does not exist")
+      ) {
+        return { exists: false, user: null };
+      }
+      
+      // For unknown errors, assume user exists to avoid blocking
+      return { exists: true, user: { email } };
     }
 
+    // No error (shouldn't happen with dummy password) - assume user doesn't exist
     return { exists: false, user: null };
   } catch (err) {
-    return { exists: false, user: null };
+    console.error("Fallback check error:", err);
+    // On error, assume user exists to avoid blocking legitimate users
+    // This is safer than blocking existing users
+    return { exists: true, user: { email } };
   }
 }
 
