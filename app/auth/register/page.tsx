@@ -134,37 +134,33 @@ function RegisterPageContent() {
         return;
       }
 
-      // If user was created but no session, try to sign in immediately
+      // If user was created but no session
       if (data.user && !data.session) {
-        // Try to sign in to get session
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (signInError) {
-          setLoading(false);
-          setError("Account created but failed to sign in. Please try signing in manually.");
-          return;
-        }
-
-        if (signInData.session && signInData.user) {
-          // Successfully signed in, redirect to dashboard
+        // Wait a moment for Supabase to process the account
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Check if session was automatically created
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session && session.user) {
+          // Session exists, redirect to dashboard
           window.location.href = "/dashboard";
           return;
         }
-      }
 
-      // Fallback - try to get current session
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        window.location.href = "/dashboard";
+        // No session - account might need email confirmation or auto-confirm is disabled
+        // Instead of trying to sign in (which causes 400/429 errors), 
+        // redirect to login page where user can sign in manually
+        setLoading(false);
+        setError("");
+        window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
         return;
       }
 
-      // If still no session, show error
+      // Fallback - if somehow we get here, redirect to login
       setLoading(false);
-      setError("Account created but failed to sign in. Please try signing in manually.");
+      setError("");
+      window.location.href = `/auth/login?email=${encodeURIComponent(email)}`;
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
