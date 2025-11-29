@@ -74,8 +74,13 @@ function LoginPageContent() {
         }
         
         // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
-        // For security, we'll be conservative and assume user might not exist
-        // Only show "Welcome back" if we're very confident
+        // However, if we're on the login page, it means checkUserExists returned true,
+        // so we can be more confident the user exists. We'll show "Welcome back" in this case.
+        if (errorMsg.includes("invalid login credentials") || errorMsg.includes("incorrect password")) {
+          return true; // User likely exists since we got redirected here
+        }
+        
+        // Other errors - assume user doesn't exist
         return false;
       }
 
