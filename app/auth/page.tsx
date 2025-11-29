@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, ArrowRight, Check, User } from "lucide-react";
+import { Mail, Lock, ArrowRight, User } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import Image from "next/image";
 
@@ -19,8 +19,10 @@ function AuthPageContent() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [nameLoading, setNameLoading] = useState(false);
   const [error, setError] = useState("");
   const [isExistingUser, setIsExistingUser] = useState(false);
+  const [userDisplayName, setUserDisplayName] = useState("");
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
   useEffect(() => {
@@ -39,41 +41,41 @@ function AuthPageContent() {
     }
   }, [router, searchParams, supabase]);
 
+  // Extract name from email for display
+  const extractNameFromEmail = (email: string): string => {
+    const username = email.split("@")[0];
+    // Capitalize first letter
+    return username.charAt(0).toUpperCase() + username.slice(1).split(/[._-]/)[0];
+  };
+
   const checkEmailExists = async (email: string): Promise<boolean> => {
     try {
-      // Try to sign up with a dummy password to check if user exists
-      // This is more reliable than trying to sign in
-      const { error: signUpError, data } = await supabase.auth.signUp({
+      // Try to sign in with an invalid password
+      // Supabase doesn't reveal if user exists for security, but we can check specific errors
+      const { error: signInError } = await supabase.auth.signInWithPassword({
         email,
-        password: "dummy_check_12345!@#$",
-        options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback`,
-        },
+        password: "invalid_check_password_12345!@#$",
       });
 
-      if (signUpError) {
-        // If error indicates user already exists, return true
-        const errorMsg = signUpError.message.toLowerCase();
+      if (signInError) {
+        const errorMsg = signInError.message.toLowerCase();
+        
+        // These errors definitely mean user exists:
         if (
-          errorMsg.includes("already registered") ||
-          errorMsg.includes("user already exists") ||
-          errorMsg.includes("email already registered") ||
-          errorMsg.includes("already been registered")
+          errorMsg.includes("email not confirmed") ||
+          errorMsg.includes("email address not confirmed")
         ) {
           return true;
         }
-        // Other errors (like invalid email format) - assume user doesn't exist
+        
+        // "Invalid login credentials" is ambiguous - could be wrong password OR user doesn't exist
+        // For security, Supabase doesn't distinguish between these
+        // We'll be conservative and assume user doesn't exist
+        // User will get proper error message when they try to sign in with real password
         return false;
       }
-
-      // If signup succeeded without error, user didn't exist before
-      // But we just created a dummy account, so we need to delete it
-      // Sign out immediately to clean up the dummy session
-      if (data.user || data.session) {
-        await supabase.auth.signOut();
-      }
       
-      // User didn't exist, return false
+      // Shouldn't happen with invalid password, but if it does, assume user doesn't exist
       return false;
     } catch (err) {
       // On error, assume user doesn't exist
@@ -96,7 +98,16 @@ function AuthPageContent() {
     try {
       const exists = await checkEmailExists(email);
       setIsExistingUser(exists);
-      setStep(exists ? "password" : "name");
+      
+      if (exists) {
+        // Existing user - extract name from email for display
+        const name = extractNameFromEmail(email);
+        setUserDisplayName(name);
+        setStep("password");
+      } else {
+        // New user - go to name step
+        setStep("name");
+      }
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -110,8 +121,16 @@ function AuthPageContent() {
       setError("Please enter both first and last name");
       return;
     }
-    setStep("create-password");
+    
+    setNameLoading(true);
     setError("");
+    
+    // Small delay for smooth transition (Apple-like)
+    setTimeout(() => {
+      setUserDisplayName(`${firstName.trim()} ${lastName.trim()}`);
+      setNameLoading(false);
+      setStep("create-password");
+    }, 800);
   };
 
   const handlePasswordLogin = async (e: React.FormEvent) => {
@@ -181,7 +200,8 @@ function AuthPageContent() {
 
       // If session exists, user is automatically verified
       if (data.session) {
-        router.push("/dashboard");
+        const redirect = searchParams.get("redirect");
+        router.push(redirect || "/dashboard");
         router.refresh();
         return;
       }
@@ -225,11 +245,15 @@ function AuthPageContent() {
         {/* Logo Atom */}
         <div className="flex justify-center mb-8">
           <Image
-            src="/ATOM_noir.png"
+            src="/A_blanc.png"
             alt="Atom"
             width={120}
-            height={34}
-            className="h-8 w-auto"
+            height={120}
+            className="h-12 w-12"
+            style={{ 
+              filter: 'brightness(0) saturate(100%) invert(0.5)',
+              opacity: 0.5
+            }}
             priority
           />
         </div>
@@ -293,66 +317,81 @@ function AuthPageContent() {
             )}
 
             {step === "name" && (
-              <motion.form
-                key="name"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                onSubmit={handleNameSubmit}
-                className="space-y-6"
-              >
-                <div className="space-y-4">
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="First name"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      required
-                      autoComplete="given-name"
-                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
-                    />
-                  </div>
-                  <div className="relative">
-                    <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Last name"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      required
-                      autoComplete="family-name"
-                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
-                    />
-                  </div>
-                  {error && (
-                    <p className="text-sm text-red-600 mt-2">{error}</p>
-                  )}
-                </div>
+              <>
+                {nameLoading ? (
+                  <motion.div
+                    key="name-loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="flex flex-col items-center justify-center py-12 space-y-4"
+                  >
+                    <div className="h-8 w-8 border-2 border-[#0071e3] border-t-transparent rounded-full animate-spin" />
+                    <p className="text-sm font-light text-gray-600">Setting things up...</p>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="name"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    onSubmit={handleNameSubmit}
+                    className="space-y-6"
+                  >
+                    <div className="space-y-4">
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="First name"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          required
+                          autoComplete="given-name"
+                          className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
+                        />
+                      </div>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="Last name"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          required
+                          autoComplete="family-name"
+                          className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
+                        />
+                      </div>
+                      {error && (
+                        <p className="text-sm text-red-600 mt-2">{error}</p>
+                      )}
+                    </div>
 
-                <div className="flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setStep("email");
-                      setFirstName("");
-                      setLastName("");
-                      setError("");
-                    }}
-                    className="flex-1 h-14 rounded-xl border border-gray-300 bg-white text-gray-900 font-medium hover:bg-gray-50 transition-all"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all flex items-center justify-center gap-2"
-                  >
-                    Continue
-                    <ArrowRight className="h-5 w-5" />
-                  </button>
-                </div>
-              </motion.form>
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStep("email");
+                          setFirstName("");
+                          setLastName("");
+                          setError("");
+                        }}
+                        className="flex-1 h-14 rounded-xl border border-gray-300 bg-white text-gray-900 font-medium hover:bg-gray-50 transition-all"
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        className="flex-1 h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all flex items-center justify-center gap-2"
+                      >
+                        Continue
+                        <ArrowRight className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </motion.form>
+                )}
+              </>
             )}
 
             {step === "password" && (
@@ -365,9 +404,25 @@ function AuthPageContent() {
                 className="space-y-6"
               >
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Signing in as <span className="font-medium text-gray-900">{email}</span>
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="mb-4"
+                  >
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                      Welcome back,{" "}
+                      <motion.span
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                        className="inline-block"
+                      >
+                        {userDisplayName}
+                      </motion.span>
+                    </h2>
+                    <p className="text-sm font-light text-gray-600">Enter your password to continue</p>
+                  </motion.div>
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                     <input
@@ -425,9 +480,25 @@ function AuthPageContent() {
                 className="space-y-6"
               >
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-600 mb-4">
-                    Creating account for <span className="font-medium text-gray-900">{email}</span>
-                  </p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="mb-4"
+                  >
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                      Happy to see you,{" "}
+                      <motion.span
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.3, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+                        className="inline-block"
+                      >
+                        {userDisplayName.split(" ")[0]}
+                      </motion.span>
+                    </h2>
+                    <p className="text-sm font-light text-gray-600">Create a password to secure your account</p>
+                  </motion.div>
                   
                   <div className="space-y-2">
                     <div className="relative">
@@ -491,7 +562,7 @@ function AuthPageContent() {
                   <button
                     type="button"
                     onClick={() => {
-                      setStep("email");
+                      setStep("name");
                       setPassword("");
                       setConfirmPassword("");
                       setError("");
@@ -540,4 +611,3 @@ export default function AuthPage() {
     </Suspense>
   );
 }
-
