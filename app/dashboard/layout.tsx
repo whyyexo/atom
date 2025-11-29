@@ -7,7 +7,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProtectedLayout requireEmailVerification={true}>
+    <ProtectedLayout>
       <DashboardShell>{children}</DashboardShell>
     </ProtectedLayout>
   );

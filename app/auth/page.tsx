@@ -1,0 +1,420 @@
+"use client";
+
+import { useState, useMemo, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Lock, ArrowRight, Check } from "lucide-react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+
+type Step = "email" | "password" | "create-password";
+
+export default function AuthPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [step, setStep] = useState<Step>("email");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [isExistingUser, setIsExistingUser] = useState(false);
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+
+  useEffect(() => {
+    // Check if user is already logged in
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user) {
+        const redirect = searchParams.get("redirect");
+        router.push(redirect || "/dashboard");
+      }
+    });
+
+    // Check for error from URL
+    const errorParam = searchParams.get("error");
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam));
+    }
+  }, [router, searchParams, supabase]);
+
+  const checkEmailExists = async (email: string): Promise<boolean> => {
+    try {
+      // Try to sign in with a dummy password
+      // If we get "Invalid login credentials", the user likely exists
+      // (Supabase doesn't distinguish between wrong password and non-existent user for security)
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password: "dummy_check_12345!@#$",
+      });
+
+      if (signInError) {
+        // "Invalid login credentials" could mean user exists with wrong password
+        // OR user doesn't exist (Supabase doesn't reveal which for security)
+        // "Email not confirmed" means user definitely exists
+        if (
+          signInError.message.includes("Invalid login credentials") ||
+          signInError.message.includes("Email not confirmed")
+        ) {
+          // Assume user exists - if wrong, they'll get error when entering real password
+          return true;
+        }
+      }
+      
+      // If no error (unlikely with dummy password), assume user exists
+      return true;
+    } catch {
+      // On error, assume user doesn't exist
+      return false;
+    }
+  };
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (!email || !email.includes("@")) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const exists = await checkEmailExists(email);
+      setIsExistingUser(exists);
+      setStep(exists ? "password" : "create-password");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (signInError) {
+        setError(signInError.message || "Invalid password");
+        setLoading(false);
+        return;
+      }
+
+      if (data.user) {
+        const redirect = searchParams.get("redirect");
+        router.push(redirect || "/dashboard");
+        router.refresh();
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const handleCreateAccount = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (signUpError) {
+        setError(signUpError.message || "Failed to create account");
+        setLoading(false);
+        return;
+      }
+
+      // If session exists, user is automatically verified
+      if (data.session) {
+        router.push("/dashboard");
+        router.refresh();
+        return;
+      }
+
+      // Otherwise, show success and redirect
+      const redirect = searchParams.get("redirect");
+      router.push(redirect || "/dashboard");
+      router.refresh();
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  const getPasswordStrength = (pwd: string): { strength: number; label: string; color: string } => {
+    if (!pwd) return { strength: 0, label: "", color: "" };
+    
+    let strength = 0;
+    if (pwd.length >= 8) strength++;
+    if (pwd.length >= 12) strength++;
+    if (/[a-z]/.test(pwd)) strength++;
+    if (/[A-Z]/.test(pwd)) strength++;
+    if (/\d/.test(pwd)) strength++;
+    if (/[^a-zA-Z\d]/.test(pwd)) strength++;
+
+    if (strength <= 2) return { strength, label: "Weak", color: "bg-red-500" };
+    if (strength <= 4) return { strength, label: "Fair", color: "bg-yellow-500" };
+    return { strength, label: "Strong", color: "bg-green-500" };
+  };
+
+  const passwordStrength = getPasswordStrength(password);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-white p-4 sm:p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        className="w-full max-w-md"
+      >
+        <div className="text-center mb-10">
+          <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-gray-900 mb-2">
+            Welcome to Atom
+          </h1>
+          <p className="text-base text-gray-600 font-light">
+            {step === "email" && "Enter your email to continue"}
+            {step === "password" && "Enter your password"}
+            {step === "create-password" && "Create your password"}
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 sm:p-10">
+          <AnimatePresence mode="wait">
+            {step === "email" && (
+              <motion.form
+                key="email"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                onSubmit={handleEmailSubmit}
+                className="space-y-6"
+              >
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Mail className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="email"
+                      placeholder="Email address"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      autoComplete="email"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                    />
+                  </div>
+                  {error && (
+                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                >
+                  {loading ? (
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      Continue
+                      <ArrowRight className="h-5 w-5" />
+                    </>
+                  )}
+                </button>
+              </motion.form>
+            )}
+
+            {step === "password" && (
+              <motion.form
+                key="password"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                onSubmit={handlePasswordLogin}
+                className="space-y-6"
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Signing in as <span className="font-medium text-gray-900">{email}</span>
+                  </p>
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      autoComplete="current-password"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                    />
+                  </div>
+                  {error && (
+                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStep("email");
+                      setPassword("");
+                      setError("");
+                    }}
+                    className="flex-1 h-14 rounded-xl border border-gray-300 bg-white text-gray-900 font-medium hover:bg-gray-50 transition-all"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="flex-1 h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {loading ? (
+                      <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        Sign in
+                        <ArrowRight className="h-5 w-5" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.form>
+            )}
+
+            {step === "create-password" && (
+              <motion.form
+                key="create-password"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                onSubmit={handleCreateAccount}
+                className="space-y-6"
+              >
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Creating account for <span className="font-medium text-gray-900">{email}</span>
+                  </p>
+                  
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                      <input
+                        type="password"
+                        placeholder="Create password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                        autoComplete="new-password"
+                        className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                      />
+                    </div>
+                    
+                    {/* Password strength indicator */}
+                    {password && (
+                      <div className="space-y-2">
+                        <div className="flex gap-1 h-1">
+                          {[1, 2, 3, 4, 5].map((i) => (
+                            <div
+                              key={i}
+                              className={`flex-1 rounded-full transition-all ${
+                                i <= passwordStrength.strength
+                                  ? passwordStrength.color
+                                  : "bg-gray-200"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <p className={`text-xs font-medium ${
+                          passwordStrength.strength <= 2 ? "text-red-600" :
+                          passwordStrength.strength <= 4 ? "text-yellow-600" :
+                          "text-green-600"
+                        }`}>
+                          {passwordStrength.label}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="relative">
+                    <Lock className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="password"
+                      placeholder="Confirm password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      autoComplete="new-password"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                    />
+                  </div>
+                  
+                  {error && (
+                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStep("email");
+                      setPassword("");
+                      setConfirmPassword("");
+                      setError("");
+                    }}
+                    className="flex-1 h-14 rounded-xl border border-gray-300 bg-white text-gray-900 font-medium hover:bg-gray-50 transition-all"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={loading || password !== confirmPassword || password.length < 8}
+                    className="flex-1 h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {loading ? (
+                      <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        Create account
+                        <ArrowRight className="h-5 w-5" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </motion.form>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+

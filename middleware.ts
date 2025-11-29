@@ -76,20 +76,9 @@ export async function middleware(request: NextRequest) {
     "/legal/terms",
     "/legal/cookies",
     "/legal/acceptable-use",
-  ];
-
-  // Auth routes
-  const authRoutes = [
-    "/auth/login",
-    "/auth/register",
-    "/auth/reset-password",
-    "/auth/update-password",
-    "/auth/verify-email",
+    "/auth",
     "/auth/callback",
   ];
-
-  // Legacy auth routes (redirect to new ones)
-  const legacyAuthRoutes = ["/login", "/sign-in", "/sign-up"];
 
   // Protected routes that require authentication
   const protectedRoutes = [
@@ -97,11 +86,11 @@ export async function middleware(request: NextRequest) {
     "/workspace",
   ];
 
+  // Legacy auth routes - redirect to new auth page
+  const legacyAuthRoutes = ["/login", "/sign-in", "/sign-up", "/register", "/auth/login", "/auth/register"];
+
   // Check if route is public
   const isPublicRoute = publicRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
-  
-  // Check if route is auth route
-  const isAuthRoute = authRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
   
   // Check if route is legacy auth route
   const isLegacyAuthRoute = legacyAuthRoutes.some((route) => pathname === route || pathname.startsWith(route + "/"));
@@ -109,36 +98,31 @@ export async function middleware(request: NextRequest) {
   // Check if route is protected
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-  // Handle legacy auth routes - redirect to new auth routes
+  // Handle legacy auth routes - redirect to new auth page
   if (isLegacyAuthRoute) {
-    if (pathname === "/login" || pathname.startsWith("/sign-in")) {
-      return NextResponse.redirect(new URL("/auth/login", request.url));
-    }
-    if (pathname.startsWith("/sign-up")) {
-      return NextResponse.redirect(new URL("/auth/register", request.url));
-    }
+    return NextResponse.redirect(new URL("/auth", request.url));
   }
 
-  // Redirect authenticated users away from auth pages (except callback and update-password)
-  if (isAuthRoute && user && pathname !== "/auth/callback" && pathname !== "/auth/update-password") {
+  // Redirect authenticated users away from auth page
+  if (pathname === "/auth" && user) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // Protect dashboard and workspace routes
   if (isProtectedRoute && !user) {
-    const redirectUrl = new URL("/auth/login", request.url);
+    const redirectUrl = new URL("/auth", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Allow public routes and auth routes to proceed
-  if (isPublicRoute || isAuthRoute) {
+  // Allow public routes to proceed
+  if (isPublicRoute) {
     return response;
   }
 
   // For any other route, require authentication
   if (!user) {
-    const redirectUrl = new URL("/auth/login", request.url);
+    const redirectUrl = new URL("/auth", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }
@@ -148,13 +132,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public folder files
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };

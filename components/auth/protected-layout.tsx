@@ -3,15 +3,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { AuthLoading } from "./auth-loading";
 import type { User } from "@supabase/supabase-js";
 
 interface ProtectedLayoutProps {
   children: React.ReactNode;
-  requireEmailVerification?: boolean;
 }
 
-export function ProtectedLayout({ children, requireEmailVerification = false }: ProtectedLayoutProps) {
+export function ProtectedLayout({ children }: ProtectedLayoutProps) {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -24,20 +22,14 @@ export function ProtectedLayout({ children, requireEmailVerification = false }: 
         const { data: { user: currentUser } } = await supabase.auth.getUser();
         
         if (!currentUser) {
-          router.push("/auth/login");
-          return;
-        }
-
-        // Check email verification if required
-        if (requireEmailVerification && !currentUser.email_confirmed_at) {
-          router.push(`/auth/verify-email?email=${encodeURIComponent(currentUser.email || "")}`);
+          router.push("/auth");
           return;
         }
 
         setUser(currentUser);
       } catch (error) {
         console.error("Auth check error:", error);
-        router.push("/auth/login");
+        router.push("/auth");
       } finally {
         setLoading(false);
       }
@@ -50,27 +42,30 @@ export function ProtectedLayout({ children, requireEmailVerification = false }: 
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === "SIGNED_OUT" || !session) {
-        router.push("/auth/login");
+        router.push("/auth");
       } else if (session.user) {
-        if (requireEmailVerification && !session.user.email_confirmed_at) {
-          router.push(`/auth/verify-email?email=${encodeURIComponent(session.user.email || "")}`);
-        } else {
-          setUser(session.user);
-        }
+        setUser(session.user);
       }
     });
 
     return () => {
       subscription.unsubscribe();
     };
-  }, [router, requireEmailVerification, supabase]);
+  }, [router, supabase]);
 
   if (loading) {
-    return <AuthLoading message="Checking authentication..." />;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-white">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-8 w-8 border-2 border-gray-900 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-light text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   if (!user) {
-    return <AuthLoading message="Redirecting to login..." />;
+    return null;
   }
 
   return <>{children}</>;

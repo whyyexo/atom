@@ -13,12 +13,12 @@ export async function GET(request: Request) {
   if (error) {
     const errorMessage = errorDescription || error;
     return NextResponse.redirect(
-      new URL(`/auth/login?error=${encodeURIComponent(errorMessage)}`, requestUrl.origin)
+      new URL(`/auth?error=${encodeURIComponent(errorMessage)}`, requestUrl.origin)
     );
   }
 
   if (!code) {
-    return NextResponse.redirect(new URL("/auth/login", requestUrl.origin));
+    return NextResponse.redirect(new URL("/auth", requestUrl.origin));
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error("Missing Supabase environment variables");
     return NextResponse.redirect(
-      new URL("/auth/login?error=config", requestUrl.origin)
+      new URL("/auth?error=config", requestUrl.origin)
     );
   }
 
@@ -61,7 +61,7 @@ export async function GET(request: Request) {
   if (exchangeError) {
     console.error("Auth error:", exchangeError);
     return NextResponse.redirect(
-      new URL(`/auth/login?error=${encodeURIComponent(exchangeError.message)}`, requestUrl.origin)
+      new URL(`/auth?error=${encodeURIComponent(exchangeError.message)}`, requestUrl.origin)
     );
   }
 
@@ -71,14 +71,7 @@ export async function GET(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.redirect(new URL("/auth/login?error=no-user", requestUrl.origin));
-  }
-
-  // Check if email is verified (for signup flow)
-  if (!user.email_confirmed_at) {
-    return NextResponse.redirect(
-      new URL(`/auth/verify-email?email=${encodeURIComponent(user.email || "")}`, requestUrl.origin)
-    );
+    return NextResponse.redirect(new URL("/auth?error=no-user", requestUrl.origin));
   }
 
   // Redirect to dashboard or next URL
