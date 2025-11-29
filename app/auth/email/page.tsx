@@ -8,6 +8,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { IOSCard } from "@/components/auth/ios-card";
 import { IOSInput } from "@/components/auth/ios-input";
 import { IOSButton } from "@/components/auth/ios-button";
+import { AppleIcon, GoogleIcon, GitHubIcon } from "@/components/auth/social-icons";
 import Image from "next/image";
 
 function EmailPageContent() {
@@ -16,40 +17,6 @@ function EmailPageContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-
-  const checkUserExists = async (email: string): Promise<{ exists: boolean; firstName?: string }> => {
-    try {
-      // Try to sign in with invalid password
-      // Supabase doesn't reveal if user exists for security, but we can check specific error messages
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password: "check_user_exists_dummy_12345!@#$",
-      });
-
-      if (signInError) {
-        const errorMsg = signInError.message.toLowerCase();
-        
-        // These errors definitely mean user exists:
-        if (
-          errorMsg.includes("email not confirmed") ||
-          errorMsg.includes("email address not confirmed")
-        ) {
-          return { exists: true };
-        }
-        
-        // "Invalid login credentials" is ambiguous (security feature)
-        // We'll be conservative and assume user doesn't exist
-        // If wrong, user will get proper error when trying to sign in
-        return { exists: false };
-      }
-      
-      // No error (shouldn't happen with dummy password) - assume user doesn't exist
-      return { exists: false };
-    } catch (err) {
-      // On any error, assume user doesn't exist
-      return { exists: false };
-    }
-  };
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,15 +33,10 @@ function EmailPageContent() {
       // Show loading shimmer
       await new Promise(resolve => setTimeout(resolve, 600));
       
-      const { exists, firstName } = await checkUserExists(email);
-      
-      if (exists) {
-        // Returning user - go to login
-        router.push(`/auth/login?email=${encodeURIComponent(email)}`);
-      } else {
-        // New user - go to register
-        router.push(`/auth/register?email=${encodeURIComponent(email)}`);
-      }
+      // Don't check if user exists - let the registration/login flow handle it
+      // This avoids the 400 error from Supabase
+      // User will be redirected appropriately based on whether account exists
+      router.push(`/auth/register?email=${encodeURIComponent(email)}`);
     } catch (err) {
       setError("Something went wrong. Please try again.");
       setLoading(false);
@@ -171,19 +133,25 @@ function EmailPageContent() {
               <IOSButton
                 variant="secondary"
                 onClick={() => handleSocialLogin("apple")}
+                className="flex items-center justify-center gap-3"
               >
+                <AppleIcon className="h-5 w-5" />
                 Continue with Apple
               </IOSButton>
               <IOSButton
                 variant="secondary"
                 onClick={() => handleSocialLogin("google")}
+                className="flex items-center justify-center gap-3"
               >
+                <GoogleIcon className="h-5 w-5" />
                 Continue with Google
               </IOSButton>
               <IOSButton
                 variant="secondary"
                 onClick={() => handleSocialLogin("github")}
+                className="flex items-center justify-center gap-3"
               >
+                <GitHubIcon className="h-5 w-5" />
                 Continue with GitHub
               </IOSButton>
             </div>

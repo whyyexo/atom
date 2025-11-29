@@ -24,6 +24,7 @@ export const IOSButton = forwardRef<HTMLButtonElement, IOSButtonProps>(
           "transition-all duration-200",
           "focus:outline-none focus:ring-2 focus:ring-offset-2",
           "disabled:cursor-not-allowed disabled:opacity-50",
+          "flex items-center justify-center",
           variant === "primary" && [
             "bg-[#0A84FF] text-white",
             "shadow-[0_4px_14px_rgba(10,132,255,0.39)]",
@@ -48,7 +49,7 @@ export const IOSButton = forwardRef<HTMLButtonElement, IOSButtonProps>(
         {...props}
       >
         {loading ? (
-          <Loader2 className="h-5 w-5 animate-spin mx-auto" />
+          <Loader2 className="h-5 w-5 animate-spin" />
         ) : (
           children
         )}
