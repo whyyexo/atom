@@ -212,15 +212,18 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                   Settings
                 </Link>
                 <div className="border-t border-black/10 dark:border-white/10 my-1" />
-                {onSignOut && (
-                  <button
-                    onClick={onSignOut}
-                    className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    Sign out
-                  </button>
-                )}
+                <button
+                  onClick={() => {
+                    setIsUserMenuOpen(false);
+                    if (onSignOut) {
+                      onSignOut();
+                    }
+                  }}
+                  className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors text-left"
+                >
+                  <LogOut className="h-4 w-4" />
+                  Sign out
+                </button>
               </motion.div>
             )}
           </AnimatePresence>

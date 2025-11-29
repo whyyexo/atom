@@ -59,9 +59,18 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }, [supabase]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push("/auth");
-    router.refresh();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Error signing out:", error);
+      }
+      // Force a full page reload to ensure session is cleared
+      window.location.href = "/auth";
+    } catch (err) {
+      console.error("Error during sign out:", err);
+      // Still redirect even on error
+      window.location.href = "/auth";
+    }
   };
 
   return (

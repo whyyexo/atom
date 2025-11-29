@@ -41,31 +41,43 @@ function AuthPageContent() {
 
   const checkEmailExists = async (email: string): Promise<boolean> => {
     try {
-      // Try to sign in with a dummy password
-      // If we get "Invalid login credentials", the user likely exists
-      // (Supabase doesn't distinguish between wrong password and non-existent user for security)
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      // Try to sign up with a dummy password to check if user exists
+      // This is more reliable than trying to sign in
+      const { error: signUpError, data } = await supabase.auth.signUp({
         email,
         password: "dummy_check_12345!@#$",
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
       });
 
-      if (signInError) {
-        // "Invalid login credentials" could mean user exists with wrong password
-        // OR user doesn't exist (Supabase doesn't reveal which for security)
-        // "Email not confirmed" means user definitely exists
+      if (signUpError) {
+        // If error indicates user already exists, return true
+        const errorMsg = signUpError.message.toLowerCase();
         if (
-          signInError.message.includes("Invalid login credentials") ||
-          signInError.message.includes("Email not confirmed")
+          errorMsg.includes("already registered") ||
+          errorMsg.includes("user already exists") ||
+          errorMsg.includes("email already registered") ||
+          errorMsg.includes("already been registered")
         ) {
-          // Assume user exists - if wrong, they'll get error when entering real password
           return true;
         }
+        // Other errors (like invalid email format) - assume user doesn't exist
+        return false;
+      }
+
+      // If signup succeeded without error, user didn't exist before
+      // But we just created a dummy account, so we need to delete it
+      // Sign out immediately to clean up the dummy session
+      if (data.user || data.session) {
+        await supabase.auth.signOut();
       }
       
-      // If no error (unlikely with dummy password), assume user exists
-      return true;
-    } catch {
+      // User didn't exist, return false
+      return false;
+    } catch (err) {
       // On error, assume user doesn't exist
+      console.error("Error checking email:", err);
       return false;
     }
   };
