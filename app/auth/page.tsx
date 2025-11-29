@@ -3,16 +3,19 @@
 import { useState, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, ArrowRight, Check } from "lucide-react";
+import { Mail, Lock, ArrowRight, Check, User } from "lucide-react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import Image from "next/image";
 
-type Step = "email" | "password" | "create-password";
+type Step = "email" | "name" | "password" | "create-password";
 
 function AuthPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -81,12 +84,22 @@ function AuthPageContent() {
     try {
       const exists = await checkEmailExists(email);
       setIsExistingUser(exists);
-      setStep(exists ? "password" : "create-password");
+      setStep(exists ? "password" : "name");
     } catch (err) {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleNameSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!firstName.trim() || !lastName.trim()) {
+      setError("Please enter both first and last name");
+      return;
+    }
+    setStep("create-password");
+    setError("");
   };
 
   const handlePasswordLogin = async (e: React.FormEvent) => {
@@ -140,6 +153,11 @@ function AuthPageContent() {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
+          data: {
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            full_name: `${firstName.trim()} ${lastName.trim()}`,
+          },
         },
       });
 
@@ -192,12 +210,25 @@ function AuthPageContent() {
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className="w-full max-w-md"
       >
+        {/* Logo Atom */}
+        <div className="flex justify-center mb-8">
+          <Image
+            src="/ATOM_noir.png"
+            alt="Atom"
+            width={120}
+            height={34}
+            className="h-8 w-auto"
+            priority
+          />
+        </div>
+
         <div className="text-center mb-10">
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-gray-900 mb-2">
             Welcome to Atom
           </h1>
           <p className="text-base text-gray-600 font-light">
             {step === "email" && "Enter your email to continue"}
+            {step === "name" && "Tell us your name"}
             {step === "password" && "Enter your password"}
             {step === "create-password" && "Create your password"}
           </p>
@@ -224,7 +255,7 @@ function AuthPageContent() {
                       onChange={(e) => setEmail(e.target.value)}
                       required
                       autoComplete="email"
-                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                     />
                   </div>
                   {error && (
@@ -235,7 +266,7 @@ function AuthPageContent() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -246,6 +277,69 @@ function AuthPageContent() {
                     </>
                   )}
                 </button>
+              </motion.form>
+            )}
+
+            {step === "name" && (
+              <motion.form
+                key="name"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                onSubmit={handleNameSubmit}
+                className="space-y-6"
+              >
+                <div className="space-y-4">
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="First name"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      required
+                      autoComplete="given-name"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
+                    />
+                  </div>
+                  <div className="relative">
+                    <User className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                    <input
+                      type="text"
+                      placeholder="Last name"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                      required
+                      autoComplete="family-name"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
+                    />
+                  </div>
+                  {error && (
+                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setStep("email");
+                      setFirstName("");
+                      setLastName("");
+                      setError("");
+                    }}
+                    className="flex-1 h-14 rounded-xl border border-gray-300 bg-white text-gray-900 font-medium hover:bg-gray-50 transition-all"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all flex items-center justify-center gap-2"
+                  >
+                    Continue
+                    <ArrowRight className="h-5 w-5" />
+                  </button>
+                </div>
               </motion.form>
             )}
 
@@ -271,7 +365,7 @@ function AuthPageContent() {
                       onChange={(e) => setPassword(e.target.value)}
                       required
                       autoComplete="current-password"
-                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                     />
                   </div>
                   {error && (
@@ -294,7 +388,7 @@ function AuthPageContent() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -333,7 +427,7 @@ function AuthPageContent() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         autoComplete="new-password"
-                        className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                        className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                       />
                     </div>
                     
@@ -372,7 +466,7 @@ function AuthPageContent() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       required
                       autoComplete="new-password"
-                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all"
+                      className="w-full h-14 pl-12 pr-4 rounded-xl border border-gray-300 bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0071e3] focus:border-transparent transition-all"
                     />
                   </div>
                   
@@ -397,7 +491,7 @@ function AuthPageContent() {
                   <button
                     type="submit"
                     disabled={loading || password !== confirmPassword || password.length < 8}
-                    className="flex-1 h-14 rounded-xl bg-gray-900 text-white font-medium hover:bg-gray-800 active:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="flex-1 h-14 rounded-xl bg-[#0071e3] text-white font-medium hover:bg-[#0077ed] active:bg-[#0071e3] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {loading ? (
                       <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />

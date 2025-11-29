@@ -2,7 +2,9 @@
 
 import { PremiumSidebar } from "@/components/dashboard/premium-sidebar";
 import { PremiumTopBar } from "@/components/dashboard/premium-topbar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -22,15 +24,54 @@ const pageTitles: Record<string, string> = {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const pageTitle = pageTitles[pathname] || "Dashboard";
+  const [userEmail, setUserEmail] = useState("user@atom.app");
+  const [userName, setUserName] = useState("User");
+  const supabase = createSupabaseBrowserClient();
 
-  const handleSignOut = () => {
-    console.log("Sign out");
+  useEffect(() => {
+    const loadUserData = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserEmail(user.email || "user@atom.app");
+        
+        // Get user metadata
+        const firstName = user.user_metadata?.first_name || "";
+        const lastName = user.user_metadata?.last_name || "";
+        const fullName = user.user_metadata?.full_name || "";
+        
+        if (fullName) {
+          setUserName(fullName);
+        } else if (firstName && lastName) {
+          setUserName(`${firstName} ${lastName}`);
+        } else if (firstName) {
+          setUserName(firstName);
+        } else {
+          // Fallback to email username
+          const emailUsername = user.email?.split("@")[0] || "User";
+          setUserName(emailUsername.charAt(0).toUpperCase() + emailUsername.slice(1));
+        }
+      }
+    };
+
+    loadUserData();
+  }, [supabase]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/auth");
+    router.refresh();
   };
 
   return (
     <div className="flex min-h-screen bg-[#fdfdfd] dark:bg-[#0a0a0a]">
-      <PremiumSidebar userEmail="user@atom.app" userName="User" onSignOut={handleSignOut} />
+      <PremiumSidebar 
+        userEmail={userEmail} 
+        userName={userName} 
+        onSignOut={handleSignOut}
+        workspaceSlug="dashboard"
+      />
 
       <div className="flex w-full flex-1 flex-col ml-[280px]">
         <PremiumTopBar title={pageTitle} />

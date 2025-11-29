@@ -30,7 +30,7 @@ type PremiumSidebarProps = {
 };
 
 const systemNav = [
-  { name: "Settings", href: "/workspace/[slug]/settings", icon: Settings },
+  { name: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User", onSignOut, workspaceSlug = "[slug]" }: PremiumSidebarProps) {
@@ -40,13 +40,13 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const mainNav = [
-    { name: "Home", href: `/workspace/${workspaceSlug}`, icon: Home },
-    { name: "Projects", href: `/workspace/${workspaceSlug}/projects`, icon: FolderKanban },
-    { name: "Tasks", href: `/workspace/${workspaceSlug}/tasks`, icon: CheckSquare },
-    { name: "Calendar", href: `/workspace/${workspaceSlug}/calendar`, icon: Calendar },
-    { name: "Notes", href: `/workspace/${workspaceSlug}/notes`, icon: FileText },
-    { name: "Analytics", href: `/workspace/${workspaceSlug}/analytics`, icon: BarChart3 },
-    { name: "Notifications", href: `/workspace/${workspaceSlug}/notifications`, icon: Bell },
+    { name: "Home", href: `/dashboard`, icon: Home },
+    { name: "Projects", href: `/dashboard/projects`, icon: FolderKanban },
+    { name: "Tasks", href: `/dashboard/tasks`, icon: CheckSquare },
+    { name: "Calendar", href: `/dashboard/calendar`, icon: Calendar },
+    { name: "Notes", href: `/dashboard/notes`, icon: FileText },
+    { name: "Analytics", href: `/dashboard/analytics`, icon: BarChart3 },
+    { name: "Notifications", href: `/dashboard/notifications`, icon: Bell },
   ];
 
   const initials = userName
@@ -196,7 +196,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                 className="absolute bottom-full left-0 right-0 mb-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-[#0a0a0a] shadow-lg p-1 space-y-0.5"
               >
                 <Link
-                  href={`/workspace/${workspaceSlug}/settings`}
+                  href={`/dashboard/settings`}
                   onClick={() => setIsUserMenuOpen(false)}
                   className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
                 >
@@ -204,7 +204,7 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
                   Profile
                 </Link>
                 <Link
-                  href={`/workspace/${workspaceSlug}/settings`}
+                  href={`/dashboard/settings`}
                   onClick={() => setIsUserMenuOpen(false)}
                   className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:bg-black/5 dark:hover:bg-white/8 hover:text-black dark:hover:text-white transition-colors text-left"
                 >
