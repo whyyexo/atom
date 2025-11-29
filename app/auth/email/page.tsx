@@ -36,6 +36,7 @@ function EmailPageContent() {
       // Don't check if user exists - let the registration/login flow handle it
       // This avoids the 400 error from Supabase
       // User will be redirected appropriately based on whether account exists
+      setLoading(false);
       router.push(`/auth/register?email=${encodeURIComponent(email)}`);
     } catch (err) {
       setError("Something went wrong. Please try again.");
