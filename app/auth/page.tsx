@@ -21,6 +21,7 @@ function AuthPageContent() {
   const [loading, setLoading] = useState(false);
   const [nameLoading, setNameLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isExistingUser, setIsExistingUser] = useState(false);
   const [userDisplayName, setUserDisplayName] = useState("");
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
@@ -38,6 +39,13 @@ function AuthPageContent() {
     const errorParam = searchParams.get("error");
     if (errorParam) {
       setError(decodeURIComponent(errorParam));
+    }
+    
+    // Check for success message from URL (e.g., after email verification)
+    const successParam = searchParams.get("success");
+    if (successParam) {
+      setSuccess(decodeURIComponent(successParam));
+      setTimeout(() => setSuccess(""), 8000);
     }
   }, [router, searchParams, supabase]);
 
@@ -173,18 +181,37 @@ function AuthPageContent() {
         return;
       }
 
-      // If session exists, user is automatically verified
-      if (data.session) {
+      // If session exists, user is automatically verified and can proceed
+      if (data.session && data.user) {
+        setLoading(false);
         const redirect = searchParams.get("redirect");
         // Use window.location for immediate redirect
         window.location.href = redirect || "/dashboard";
         return;
       }
 
-      // Otherwise, show success and redirect
-      const redirect = searchParams.get("redirect");
-      // Use window.location for immediate redirect
-      window.location.href = redirect || "/dashboard";
+      // If user was created but no session (email confirmation required)
+      if (data.user && !data.session) {
+        setLoading(false);
+        // Show success message
+        setSuccess("Account created! Please check your email to verify your account before signing in.");
+        setError("");
+        // Reset form
+        setStep("email");
+        setEmail("");
+        setFirstName("");
+        setLastName("");
+        setPassword("");
+        setConfirmPassword("");
+        // Clear success message after 8 seconds
+        setTimeout(() => setSuccess(""), 8000);
+        return;
+      }
+
+      // Fallback: if something unexpected happened
+      setLoading(false);
+      setError("Account created but something went wrong. Please try signing in.");
+      setStep("email");
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
@@ -275,7 +302,23 @@ function AuthPageContent() {
                     />
                   </div>
                   {error && (
-                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-xl bg-red-50 border border-red-200 p-3 mt-2"
+                    >
+                      <p className="text-sm text-red-600">{error}</p>
+                    </motion.div>
+                  )}
+                  {success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="rounded-xl bg-green-50 border border-green-200 p-3 mt-2"
+                    >
+                      <p className="text-sm text-green-600">{success}</p>
+                    </motion.div>
                   )}
                 </div>
 
@@ -416,7 +459,23 @@ function AuthPageContent() {
                     />
                   </div>
                   {error && (
-                    <p className="text-sm text-red-600 mt-2">{error}</p>
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="rounded-xl bg-red-50 border border-red-200 p-3 mt-2"
+                    >
+                      <p className="text-sm text-red-600">{error}</p>
+                    </motion.div>
+                  )}
+                  {success && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="rounded-xl bg-green-50 border border-green-200 p-3 mt-2"
+                    >
+                      <p className="text-sm text-green-600">{success}</p>
+                    </motion.div>
                   )}
                 </div>
 
