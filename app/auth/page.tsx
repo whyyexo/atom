@@ -1,11 +1,17 @@
 "use client";
 
-import { useState, useMemo, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, ArrowRight, User } from "lucide-react";
-import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import Image from "next/image";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+export default function AuthPage() {
+  const router = useRouter();
+  
+  useEffect(() => {
+    router.replace("/auth/email");
+  }, [router]);
+
+  return null;
+}
 
 type Step = "email" | "name" | "password" | "create-password";
 

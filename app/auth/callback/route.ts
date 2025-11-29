@@ -13,12 +13,12 @@ export async function GET(request: Request) {
   if (error) {
     const errorMessage = errorDescription || error;
     return NextResponse.redirect(
-      new URL(`/auth?error=${encodeURIComponent(errorMessage)}`, requestUrl.origin)
+      new URL(`/auth/email?error=${encodeURIComponent(errorMessage)}`, requestUrl.origin)
     );
   }
 
   if (!code) {
-    return NextResponse.redirect(new URL("/auth", requestUrl.origin));
+    return NextResponse.redirect(new URL("/auth/email", requestUrl.origin));
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error("Missing Supabase environment variables");
     return NextResponse.redirect(
-      new URL("/auth?error=config", requestUrl.origin)
+      new URL("/auth/email?error=config", requestUrl.origin)
     );
   }
 
@@ -71,7 +71,32 @@ export async function GET(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return NextResponse.redirect(new URL("/auth?error=no-user", requestUrl.origin));
+    return NextResponse.redirect(new URL("/auth/email?error=no-user", requestUrl.origin));
+  }
+
+  // Check if user needs to complete profile (no first_name/last_name)
+  const firstName = user.user_metadata?.first_name;
+  const lastName = user.user_metadata?.last_name;
+  
+  // If social login and no name metadata, try to extract from provider
+  if (!firstName || !lastName) {
+    const fullName = user.user_metadata?.full_name || 
+                     user.user_metadata?.name ||
+                     user.user_metadata?.display_name;
+    
+    if (fullName) {
+      const nameParts = fullName.split(" ");
+      if (nameParts.length >= 2) {
+        // Update user metadata with extracted name
+        await supabase.auth.updateUser({
+          data: {
+            first_name: nameParts[0],
+            last_name: nameParts.slice(1).join(" "),
+            full_name: fullName,
+          },
+        });
+      }
+    }
   }
 
   // Redirect to dashboard or next URL

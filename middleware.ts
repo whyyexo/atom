@@ -77,6 +77,11 @@ export async function middleware(request: NextRequest) {
     "/legal/cookies",
     "/legal/acceptable-use",
     "/auth",
+    "/auth/email",
+    "/auth/login",
+    "/auth/register",
+    "/auth/reset-password",
+    "/auth/update-password",
     "/auth/callback",
   ];
 
@@ -98,19 +103,19 @@ export async function middleware(request: NextRequest) {
   // Check if route is protected
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route));
 
-  // Handle legacy auth routes - redirect to new auth page
+  // Handle legacy auth routes - redirect to new auth email page
   if (isLegacyAuthRoute) {
-    return NextResponse.redirect(new URL("/auth", request.url));
+    return NextResponse.redirect(new URL("/auth/email", request.url));
   }
 
-  // Redirect authenticated users away from auth page
-  if (pathname === "/auth" && user) {
+  // Redirect authenticated users away from auth pages
+  if (pathname.startsWith("/auth") && pathname !== "/auth/callback" && user) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   // Protect dashboard and workspace routes
   if (isProtectedRoute && !user) {
-    const redirectUrl = new URL("/auth", request.url);
+    const redirectUrl = new URL("/auth/email", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }
@@ -122,7 +127,7 @@ export async function middleware(request: NextRequest) {
 
   // For any other route, require authentication
   if (!user) {
-    const redirectUrl = new URL("/auth", request.url);
+    const redirectUrl = new URL("/auth/email", request.url);
     redirectUrl.searchParams.set("redirect", pathname);
     return NextResponse.redirect(redirectUrl);
   }
