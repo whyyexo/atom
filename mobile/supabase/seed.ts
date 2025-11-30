@@ -1,13 +1,38 @@
 import { createClient } from '@supabase/supabase-js';
 import * as dotenv from 'dotenv';
+import * as path from 'path';
+import * as fs from 'fs';
 
-dotenv.config();
+// Load .env.local first, then .env
+const envLocalPath = path.resolve(process.cwd(), '.env.local');
+const envPath = path.resolve(process.cwd(), '.env');
 
-const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!; // Use service role key for seeding
+// Try to load .env.local first, then .env
+if (fs.existsSync(envLocalPath)) {
+  dotenv.config({ path: envLocalPath });
+} else if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  dotenv.config(); // Fallback to default .env
+}
+
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables');
+  console.error('\n❌ Missing Supabase environment variables!');
+  console.error('\nCurrent values:');
+  console.error(`  EXPO_PUBLIC_SUPABASE_URL: ${supabaseUrl ? '✓ Set' : '✗ Missing'}`);
+  console.error(`  SUPABASE_SERVICE_ROLE_KEY: ${supabaseServiceKey ? '✓ Set' : '✗ Missing'}`);
+  console.error('\nPlease add to .env.local:');
+  console.error('  EXPO_PUBLIC_SUPABASE_URL=your-supabase-url');
+  console.error('  SUPABASE_SERVICE_ROLE_KEY=your-service-role-key');
+  console.error('\nTo get your Service Role Key:');
+  console.error('  1. Go to https://supabase.com/dashboard');
+  console.error('  2. Select your project');
+  console.error('  3. Go to Settings > API');
+  console.error('  4. Copy the "service_role" key (NOT the anon key)\n');
+  process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
@@ -107,7 +132,7 @@ async function seed() {
       {
         user_id: userId,
         role: 'assistant' as const,
-        text: 'Hello! I'm your AI assistant. I can help you with tasks, answer questions, and assist with your workflow.',
+        text: "Hello! I'm your AI assistant. I can help you with tasks, answer questions, and assist with your workflow.",
       },
     ];
 
