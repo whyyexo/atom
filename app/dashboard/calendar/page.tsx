@@ -1,167 +1,187 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  Sparkles,
+  Plus,
+  Brain,
+} from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export default function CalendarPage() {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+  const events = [
+    {
+      id: 1,
+      title: "Team Sync",
+      time: "10:00 AM",
+      type: "meeting",
+      duration: "30min",
+    },
+    {
+      id: 2,
+      title: "Deep Work Block",
+      time: "2:00 PM",
+      type: "focus",
+      duration: "2h",
+    },
+    {
+      id: 3,
+      title: "Client Call",
+      time: "4:30 PM",
+      type: "meeting",
+      duration: "1h",
+    },
   ];
 
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
-  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-
-  const goToPreviousMonth = () => {
-    setCurrentDate(new Date(currentYear, currentMonth - 1, 1));
-  };
-
-  const goToNextMonth = () => {
-    setCurrentDate(new Date(currentYear, currentMonth + 1, 1));
-  };
-
-  const goToToday = () => {
-    setCurrentDate(new Date());
-  };
-
-  const isToday = (day: number) => {
-    return (
-      day === today.getDate() &&
-      currentMonth === today.getMonth() &&
-      currentYear === today.getFullYear()
-    );
-  };
-
-  // Events for demonstration (in a real app, this would come from data)
-  const events: Record<number, { count: number; color: string }> = {
-    5: { count: 2, color: "#0071e3" },
-    12: { count: 1, color: "#34c759" },
-    18: { count: 3, color: "#ff9500" },
-    25: { count: 1, color: "#af52de" },
-  };
+  const aiSuggestions = [
+    "Schedule 2h deep work for strategy review at 2 PM",
+    "Move team sync to 11 AM for better focus",
+    "Add buffer time after client call",
+  ];
 
   return (
-    <div className="min-h-screen bg-[#fdfdfd] dark:bg-[#0a0a0a]">
-      <div className="p-8">
-        <div className="flex items-center justify-between mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#0a0a0a] dark:via-black dark:to-[#1a1a1a]">
+      <div className="max-w-6xl mx-auto p-6 space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-white">Calendar</h1>
-            <p className="mt-1 text-sm text-black/50 dark:text-white/50">
-              View and manage your schedule
+            <h1 className="text-4xl font-semibold tracking-tight">Calendar</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">
+              Your schedule, optimized
             </p>
           </div>
-          <button
-            onClick={goToToday}
-            className="px-4 py-2 text-sm font-medium text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white transition-colors"
-          >
-            Today
-          </button>
+          <Button className="rounded-2xl bg-[#007AFF] hover:bg-[#0051D5]">
+            <Plus className="h-4 w-4 mr-2" />
+            New Event
+          </Button>
         </div>
 
-        <div className="rounded-xl border border-black/5 dark:border-white/5 bg-white dark:bg-black/50 p-8 max-w-4xl">
-          {/* Calendar Header */}
-          <div className="flex items-center justify-between mb-8">
-            <button
-              onClick={goToPreviousMonth}
-              className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-            >
-              <ChevronLeft className="h-5 w-5 text-black/60 dark:text-white/60" />
-            </button>
-            <h2 className="text-xl font-semibold text-black dark:text-white">
-              {monthNames[currentMonth]} {currentYear}
-            </h2>
-            <button
-              onClick={goToNextMonth}
-              className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
-            >
-              <ChevronRight className="h-5 w-5 text-black/60 dark:text-white/60" />
-            </button>
-          </div>
-
-          {/* Calendar Grid */}
-          <div className="grid grid-cols-7 gap-2">
-            {/* Weekday Headers */}
-            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-              <div
-                key={day}
-                className="text-center text-xs font-medium text-black/40 dark:text-white/40 py-2"
-              >
-                {day}
+        {/* Calendar Grid */}
+        <Card className="rounded-3xl border-0 bg-white/60 dark:bg-black/40 backdrop-blur-xl shadow-lg">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Today's Schedule</CardTitle>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline">Google Calendar</Badge>
+                <Badge variant="outline">Apple Calendar</Badge>
               </div>
-            ))}
-
-            {/* Empty cells for days before month starts */}
-            {Array.from({ length: firstDayOfMonth }).map((_, i) => (
-              <div key={`empty-${i}`} />
-            ))}
-
-            {/* Days of the month */}
-            {days.map((day) => {
-              const dayEvents = events[day];
-              const isTodayDay = isToday(day);
-
-              return (
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {events.map((event, idx) => (
                 <motion.div
-                  key={day}
-                  whileHover={{ scale: 1.05 }}
-                  className={cn(
-                    "aspect-square rounded-lg p-2 cursor-pointer transition-all duration-150",
-                    isTodayDay
-                      ? "bg-black/10 dark:bg-white/10 border border-black/20 dark:border-white/20"
-                      : "hover:bg-black/5 dark:hover:bg-white/5"
-                  )}
+                  key={event.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
                 >
-                  <div
-                    className={cn(
-                      "text-sm font-medium mb-1",
-                      isTodayDay
-                        ? "text-black dark:text-white"
-                        : "text-black/70 dark:text-white/70"
-                    )}
-                  >
-                    {day}
-                  </div>
-                  {dayEvents && (
-                    <div className="flex items-center gap-1">
-                      {Array.from({ length: Math.min(dayEvents.count, 3) }).map((_, i) => (
+                  <Card className="rounded-2xl border-0 bg-white/80 dark:bg-black/60 backdrop-blur-xl shadow-sm hover:shadow-md transition-all">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-4">
                         <div
-                          key={i}
-                          className="w-1.5 h-1.5 rounded-full"
-                          style={{ backgroundColor: dayEvents.color }}
+                          className={`w-2 h-2 rounded-full mt-2 ${
+                            event.type === "meeting"
+                              ? "bg-[#007AFF]"
+                              : "bg-[#34C759]"
+                          }`}
                         />
-                      ))}
-                      {dayEvents.count > 3 && (
-                        <span className="text-[10px] text-black/50 dark:text-white/50">
-                          +{dayEvents.count - 3}
-                        </span>
-                      )}
-                    </div>
-                  )}
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-semibold">{event.title}</h3>
+                            <Badge
+                              className={
+                                event.type === "focus"
+                                  ? "bg-[#34C759]/20 text-[#34C759]"
+                                  : "bg-[#007AFF]/20 text-[#007AFF]"
+                              }
+                            >
+                              {event.type}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-3 mt-2">
+                            <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-1">
+                              <Clock className="h-3 w-3" />
+                              {event.time}
+                            </span>
+                            <span className="text-sm text-gray-500">
+                              {event.duration}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </motion.div>
-              );
-            })}
-          </div>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Deep Work Blocks */}
+        <Card className="rounded-3xl border-0 bg-gradient-to-br from-[#34C759]/10 to-[#30D158]/10 dark:from-[#34C759]/20 dark:to-[#30D158]/20 backdrop-blur-xl shadow-lg">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Brain className="h-5 w-5 text-[#34C759]" />
+              <CardTitle>Deep Work Blocks</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="p-4 rounded-2xl bg-white/80 dark:bg-black/60">
+                <h4 className="font-semibold mb-2">Today</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  2:00 PM - 4:00 PM (2h)
+                </p>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/80 dark:bg-black/60">
+                <h4 className="font-semibold mb-2">Tomorrow</h4>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  9:00 AM - 11:00 AM (2h)
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* AI Suggestions */}
+        <Card className="rounded-3xl border-0 bg-white/60 dark:bg-black/40 backdrop-blur-xl shadow-lg">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-[#007AFF]" />
+              <CardTitle>AI Suggestions</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {aiSuggestions.map((suggestion, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded-2xl bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-black/60 dark:to-gray-900/60 border border-black/5 dark:border-white/5"
+                >
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    {suggestion}
+                  </p>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="mt-3 rounded-xl"
+                  >
+                    Apply
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
 }
-
