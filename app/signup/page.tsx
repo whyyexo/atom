@@ -4,23 +4,11 @@ import { useState, FormEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { Loader2, ArrowRight } from "lucide-react";
-import {
-  PrimaryButton,
-  SecondaryButton,
-  EmailInput,
-  PasswordInput,
-  TextInput,
-  Card,
-  PageContainer,
-  TitleM,
-  Body,
-  Caption,
-  SmoothFadeSlide,
-} from "@/guide";
-import { useTheme } from "@/components/providers/theme-provider";
-import { getColor } from "@/guide/styles";
-import { motion, AnimatePresence } from "framer-motion";
+import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 type Step = "email" | "name" | "password";
 
@@ -35,8 +23,6 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-  const { theme } = useTheme();
-  const mode = theme === "dark" ? "dark" : "light";
 
   const validateName = (name: string): boolean => {
     return /^[a-zA-Z\s'-]+$/.test(name) && name.trim().length > 0;
@@ -109,30 +95,44 @@ export default function SignUpPage() {
 
       if (signUpError) {
         const errorMsg = signUpError.message.toLowerCase();
+        setLoading(false);
         
         if (
           errorMsg.includes("already registered") ||
           errorMsg.includes("user already exists") ||
           errorMsg.includes("email already registered")
         ) {
-          setError("This email is already registered. Please sign in instead.");
-          setLoading(false);
+          window.location.href = `/login?email=${encodeURIComponent(email)}`;
           return;
         }
         
         setError(signUpError.message || "Failed to create account");
-        setLoading(false);
         return;
       }
 
       if (data.session && data.user) {
-        router.push("/dashboard");
-        router.refresh();
+        window.location.href = "/dashboard";
         return;
       }
 
+      if (data.user && !data.session) {
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        const { data: { session } } = await supabase.auth.getSession();
+        
+        if (session && session.user) {
+          window.location.href = "/dashboard";
+          return;
+        }
+
+        setLoading(false);
+        setError("");
+        window.location.href = `/login?email=${encodeURIComponent(email)}`;
+        return;
+      }
+
+      setLoading(false);
       setError("");
-      router.push("/login?message=Please check your email to confirm your account");
+      window.location.href = `/login?email=${encodeURIComponent(email)}`;
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
       setLoading(false);
@@ -140,194 +140,126 @@ export default function SignUpPage() {
   }
 
   return (
-    <PageContainer className="flex items-center justify-center">
-      <SmoothFadeSlide direction="up" delay={0.1}>
-        <Card className="w-full max-w-md">
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <TitleM>
-                {step === "email" && "Create Account"}
-                {step === "name" && `Welcome, ${email.split("@")[0]}!`}
-                {step === "password" && `Almost there, ${firstName}!`}
-              </TitleM>
-              <Body>
-                {step === "email" && "Enter your email to get started"}
-                {step === "name" && "Tell us your name"}
-                {step === "password" && "Set your password"}
-              </Body>
-            </div>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold">
+            {step === "email" && "Create your account"}
+            {step === "name" && "Tell us your name"}
+            {step === "password" && `Set your password, ${firstName}`}
+          </CardTitle>
+          <CardDescription>
+            {step === "email" && "Enter your email to get started"}
+            {step === "name" && "We'll use this to personalize your experience"}
+            {step === "password" && "Create a secure password"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {step === "email" && (
+            <form onSubmit={handleEmailSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <Button type="submit" className="w-full">Continue</Button>
+            </form>
+          )}
 
-            <AnimatePresence mode="wait">
-              {step === "email" && (
-                <motion.form
-                  key="email"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  onSubmit={handleEmailSubmit}
-                  className="space-y-5"
-                >
-                  <EmailInput
-                    label="Email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                    required
-                    error={error}
-                  />
+          {step === "name" && (
+            <form onSubmit={handleNameSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First name</Label>
+                <Input
+                  id="firstName"
+                  type="text"
+                  placeholder="John"
+                  value={firstName}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
+                      setFirstName(value);
+                      setError("");
+                    }
+                  }}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last name</Label>
+                <Input
+                  id="lastName"
+                  type="text"
+                  placeholder="Doe"
+                  value={lastName}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
+                      setLastName(value);
+                      setError("");
+                    }
+                  }}
+                  required
+                />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <Button type="submit" className="w-full">Continue</Button>
+            </form>
+          )}
 
-                  <PrimaryButton type="submit" fullWidth>
-                    Continue <ArrowRight className="ml-2 h-4 w-4" />
-                  </PrimaryButton>
-                </motion.form>
-              )}
+          {step === "password" && (
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword">Confirm password</Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating account...
+                  </>
+                ) : (
+                  "Create Account"
+                )}
+              </Button>
+            </form>
+          )}
 
-              {step === "name" && (
-                <motion.form
-                  key="name"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  onSubmit={handleNameSubmit}
-                  className="space-y-5"
-                >
-                  <TextInput
-                    label="First Name"
-                    placeholder="John"
-                    value={firstName}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value;
-                      if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
-                        setFirstName(value);
-                        setError("");
-                      }
-                    }}
-                    required
-                    error={error && error.includes("First") ? error : undefined}
-                  />
-
-                  <TextInput
-                    label="Last Name"
-                    placeholder="Doe"
-                    value={lastName}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const value = e.target.value;
-                      if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
-                        setLastName(value);
-                        setError("");
-                      }
-                    }}
-                    required
-                    error={error && error.includes("Last") ? error : undefined}
-                  />
-
-                  {error && !error.includes("First") && !error.includes("Last") && (
-                    <div
-                      className="p-3 rounded-2xl text-sm"
-                      style={{
-                        backgroundColor: getColor("systemRed", mode) + "15",
-                        color: getColor("systemRed", mode),
-                      }}
-                    >
-                      {error}
-                    </div>
-                  )}
-
-                  <div className="flex gap-3">
-                    <SecondaryButton
-                      type="button"
-                      onClick={() => setStep("email")}
-                      fullWidth
-                    >
-                      Back
-                    </SecondaryButton>
-                    <PrimaryButton type="submit" fullWidth>
-                      Continue <ArrowRight className="ml-2 h-4 w-4" />
-                    </PrimaryButton>
-                  </div>
-                </motion.form>
-              )}
-
-              {step === "password" && (
-                <motion.form
-                  key="password"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  onSubmit={handlePasswordSubmit}
-                  className="space-y-5"
-                >
-                  <PasswordInput
-                    label="Password"
-                    placeholder="Create a secure password"
-                    value={password}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                    required
-                    disabled={loading}
-                    showStrengthIndicator
-                  />
-
-                  <PasswordInput
-                    label="Confirm Password"
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
-                    required
-                    disabled={loading}
-                    error={error && error.includes("match") ? error : undefined}
-                  />
-
-                  {error && !error.includes("match") && (
-                    <div
-                      className="p-3 rounded-2xl text-sm"
-                      style={{
-                        backgroundColor: getColor("systemRed", mode) + "15",
-                        color: getColor("systemRed", mode),
-                      }}
-                    >
-                      {error}
-                    </div>
-                  )}
-
-                  <div className="flex gap-3">
-                    <SecondaryButton
-                      type="button"
-                      onClick={() => setStep("name")}
-                      fullWidth
-                      disabled={loading}
-                    >
-                      Back
-                    </SecondaryButton>
-                    <PrimaryButton type="submit" fullWidth disabled={loading}>
-                      {loading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Creating...
-                        </>
-                      ) : (
-                        "Create Account"
-                      )}
-                    </PrimaryButton>
-                  </div>
-                </motion.form>
-              )}
-            </AnimatePresence>
-
-            <div className="text-center">
-              <Caption>
-                Already have an account?{" "}
-                <Link
-                  href="/login"
-                  className="font-medium hover:underline"
-                  style={{ color: getColor("systemBlue", mode) }}
-                >
-                  Sign in
-                </Link>
-              </Caption>
-            </div>
+          <div className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <Link href="/login" className="text-blue-600 hover:underline">
+              Sign in
+            </Link>
           </div>
-        </Card>
-      </SmoothFadeSlide>
-    </PageContainer>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

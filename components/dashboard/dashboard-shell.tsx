@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { SidebarApple } from "@/components/navigation/sidebar-apple";
-import { MobileNavApple } from "@/components/navigation/mobile-nav-apple";
+import { PremiumSidebar } from "@/components/dashboard/premium-sidebar";
+import { useRouter } from "next/navigation";
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -12,8 +12,9 @@ type DashboardShellProps = {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
+  const router = useRouter();
   const [userEmail, setUserEmail] = useState("user@atom.app");
-  const [userName, setUserName] = useState<string | undefined>(undefined);
+  const [userName, setUserName] = useState<string>("User");
   const [mounted, setMounted] = useState(false);
   const supabase = createSupabaseBrowserClient();
 
@@ -35,12 +36,19 @@ export function DashboardShell({ children }: DashboardShellProps) {
           setUserName(`${firstName} ${lastName}`);
         } else if (firstName) {
           setUserName(firstName);
+        } else {
+          setUserName(userEmail.split("@")[0]);
         }
       }
     };
 
     loadUserData();
-  }, [supabase]);
+  }, [supabase, userEmail]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    router.push("/login");
+  };
 
   if (!mounted) {
     return null;
@@ -48,18 +56,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   return (
     <div className="flex min-h-screen bg-[#fdfdfd] dark:bg-[#0a0a0a]">
-      {/* Desktop Sidebar */}
-      <div className="hidden md:block">
-        <SidebarApple userEmail={userEmail} userName={userName} />
-      </div>
-
-      {/* Mobile Bottom Nav */}
-      <div className="md:hidden">
-        <MobileNavApple userEmail={userEmail} userName={userName} />
-      </div>
-
-      {/* Main Content */}
-      <div className="flex-1 md:ml-[72px] pb-20 md:pb-0">
+      <PremiumSidebar 
+        userEmail={userEmail} 
+        userName={userName} 
+        onSignOut={handleSignOut}
+      />
+      <div className="flex-1 md:ml-[280px]">
         <main className="min-h-screen">{children}</main>
       </div>
     </div>

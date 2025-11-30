@@ -5,19 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Loader2 } from "lucide-react";
-import {
-  PrimaryButton,
-  EmailInput,
-  PasswordInput,
-  Card,
-  PageContainer,
-  TitleM,
-  Body,
-  Caption,
-  SmoothFadeSlide,
-} from "@/guide";
-import { useTheme } from "@/components/providers/theme-provider";
-import { getColor } from "@/guide/styles";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -27,8 +18,6 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-  const { theme } = useTheme();
-  const mode = theme === "dark" ? "dark" : "light";
 
   useEffect(() => {
     const message = searchParams.get("message");
@@ -55,9 +44,7 @@ function LoginForm() {
       }
 
       if (data.user) {
-        const redirect = searchParams.get("redirect");
-        router.push(redirect || "/dashboard");
-        router.refresh();
+        router.push("/dashboard");
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
@@ -66,96 +53,74 @@ function LoginForm() {
   }
 
   return (
-    <PageContainer className="flex items-center justify-center">
-      <SmoothFadeSlide direction="up" delay={0.1}>
-        <Card className="w-full max-w-md">
-          <div className="space-y-6">
-            <div className="text-center space-y-2">
-              <TitleM>Sign In</TitleM>
-              <Body>
-                Enter your email and password to access your account
-              </Body>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <EmailInput
-                label="Email"
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-semibold">Sign in to your account</CardTitle>
+          <CardDescription>Enter your email and password to continue</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
                 placeholder="you@example.com"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading}
-                error={error && error.includes("email") ? error : undefined}
               />
-
-              <PasswordInput
-                label="Password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                required
-                disabled={loading}
-                error={error && error.includes("password") ? error : undefined}
-              />
-
-              {error && !error.includes("email") && !error.includes("password") && (
-                <div
-                  className="p-3 rounded-2xl text-sm"
-                  style={{
-                    backgroundColor: getColor("systemRed", mode) + "15",
-                    color: getColor("systemRed", mode),
-                  }}
-                >
-                  {error}
-                </div>
-              )}
-
-              <PrimaryButton
-                type="submit"
-                fullWidth
-                disabled={loading}
-                text={loading ? "Signing in..." : "Sign In"}
-              >
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              </PrimaryButton>
-            </form>
-
-            <div className="text-center">
-              <Caption>
-                Don't have an account?{" "}
-                <Link
-                  href="/signup"
-                  className="font-medium hover:underline"
-                  style={{ color: getColor("systemBlue", mode) }}
-                >
-                  Sign up
-                </Link>
-              </Caption>
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            {error && (
+              <p className="text-sm text-red-500">{error}</p>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign in"
+              )}
+            </Button>
+          </form>
+          <div className="mt-4 text-center text-sm">
+            <Link href="/auth/reset-password" className="text-blue-600 hover:underline">
+              Forgot password?
+            </Link>
           </div>
-        </Card>
-      </SmoothFadeSlide>
-    </PageContainer>
+          <div className="mt-4 text-center text-sm">
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-blue-600 hover:underline">
+              Sign up
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
 
 export default function LoginPage() {
-  const { theme } = useTheme();
-  const mode = theme === "dark" ? "dark" : "light";
-
   return (
     <Suspense
       fallback={
-        <PageContainer className="flex items-center justify-center">
-          <Card className="w-full max-w-md">
-            <div className="flex items-center justify-center p-6">
-              <Loader2
-                className="h-6 w-6 animate-spin"
-                style={{ color: getColor("text.tertiary", mode) }}
-              />
-            </div>
-          </Card>
-        </PageContainer>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
       }
     >
       <LoginForm />

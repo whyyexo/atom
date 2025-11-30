@@ -1,27 +1,14 @@
 "use client";
 
-import { Plus, Calendar, CheckCircle2, Clock, AlertCircle, ArrowRight } from "lucide-react";
+import { Plus, Calendar, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import Link from "next/link";
-import {
-  Card,
-  PageContainer,
-  Section,
-  TitleM,
-  Body,
-  Caption,
-  SmoothFadeSlide,
-  PrimaryButton,
-} from "@/guide";
-import { useTheme } from "@/components/providers/theme-provider";
-import { getColor } from "@/guide/styles";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const userName = "User";
   const todayTasksCount = 5;
   const activeProject = "Q1 Product Launch";
-  const { theme } = useTheme();
-  const mode = theme === "dark" ? "dark" : "light";
 
   const projects = [
     { id: 1, name: "Q1 Product Launch", progress: 68, color: "#007AFF", members: 3 },
@@ -42,276 +29,166 @@ export default function DashboardPage() {
   };
 
   return (
-    <PageContainer>
-      <Section spacing="lg">
-        <div className="space-y-8">
-          {/* Welcome Header */}
-          <SmoothFadeSlide direction="up" delay={0}>
-            <div className="space-y-2">
-              <TitleM>Welcome back, {userName}</TitleM>
-              <Caption>Here's what's happening today</Caption>
+    <div className="p-8 space-y-8">
+      {/* Welcome Header */}
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold">Welcome back, {userName}</h1>
+        <p className="text-gray-600 dark:text-gray-400">Here's what's happening today</p>
+      </div>
+
+      {/* Focus Block */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Today's Focus</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <p className="text-base">{todayTasksCount} tasks due today</p>
             </div>
-          </SmoothFadeSlide>
-
-          {/* Focus Block */}
-          <SmoothFadeSlide direction="up" delay={0.1}>
-            <Card className="p-8">
-              <div className="space-y-6">
-                <TitleM>Today's Focus</TitleM>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2
-                      className="w-5 h-5"
-                      style={{ color: getColor("text.secondary", mode) }}
-                    />
-                    <Body>{todayTasksCount} tasks due today</Body>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Calendar
-                      className="w-5 h-5"
-                      style={{ color: getColor("text.secondary", mode) }}
-                    />
-                    <Body>Active: {activeProject}</Body>
-                  </div>
-                  <div className="flex items-center gap-3 pt-2">
-                    <Link href="/dashboard/tasks">
-                      <PrimaryButton size="sm">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Task
-                      </PrimaryButton>
-                    </Link>
-                    <Link href="/dashboard/projects">
-                      <PrimaryButton size="sm">
-                        <Plus className="w-4 h-4 mr-2" />
-                        Add Project
-                      </PrimaryButton>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </SmoothFadeSlide>
-
-          {/* Projects Overview */}
-          <SmoothFadeSlide direction="up" delay={0.2}>
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <TitleM>Projects</TitleM>
-                <Link
-                  href="/dashboard/projects"
-                  className="flex items-center gap-1 text-sm font-medium hover:opacity-70 transition-opacity"
-                  style={{ color: getColor("text.secondary", mode) }}
-                >
-                  View all <ArrowRight className="w-3 h-3" />
-                </Link>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {projects.map((project, index) => (
-                  <SmoothFadeSlide key={project.id} direction="up" delay={0.3 + index * 0.05}>
-                    <Card hoverable className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-start justify-between">
-                          <TitleM className="text-base">{project.name}</TitleM>
-                          <div
-                            className="w-2 h-2 rounded-full"
-                            style={{ backgroundColor: project.color }}
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <div
-                            className="h-1 rounded-full overflow-hidden"
-                            style={{ backgroundColor: getColor("fill.tertiary", mode) }}
-                          >
-                            <div
-                              className="h-full rounded-full transition-all duration-300"
-                              style={{ width: `${project.progress}%`, backgroundColor: project.color }}
-                            />
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <Caption>{project.progress}% complete</Caption>
-                            <div className="flex -space-x-2">
-                              {Array.from({ length: project.members }).map((_, i) => (
-                                <div
-                                  key={i}
-                                  className="w-6 h-6 rounded-full border-2"
-                                  style={{
-                                    backgroundColor: getColor("fill.secondary", mode),
-                                    borderColor: getColor("background.primary", mode),
-                                  }}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </Card>
-                  </SmoothFadeSlide>
-                ))}
-              </div>
+            <div className="flex items-center gap-3">
+              <Calendar className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+              <p className="text-base">Active: {activeProject}</p>
             </div>
-          </SmoothFadeSlide>
-
-          {/* Tasks and Calendar */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <SmoothFadeSlide direction="up" delay={0.4}>
-              <div className="space-y-6">
-                <TitleM>Tasks</TitleM>
-                <div className="space-y-6">
-                  {/* Due Today */}
-                  {tasks.dueToday.length > 0 && (
-                    <Card className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" style={{ color: getColor("text.secondary", mode) }} />
-                          <Body className="font-semibold">Due Today</Body>
-                        </div>
-                        <div className="space-y-2">
-                          {tasks.dueToday.map((task) => (
-                            <div
-                              key={task.id}
-                              className="flex items-center gap-3 rounded-xl px-3 py-2 hover:opacity-70 transition-opacity cursor-pointer"
-                              style={{ backgroundColor: getColor("fill.tertiary", mode) }}
-                            >
-                              <div
-                                className={cn("w-1.5 h-1.5 rounded-full")}
-                                style={{
-                                  backgroundColor:
-                                    task.priority === "high"
-                                      ? getColor("systemRed", mode)
-                                      : getColor("systemOrange", mode),
-                                }}
-                              />
-                              <Body className="text-sm">{task.title}</Body>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  )}
-
-                  {/* Upcoming */}
-                  {tasks.upcoming.length > 0 && (
-                    <Card className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" style={{ color: getColor("text.secondary", mode) }} />
-                          <Body className="font-semibold">Upcoming</Body>
-                        </div>
-                        <div className="space-y-2">
-                          {tasks.upcoming.map((task) => (
-                            <div
-                              key={task.id}
-                              className="flex items-center justify-between rounded-xl px-3 py-2 hover:opacity-70 transition-opacity cursor-pointer"
-                              style={{ backgroundColor: getColor("fill.tertiary", mode) }}
-                            >
-                              <Body className="text-sm">{task.title}</Body>
-                              <Caption>{task.dueDate}</Caption>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  )}
-
-                  {/* Overdue */}
-                  {tasks.overdue.length > 0 && (
-                    <Card className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                          <AlertCircle
-                            className="w-4 h-4"
-                            style={{ color: getColor("systemRed", mode) }}
-                          />
-                          <Body className="font-semibold" style={{ color: getColor("systemRed", mode) }}>
-                            Overdue
-                          </Body>
-                        </div>
-                        <div className="space-y-2">
-                          {tasks.overdue.map((task) => (
-                            <div
-                              key={task.id}
-                              className="flex items-center gap-3 rounded-xl px-3 py-2 hover:opacity-70 transition-opacity cursor-pointer"
-                              style={{
-                                backgroundColor: getColor("systemRed", mode) + "15",
-                              }}
-                            >
-                              <div
-                                className="w-1.5 h-1.5 rounded-full"
-                                style={{ backgroundColor: getColor("systemRed", mode) }}
-                              />
-                              <Body className="text-sm" style={{ color: getColor("systemRed", mode) }}>
-                                {task.title}
-                              </Body>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </Card>
-                  )}
-                </div>
-              </div>
-            </SmoothFadeSlide>
-
-            {/* Calendar Snapshot */}
-            <SmoothFadeSlide direction="up" delay={0.5}>
-              <Card className="p-6">
-                <TitleM className="mb-6">Calendar</TitleM>
-                <CalendarSnapshot />
-              </Card>
-            </SmoothFadeSlide>
+            <div className="flex items-center gap-3 pt-2">
+              <Link href="/dashboard/tasks">
+                <Button size="sm">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Task
+                </Button>
+              </Link>
+              <Link href="/dashboard/projects">
+                <Button size="sm">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Project
+                </Button>
+              </Link>
+            </div>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Projects Overview */}
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold">Projects</h2>
+          <Link href="/dashboard/projects">
+            <Button variant="outline" size="sm">View all</Button>
+          </Link>
         </div>
-      </Section>
-    </PageContainer>
-  );
-}
-
-function CalendarSnapshot() {
-  const today = new Date();
-  const currentMonth = today.toLocaleString("default", { month: "long", year: "numeric" });
-  const daysInMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
-  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-  const { theme } = useTheme();
-  const mode = theme === "dark" ? "dark" : "light";
-
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-4">
-        <Body className="font-semibold">{currentMonth}</Body>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project) => (
+            <Card key={project.id}>
+              <CardHeader>
+                <CardTitle className="text-lg">{project.name}</CardTitle>
+                <CardDescription>{project.members} members</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600 dark:text-gray-400">Progress</span>
+                    <span className="font-medium">{project.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full transition-all"
+                      style={{
+                        width: `${project.progress}%`,
+                        backgroundColor: project.color,
+                      }}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
-      <div className="grid grid-cols-7 gap-1">
-        {["S", "M", "T", "W", "T", "F", "S"].map((day) => (
-          <div
-            key={day}
-            className="text-center text-xs font-medium py-1"
-            style={{ color: getColor("text.tertiary", mode) }}
-          >
-            {day}
+
+      {/* Tasks Overview */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {/* Due Today */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Clock className="w-5 h-5" />
+              Due Today
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {tasks.dueToday.map((task) => (
+                <div
+                  key={task.id}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm">{task.title}</span>
+                </div>
+              ))}
+            {tasks.dueToday.length === 0 && (
+              <p className="text-sm text-gray-500">No tasks due today</p>
+            )}
           </div>
-        ))}
-        {Array.from({ length: firstDayOfMonth }).map((_, i) => (
-          <div key={`empty-${i}`} />
-        ))}
-        {days.map((day) => {
-          const isToday = day === today.getDate();
-          return (
-            <div
-              key={day}
-              className={cn(
-                "text-center text-xs py-1 rounded transition-colors cursor-pointer",
-                isToday && "font-semibold"
-              )}
-              style={{
-                backgroundColor: isToday ? getColor("systemBlue", mode) + "20" : "transparent",
-                color: isToday ? getColor("systemBlue", mode) : getColor("text.secondary", mode),
-              }}
-            >
-              {day}
+        </CardContent>
+      </Card>
+
+      {/* Upcoming */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg flex items-center gap-2">
+            <Calendar className="w-5 h-5" />
+            Upcoming
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-2">
+            {tasks.upcoming.map((task) => (
+              <div
+                key={task.id}
+                className="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors cursor-pointer"
+              >
+                <Clock className="w-4 h-4 text-gray-400" />
+                <div className="flex-1">
+                  <p className="text-sm">{task.title}</p>
+                  <p className="text-xs text-gray-500">{task.dueDate}</p>
+                </div>
+              </div>
+            ))}
+            {tasks.upcoming.length === 0 && (
+              <p className="text-sm text-gray-500">No upcoming tasks</p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Overdue */}
+      {tasks.overdue.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2 text-red-600 dark:text-red-400">
+              <AlertCircle className="w-5 h-5" />
+              Overdue
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {tasks.overdue.map((task) => (
+                <div
+                  key={task.id}
+                  className="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors cursor-pointer"
+                >
+                  <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                  <span className="text-sm font-semibold text-red-600 dark:text-red-400">
+                    {task.title}
+                  </span>
+                </div>
+              ))}
             </div>
-          );
-        })}
-      </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
