@@ -4,7 +4,7 @@ import { forwardRef, useState } from "react";
 import { useTheme } from "@/components/providers/theme-provider";
 import { getColor, getShadow, getTransition, getBlurClass } from "@/guide/styles";
 
-interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   helperText?: string;
