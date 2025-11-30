@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Safe area support for iOS */
+@supports (padding: max(0px)) {
+  .safe-area-inset-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
 :root {
   /* Light mode - Premium white/off-white palette */
   --background: 0 0% 99.2%; /* #fdfdfd */
