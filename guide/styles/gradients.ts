@@ -3,6 +3,8 @@
  * Aurora and accent gradients
  */
 
+import type { ColorMode } from "./colors";
+
 export const gradients = {
   // System gradients
   blue: {
@@ -40,7 +42,6 @@ export const gradients = {
 } as const;
 
 export type GradientType = keyof typeof gradients;
-export type ColorMode = "light" | "dark";
 
 export function getGradient(
   gradientType: GradientType,

@@ -3,6 +3,8 @@
  * Natural, soft shadows with depth
  */
 
+import type { ColorMode } from "./colors";
+
 export const shadows = {
   // Elevation shadows
   sm: {
@@ -50,8 +52,6 @@ export const shadows = {
     },
   },
 } as const;
-
-export type ColorMode = "light" | "dark";
 
 export function getShadow(
   shadowType: keyof typeof shadows,
