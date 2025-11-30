@@ -10,7 +10,6 @@ import {
   User,
   LogOut,
   ChevronDown,
-  ChevronUp,
   Sparkles,
   Plug,
   FlaskConical,
@@ -21,7 +20,6 @@ import {
   Clock,
   BarChart3,
   File,
-  Brain,
   Inbox,
   Lightbulb,
   Briefcase,
@@ -40,7 +38,7 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/providers/theme-provider";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 type PremiumSidebarProps = {
   userEmail?: string;
@@ -55,72 +53,44 @@ type NavItem = {
   icon: React.ComponentType<{ className?: string }>;
 };
 
-type NavCategory = {
-  name: string;
-  items: NavItem[];
-};
-
 export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User", onSignOut, workspaceSlug = "[slug]" }: PremiumSidebarProps) {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({
-    Workspace: true,
-    Intelligence: true,
-    Account: true,
-  });
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  const navigation: NavCategory[] = [
-    {
-      name: "Workspace",
-      items: [
-        { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
-        { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
-        { name: "Notes", href: "/dashboard/notes", icon: FileText },
-        { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-        { name: "Email", href: "/dashboard/email", icon: Mail },
-        { name: "Automations", href: "/dashboard/automations", icon: Zap },
-        { name: "Focus / Timers", href: "/dashboard/focus", icon: Clock },
-        { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-        { name: "Integrations", href: "/dashboard/integrations", icon: Plug },
-        { name: "Files", href: "/dashboard/files", icon: File },
-      ],
-    },
-    {
-      name: "Intelligence",
-      items: [
-        { name: "AI Assistant", href: "/dashboard/ai-assistant", icon: Sparkles },
-        { name: "Email Classifier", href: "/dashboard/email-classifier", icon: Inbox },
-        { name: "Smart Suggestions", href: "/dashboard/smart-suggestions", icon: Lightbulb },
-        { name: "Daily Briefing", href: "/dashboard/daily-briefing", icon: Briefcase },
-        { name: "Science Center", href: "/science", icon: FlaskConical },
-        { name: "Automation Studio", href: "/dashboard/automation-studio", icon: Bot },
-        { name: "Analytics IA", href: "/dashboard/ai-analytics", icon: TrendingUp },
-      ],
-    },
-    {
-      name: "Account",
-      items: [
-        { name: "Profile", href: "/dashboard/settings/profile", icon: User },
-        { name: "Security", href: "/dashboard/settings/security", icon: Shield },
-        { name: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
-        { name: "Notifications", href: "/dashboard/settings/notifications", icon: Bell },
-        { name: "Theme", href: "/dashboard/settings/theme", icon: Palette },
-        { name: "Data & Privacy", href: "/dashboard/settings/privacy", icon: Database },
-        { name: "Support Center", href: "/dashboard/support", icon: HelpCircle },
-        { name: "About Atom", href: "/dashboard/about", icon: Info },
-      ],
-    },
+  const navigation: NavItem[] = [
+    // Workspace
+    { name: "Dashboard", href: "/dashboard", icon: Home },
+    { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
+    { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
+    { name: "Notes", href: "/dashboard/notes", icon: FileText },
+    { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
+    { name: "Email", href: "/dashboard/email", icon: Mail },
+    { name: "Automations", href: "/dashboard/automations", icon: Zap },
+    { name: "Focus / Timers", href: "/dashboard/focus", icon: Clock },
+    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+    { name: "Integrations", href: "/dashboard/integrations", icon: Plug },
+    { name: "Files", href: "/dashboard/files", icon: File },
+    // Intelligence
+    { name: "AI Assistant", href: "/dashboard/ai-assistant", icon: Sparkles },
+    { name: "Email Classifier", href: "/dashboard/email-classifier", icon: Inbox },
+    { name: "Smart Suggestions", href: "/dashboard/smart-suggestions", icon: Lightbulb },
+    { name: "Daily Briefing", href: "/dashboard/daily-briefing", icon: Briefcase },
+    { name: "Science Center", href: "/science", icon: FlaskConical },
+    { name: "Automation Studio", href: "/dashboard/automation-studio", icon: Bot },
+    { name: "Analytics IA", href: "/dashboard/ai-analytics", icon: TrendingUp },
+    // Account
+    { name: "Profile", href: "/dashboard/settings/profile", icon: User },
+    { name: "Security", href: "/dashboard/settings/security", icon: Shield },
+    { name: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
+    { name: "Notifications", href: "/dashboard/settings/notifications", icon: Bell },
+    { name: "Theme", href: "/dashboard/settings/theme", icon: Palette },
+    { name: "Data & Privacy", href: "/dashboard/settings/privacy", icon: Database },
+    { name: "Support Center", href: "/dashboard/support", icon: HelpCircle },
+    { name: "About Atom", href: "/dashboard/about", icon: Info },
+    { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
-
-  const toggleCategory = (categoryName: string) => {
-    setExpandedCategories((prev) => ({
-      ...prev,
-      [categoryName]: !prev[categoryName],
-    }));
-  };
 
   const initials = userName
     .split(" ")
@@ -161,58 +131,23 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 px-3 overflow-y-auto">
-        {navigation.map((category) => {
-          const isExpanded = expandedCategories[category.name] ?? true;
+      <nav className="flex-1 space-y-0.5 px-3 overflow-y-auto py-4">
+        {navigation.map((item) => {
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          const Icon = item.icon;
           return (
-            <div key={category.name} className="mb-4">
-              <button
-                onClick={() => toggleCategory(category.name)}
-                className="w-full flex items-center justify-between px-3 py-2 mb-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/8 transition-colors group"
-              >
-                <p className="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40 group-hover:text-black/60 dark:group-hover:text-white/60">
-                  {category.name}
-                </p>
-                <motion.div
-                  animate={{ rotate: isExpanded ? 180 : 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <ChevronDown className="h-3 w-3 text-black/40 dark:text-white/40" />
-                </motion.div>
-              </button>
-              <AnimatePresence>
-                {isExpanded && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="space-y-0.5">
-                      {category.items.map((item) => {
-                        const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-                        const Icon = item.icon;
-                        return (
-                          <Link
-                            key={item.name}
-                            href={item.href}
-                            className={cn(
-                              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
-                              "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
-                              isActive && "bg-black/5 dark:bg-white/8 text-black dark:text-white"
-                            )}
-                          >
-                            <Icon className="h-4 w-4" />
-                            {item.name}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+            <Link
+              key={item.name}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
+                "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
+                isActive && "bg-black/5 dark:bg-white/8 text-black dark:text-white"
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {item.name}
+            </Link>
           );
         })}
       </nav>
