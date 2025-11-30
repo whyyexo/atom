@@ -2,9 +2,7 @@
 
 import {
   Home,
-  FolderKanban,
   CheckSquare,
-  Calendar,
   FileText,
   Settings,
   Moon,
@@ -12,8 +10,11 @@ import {
   User,
   LogOut,
   ChevronDown,
-  BarChart3,
-  Bell,
+  Sparkles,
+  Plug,
+  FlaskConical,
+  Mail,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,9 +30,16 @@ type PremiumSidebarProps = {
   workspaceSlug?: string;
 };
 
-const systemNav = [
-  { name: "Settings", href: "/dashboard/settings", icon: Settings },
-];
+type NavItem = {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+type NavCategory = {
+  name: string;
+  items: NavItem[];
+};
 
 export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User", onSignOut, workspaceSlug = "[slug]" }: PremiumSidebarProps) {
   const pathname = usePathname();
@@ -39,14 +47,45 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  const mainNav = [
-    { name: "Home", href: `/dashboard`, icon: Home },
-    { name: "Projects", href: `/dashboard/projects`, icon: FolderKanban },
-    { name: "Tasks", href: `/dashboard/tasks`, icon: CheckSquare },
-    { name: "Calendar", href: `/dashboard/calendar`, icon: Calendar },
-    { name: "Notes", href: `/dashboard/notes`, icon: FileText },
-    { name: "Analytics", href: `/dashboard/analytics`, icon: BarChart3 },
-    { name: "Notifications", href: `/dashboard/notifications`, icon: Bell },
+  const navigation: NavCategory[] = [
+    {
+      name: "Core",
+      items: [
+        { name: "Dashboard", href: "/dashboard", icon: Home },
+        { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
+        { name: "Notes", href: "/dashboard/notes", icon: FileText },
+      ],
+    },
+    {
+      name: "AI Assistant",
+      items: [
+        { name: "Automations", href: "/dashboard/automations", icon: Zap },
+      ],
+    },
+    {
+      name: "Integrations",
+      items: [
+        { name: "Automations", href: "/dashboard/integrations/automations", icon: Plug },
+      ],
+    },
+    {
+      name: "Science",
+      items: [
+        { name: "Science Hub", href: "/science", icon: FlaskConical },
+      ],
+    },
+    {
+      name: "Communication",
+      items: [
+        { name: "Email", href: "/dashboard/email", icon: Mail },
+      ],
+    },
+    {
+      name: "Settings",
+      items: [
+        { name: "Settings", href: "/dashboard/settings", icon: Settings },
+      ],
+    },
   ];
 
   const initials = userName
@@ -89,63 +128,35 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
 
       {/* Navigation */}
       <nav className="flex-1 space-y-1 px-3 overflow-y-auto">
-        {/* MAIN */}
-        <div className="mb-6">
-          <div className="px-3 py-2 mb-1">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40">
-              MAIN
-            </p>
+        {navigation.map((category) => (
+          <div key={category.name} className="mb-6">
+            <div className="px-3 py-2 mb-1">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40">
+                {category.name}
+              </p>
+            </div>
+            <div className="space-y-0.5">
+              {category.items.map((item) => {
+                const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={cn(
+                      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
+                      "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
+                      isActive && "bg-black/5 dark:bg-white/8 text-black dark:text-white"
+                    )}
+                  >
+                    <Icon className="h-4 w-4" />
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-          <div className="space-y-0.5">
-            {mainNav.map((item) => {
-              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
-                    "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
-                    isActive && "bg-black/5 dark:bg-white/8 text-black dark:text-white"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* SYSTEM */}
-        <div className="mb-6">
-          <div className="px-3 py-2 mb-1">
-            <p className="text-[10px] font-medium uppercase tracking-wider text-black/40 dark:text-white/40">
-              SYSTEM
-            </p>
-          </div>
-          <div className="space-y-0.5">
-            {systemNav.map((item) => {
-              const isActive = pathname === item.href.replace("[slug]", workspaceSlug) || pathname.startsWith(item.href.replace("[slug]", workspaceSlug) + "/");
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href.replace("[slug]", workspaceSlug)}
-                  className={cn(
-                    "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150",
-                    "text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white",
-                    isActive && "bg-black/5 dark:bg-white/8 text-black dark:text-white"
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+        ))}
       </nav>
 
       {/* Bottom section */}
