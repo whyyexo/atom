@@ -4,11 +4,22 @@ import { useState, FormEvent, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, User, Lock, Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight } from "lucide-react";
+import {
+  PrimaryButton,
+  SecondaryButton,
+  EmailInput,
+  PasswordInput,
+  TextInput,
+  Card,
+  PageContainer,
+  TitleM,
+  Body,
+  Caption,
+  SmoothFadeSlide,
+} from "@/guide";
+import { useTheme } from "@/components/providers/theme-provider";
+import { getColor } from "@/guide/styles";
 import { motion, AnimatePresence } from "framer-motion";
 
 type Step = "email" | "name" | "password";
@@ -24,6 +35,8 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const { theme } = useTheme();
+  const mode = theme === "dark" ? "dark" : "light";
 
   const validateName = (name: string): boolean => {
     return /^[a-zA-Z\s'-]+$/.test(name) && name.trim().length > 0;
@@ -62,24 +75,6 @@ export default function SignUpPage() {
 
     setStep("password");
   };
-
-  const getPasswordStrength = (pwd: string): { strength: number; label: string; color: string } => {
-    if (!pwd) return { strength: 0, label: "", color: "" };
-    
-    let strength = 0;
-    if (pwd.length >= 8) strength++;
-    if (pwd.length >= 12) strength++;
-    if (/[a-z]/.test(pwd)) strength++;
-    if (/[A-Z]/.test(pwd)) strength++;
-    if (/\d/.test(pwd)) strength++;
-    if (/[^a-zA-Z\d]/.test(pwd)) strength++;
-
-    if (strength <= 2) return { strength, label: "Weak", color: "bg-red-500" };
-    if (strength <= 4) return { strength, label: "Fair", color: "bg-yellow-500" };
-    return { strength, label: "Strong", color: "bg-green-500" };
-  };
-
-  const passwordStrength = getPasswordStrength(password);
 
   async function handlePasswordSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -136,7 +131,6 @@ export default function SignUpPage() {
         return;
       }
 
-      // If user was created but no session (email confirmation required)
       setError("");
       router.push("/login?message=Please check your email to confirm your account");
     } catch (err) {
@@ -146,240 +140,194 @@ export default function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Create Account</CardTitle>
-          <CardDescription className="text-center">
-            {step === "email" && "Enter your email to get started"}
-            {step === "name" && `Welcome, ${email.split("@")[0]}!`}
-            {step === "password" && `Almost there, ${firstName}!`}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AnimatePresence mode="wait">
-            {step === "email" && (
-              <motion.form
-                key="email"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                onSubmit={handleEmailSubmit}
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder="you@example.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
+    <PageContainer className="flex items-center justify-center">
+      <SmoothFadeSlide direction="up" delay={0.1}>
+        <Card className="w-full max-w-md">
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <TitleM>
+                {step === "email" && "Create Account"}
+                {step === "name" && `Welcome, ${email.split("@")[0]}!`}
+                {step === "password" && `Almost there, ${firstName}!`}
+              </TitleM>
+              <Body>
+                {step === "email" && "Enter your email to get started"}
+                {step === "name" && "Tell us your name"}
+                {step === "password" && "Set your password"}
+              </Body>
+            </div>
 
-                {error && (
-                  <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                    {error}
-                  </div>
-                )}
+            <AnimatePresence mode="wait">
+              {step === "email" && (
+                <motion.form
+                  key="email"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  onSubmit={handleEmailSubmit}
+                  className="space-y-5"
+                >
+                  <EmailInput
+                    label="Email"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                    required
+                    error={error}
+                  />
 
-                <Button type="submit" className="w-full">
-                  Continue <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </motion.form>
-            )}
-
-            {step === "name" && (
-              <motion.form
-                key="name"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                onSubmit={handleNameSubmit}
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="firstName"
-                      type="text"
-                      placeholder="John"
-                      value={firstName}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
-                          setFirstName(value);
-                          setError("");
-                        }
-                      }}
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="lastName"
-                      type="text"
-                      placeholder="Doe"
-                      value={lastName}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
-                          setLastName(value);
-                          setError("");
-                        }
-                      }}
-                      required
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-
-                {error && (
-                  <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                    {error}
-                  </div>
-                )}
-
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep("email")}
-                    className="flex-1"
-                  >
-                    Back
-                  </Button>
-                  <Button type="submit" className="flex-1">
+                  <PrimaryButton type="submit" fullWidth>
                     Continue <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-              </motion.form>
-            )}
+                  </PrimaryButton>
+                </motion.form>
+              )}
 
-            {step === "password" && (
-              <motion.form
-                key="password"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                onSubmit={handlePasswordSubmit}
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="password"
-                      type="password"
-                      placeholder="Create a secure password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="pl-10"
-                      disabled={loading}
-                    />
-                  </div>
-                  {password && (
-                    <div className="space-y-1">
-                      <div className="flex gap-1 h-1">
-                        {[1, 2, 3, 4, 5].map((i) => (
-                          <div
-                            key={i}
-                            className={`flex-1 rounded-full ${
-                              i <= passwordStrength.strength
-                                ? passwordStrength.color
-                                : "bg-gray-200"
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      <p
-                        className={`text-xs font-medium ${
-                          passwordStrength.strength <= 2
-                            ? "text-red-500"
-                            : passwordStrength.strength <= 4
-                            ? "text-yellow-500"
-                            : "text-green-500"
-                        }`}
-                      >
-                        {passwordStrength.label}
-                      </p>
+              {step === "name" && (
+                <motion.form
+                  key="name"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  onSubmit={handleNameSubmit}
+                  className="space-y-5"
+                >
+                  <TextInput
+                    label="First Name"
+                    placeholder="John"
+                    value={firstName}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const value = e.target.value;
+                      if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
+                        setFirstName(value);
+                        setError("");
+                      }
+                    }}
+                    required
+                    error={error && error.includes("First") ? error : undefined}
+                  />
+
+                  <TextInput
+                    label="Last Name"
+                    placeholder="Doe"
+                    value={lastName}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      const value = e.target.value;
+                      if (value === "" || /^[a-zA-Z\s'-]*$/.test(value)) {
+                        setLastName(value);
+                        setError("");
+                      }
+                    }}
+                    required
+                    error={error && error.includes("Last") ? error : undefined}
+                  />
+
+                  {error && !error.includes("First") && !error.includes("Last") && (
+                    <div
+                      className="p-3 rounded-2xl text-sm"
+                      style={{
+                        backgroundColor: getColor("systemRed", mode) + "15",
+                        color: getColor("systemRed", mode),
+                      }}
+                    >
+                      {error}
                     </div>
                   )}
-                </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <Input
-                      id="confirmPassword"
-                      type="password"
-                      placeholder="Confirm your password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      className="pl-10"
-                      disabled={loading}
-                    />
+                  <div className="flex gap-3">
+                    <SecondaryButton
+                      type="button"
+                      onClick={() => setStep("email")}
+                      fullWidth
+                    >
+                      Back
+                    </SecondaryButton>
+                    <PrimaryButton type="submit" fullWidth>
+                      Continue <ArrowRight className="ml-2 h-4 w-4" />
+                    </PrimaryButton>
                   </div>
-                </div>
+                </motion.form>
+              )}
 
-                {error && (
-                  <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                    {error}
-                  </div>
-                )}
-
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep("name")}
-                    className="flex-1"
+              {step === "password" && (
+                <motion.form
+                  key="password"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  onSubmit={handlePasswordSubmit}
+                  className="space-y-5"
+                >
+                  <PasswordInput
+                    label="Password"
+                    placeholder="Create a secure password"
+                    value={password}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                    required
                     disabled={loading}
-                  >
-                    Back
-                  </Button>
-                  <Button type="submit" className="flex-1" disabled={loading}>
-                    {loading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Creating...
-                      </>
-                    ) : (
-                      "Create Account"
-                    )}
-                  </Button>
-                </div>
-              </motion.form>
-            )}
-          </AnimatePresence>
+                    showStrengthIndicator
+                  />
 
-          <div className="mt-4 text-center text-sm">
-            <span className="text-gray-600">Already have an account? </span>
-            <Link href="/login" className="text-blue-600 hover:underline font-medium">
-              Sign in
-            </Link>
+                  <PasswordInput
+                    label="Confirm Password"
+                    placeholder="Confirm your password"
+                    value={confirmPassword}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                    required
+                    disabled={loading}
+                    error={error && error.includes("match") ? error : undefined}
+                  />
+
+                  {error && !error.includes("match") && (
+                    <div
+                      className="p-3 rounded-2xl text-sm"
+                      style={{
+                        backgroundColor: getColor("systemRed", mode) + "15",
+                        color: getColor("systemRed", mode),
+                      }}
+                    >
+                      {error}
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <SecondaryButton
+                      type="button"
+                      onClick={() => setStep("name")}
+                      fullWidth
+                      disabled={loading}
+                    >
+                      Back
+                    </SecondaryButton>
+                    <PrimaryButton type="submit" fullWidth disabled={loading}>
+                      {loading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Creating...
+                        </>
+                      ) : (
+                        "Create Account"
+                      )}
+                    </PrimaryButton>
+                  </div>
+                </motion.form>
+              )}
+            </AnimatePresence>
+
+            <div className="text-center">
+              <Caption>
+                Already have an account?{" "}
+                <Link
+                  href="/login"
+                  className="font-medium hover:underline"
+                  style={{ color: getColor("systemBlue", mode) }}
+                >
+                  Sign in
+                </Link>
+              </Caption>
+            </div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </Card>
+      </SmoothFadeSlide>
+    </PageContainer>
   );
 }
-

@@ -4,11 +4,20 @@ import { useState, FormEvent, useMemo, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import {
+  PrimaryButton,
+  EmailInput,
+  PasswordInput,
+  Card,
+  PageContainer,
+  TitleM,
+  Body,
+  Caption,
+  SmoothFadeSlide,
+} from "@/guide";
+import { useTheme } from "@/components/providers/theme-provider";
+import { getColor } from "@/guide/styles";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -18,6 +27,8 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const { theme } = useTheme();
+  const mode = theme === "dark" ? "dark" : "light";
 
   useEffect(() => {
     const message = searchParams.get("message");
@@ -55,93 +66,98 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
-          <CardDescription className="text-center">
-            Enter your email and password to access your account
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="pl-10"
-                  disabled={loading}
-                />
-              </div>
+    <PageContainer className="flex items-center justify-center">
+      <SmoothFadeSlide direction="up" delay={0.1}>
+        <Card className="w-full max-w-md">
+          <div className="space-y-6">
+            <div className="text-center space-y-2">
+              <TitleM>Sign In</TitleM>
+              <Body>
+                Enter your email and password to access your account
+              </Body>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="pl-10"
-                  disabled={loading}
-                />
-              </div>
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <EmailInput
+                label="Email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+                required
+                disabled={loading}
+                error={error && error.includes("email") ? error : undefined}
+              />
 
-            {error && (
-              <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-                {error}
-              </div>
-            )}
+              <PasswordInput
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+                error={error && error.includes("password") ? error : undefined}
+              />
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                "Sign In"
+              {error && !error.includes("email") && !error.includes("password") && (
+                <div
+                  className="p-3 rounded-2xl text-sm"
+                  style={{
+                    backgroundColor: getColor("systemRed", mode) + "15",
+                    color: getColor("systemRed", mode),
+                  }}
+                >
+                  {error}
+                </div>
               )}
-            </Button>
-          </form>
 
-          <div className="mt-4 text-center text-sm">
-            <span className="text-gray-600">Don't have an account? </span>
-            <Link href="/signup" className="text-blue-600 hover:underline font-medium">
-              Sign up
-            </Link>
+              <PrimaryButton
+                type="submit"
+                fullWidth
+                disabled={loading}
+                text={loading ? "Signing in..." : "Sign In"}
+              >
+                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              </PrimaryButton>
+            </form>
+
+            <div className="text-center">
+              <Caption>
+                Don't have an account?{" "}
+                <Link
+                  href="/signup"
+                  className="font-medium hover:underline"
+                  style={{ color: getColor("systemBlue", mode) }}
+                >
+                  Sign up
+                </Link>
+              </Caption>
+            </div>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </Card>
+      </SmoothFadeSlide>
+    </PageContainer>
   );
 }
 
 export default function LoginPage() {
+  const { theme } = useTheme();
+  const mode = theme === "dark" ? "dark" : "light";
+
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 via-white to-gray-50">
-        <Card className="w-full max-w-md">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-center">
-              <Loader2 className="h-6 w-6 animate-spin text-gray-400" />
+    <Suspense
+      fallback={
+        <PageContainer className="flex items-center justify-center">
+          <Card className="w-full max-w-md">
+            <div className="flex items-center justify-center p-6">
+              <Loader2
+                className="h-6 w-6 animate-spin"
+                style={{ color: getColor("text.tertiary", mode) }}
+              />
             </div>
-          </CardContent>
-        </Card>
-      </div>
-    }>
+          </Card>
+        </PageContainer>
+      }
+    >
       <LoginForm />
     </Suspense>
   );
