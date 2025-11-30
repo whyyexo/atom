@@ -3,7 +3,6 @@
 import {
   Home,
   CheckSquare,
-  FileText,
   Settings,
   Moon,
   Sun,
@@ -11,27 +10,8 @@ import {
   LogOut,
   ChevronDown,
   Sparkles,
-  Plug,
   FlaskConical,
-  Mail,
-  Zap,
   Calendar,
-  FolderKanban,
-  Clock,
-  BarChart3,
-  File,
-  Inbox,
-  Lightbulb,
-  Briefcase,
-  Bot,
-  Shield,
-  CreditCard,
-  Bell,
-  Palette,
-  Database,
-  HelpCircle,
-  Info,
-  TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -60,35 +40,11 @@ export function PremiumSidebar({ userEmail = "user@atom.app", userName = "User",
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   const navigation: NavItem[] = [
-    // Workspace
     { name: "Dashboard", href: "/dashboard", icon: Home },
     { name: "Tasks", href: "/dashboard/tasks", icon: CheckSquare },
     { name: "Calendar", href: "/dashboard/calendar", icon: Calendar },
-    { name: "Notes", href: "/dashboard/notes", icon: FileText },
-    { name: "Projects", href: "/dashboard/projects", icon: FolderKanban },
-    { name: "Email", href: "/dashboard/email", icon: Mail },
-    { name: "Automations", href: "/dashboard/automations", icon: Zap },
-    { name: "Focus / Timers", href: "/dashboard/focus", icon: Clock },
-    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
-    { name: "Integrations", href: "/dashboard/integrations", icon: Plug },
-    { name: "Files", href: "/dashboard/files", icon: File },
-    // Intelligence
-    { name: "AI Assistant", href: "/dashboard/ai-assistant", icon: Sparkles },
-    { name: "Email Classifier", href: "/dashboard/email-classifier", icon: Inbox },
-    { name: "Smart Suggestions", href: "/dashboard/smart-suggestions", icon: Lightbulb },
-    { name: "Daily Briefing", href: "/dashboard/daily-briefing", icon: Briefcase },
-    { name: "Science Center", href: "/science", icon: FlaskConical },
-    { name: "Automation Studio", href: "/dashboard/automation-studio", icon: Bot },
-    { name: "Analytics IA", href: "/dashboard/ai-analytics", icon: TrendingUp },
-    // Account
-    { name: "Profile", href: "/dashboard/settings/profile", icon: User },
-    { name: "Security", href: "/dashboard/settings/security", icon: Shield },
-    { name: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
-    { name: "Notifications", href: "/dashboard/settings/notifications", icon: Bell },
-    { name: "Theme", href: "/dashboard/settings/theme", icon: Palette },
-    { name: "Data & Privacy", href: "/dashboard/settings/privacy", icon: Database },
-    { name: "Support Center", href: "/dashboard/support", icon: HelpCircle },
-    { name: "About Atom", href: "/dashboard/about", icon: Info },
+    { name: "Intelligence", href: "/dashboard/ai-assistant", icon: Sparkles },
+    { name: "Science", href: "/science", icon: FlaskConical },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
 
