@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { PremiumSidebar } from "@/components/dashboard/premium-sidebar";
+import { AppleNavbar } from "@/components/dashboard/apple-navbar";
 import { useRouter } from "next/navigation";
 
 type DashboardShellProps = {
@@ -62,7 +63,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
         onSignOut={handleSignOut}
       />
       <div className="flex-1 md:ml-[280px]">
-        <main className="min-h-screen">{children}</main>
+        <AppleNavbar />
+        <main className="min-h-screen pt-24">{children}</main>
       </div>
     </div>
   );
