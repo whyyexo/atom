@@ -43,14 +43,20 @@ export const gradients = {
 
 export type GradientType = keyof typeof gradients;
 
+type GradientValue = { light: string; dark: string } | string;
+
 export function getGradient(
   gradientType: GradientType,
   mode: ColorMode = "light"
 ): string {
-  const gradient = gradients[gradientType];
-  if (typeof gradient === "object" && ("light" in gradient || "dark" in gradient)) {
-    return gradient[mode] || gradient.light || "";
+  const gradient = gradients[gradientType] as GradientValue;
+  if (typeof gradient === "object" && gradient !== null && ("light" in gradient || "dark" in gradient)) {
+    const gradientObj = gradient as { light: string; dark: string };
+    return gradientObj[mode] || gradientObj.light || "";
   }
-  return typeof gradient === "string" ? gradient : "";
+  if (typeof gradient === "string") {
+    return gradient;
+  }
+  return "";
 }
 

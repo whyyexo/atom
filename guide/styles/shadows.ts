@@ -53,13 +53,19 @@ export const shadows = {
   },
 } as const;
 
+type ShadowValue = { light: string; dark: string } | string;
+
 export function getShadow(
   shadowType: keyof typeof shadows,
   mode: ColorMode = "light"
 ): string {
-  const shadow = shadows[shadowType];
-  if (typeof shadow === "object" && ("light" in shadow || "dark" in shadow)) {
-    return shadow[mode] || shadow.light || "";
+  const shadow = shadows[shadowType] as ShadowValue;
+  if (typeof shadow === "object" && shadow !== null && ("light" in shadow || "dark" in shadow)) {
+    const shadowObj = shadow as { light: string; dark: string };
+    return shadowObj[mode] || shadowObj.light || "";
+  }
+  if (typeof shadow === "string") {
+    return shadow;
   }
   return "";
 }
