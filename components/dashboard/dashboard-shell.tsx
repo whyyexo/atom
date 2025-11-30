@@ -1,36 +1,24 @@
 "use client";
 
-import { PremiumSidebar } from "@/components/dashboard/premium-sidebar";
-import { PremiumTopBar } from "@/components/dashboard/premium-topbar";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { SidebarApple } from "@/components/navigation/sidebar-apple";
+import { MobileNavApple } from "@/components/navigation/mobile-nav-apple";
 
 type DashboardShellProps = {
   children: React.ReactNode;
 };
 
-const pageTitles: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/dashboard/projects": "Projects",
-  "/dashboard/tasks": "Tasks",
-  "/dashboard/calendar": "Calendar",
-  "/dashboard/notes": "Notes",
-  "/dashboard/analytics": "Analytics",
-  "/dashboard/notifications": "Notifications",
-  "/dashboard/team": "Team",
-  "/dashboard/settings": "Settings",
-};
-
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const pageTitle = pageTitles[pathname] || "Dashboard";
   const [userEmail, setUserEmail] = useState("user@atom.app");
-  const [userName, setUserName] = useState("User");
+  const [userName, setUserName] = useState<string | undefined>(undefined);
+  const [mounted, setMounted] = useState(false);
   const supabase = createSupabaseBrowserClient();
 
   useEffect(() => {
+    setMounted(true);
     const loadUserData = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -47,10 +35,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
           setUserName(`${firstName} ${lastName}`);
         } else if (firstName) {
           setUserName(firstName);
-        } else {
-          // Fallback to email username
-          const emailUsername = user.email?.split("@")[0] || "User";
-          setUserName(emailUsername.charAt(0).toUpperCase() + emailUsername.slice(1));
         }
       }
     };
@@ -58,33 +42,25 @@ export function DashboardShell({ children }: DashboardShellProps) {
     loadUserData();
   }, [supabase]);
 
-  const handleSignOut = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Error signing out:", error);
-      }
-      // Force a full page reload to ensure session is cleared
-      window.location.href = "/auth";
-    } catch (err) {
-      console.error("Error during sign out:", err);
-      // Still redirect even on error
-      window.location.href = "/auth";
-    }
-  };
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="flex min-h-screen bg-[#fdfdfd] dark:bg-[#0a0a0a]">
-      <PremiumSidebar 
-        userEmail={userEmail} 
-        userName={userName} 
-        onSignOut={handleSignOut}
-        workspaceSlug="dashboard"
-      />
+      {/* Desktop Sidebar */}
+      <div className="hidden md:block">
+        <SidebarApple userEmail={userEmail} userName={userName} />
+      </div>
 
-      <div className="flex w-full flex-1 flex-col ml-[280px]">
-        <PremiumTopBar title={pageTitle} />
-        <main className="flex-1">{children}</main>
+      {/* Mobile Bottom Nav */}
+      <div className="md:hidden">
+        <MobileNavApple userEmail={userEmail} userName={userName} />
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 md:ml-[72px] pb-20 md:pb-0">
+        <main className="min-h-screen">{children}</main>
       </div>
     </div>
   );
