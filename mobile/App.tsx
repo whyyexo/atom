@@ -1,3 +1,4 @@
+// These imports must be at the top
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { useEffect } from 'react';
