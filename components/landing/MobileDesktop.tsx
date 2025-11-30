@@ -52,7 +52,7 @@ export function MobileDesktop() {
                 <Monitor className="w-32 h-32 text-blue-400/30" />
               </div>
             </div>
-            <p className="mt-6 text-sm font-medium text-foreground">Web Dashboard</p>
+            <p className="mt-6 text-sm font-medium text-foreground">Web App</p>
           </motion.div>
         </div>
       </div>

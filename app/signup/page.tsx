@@ -111,7 +111,7 @@ export default function SignUpPage() {
       }
 
       if (data.session && data.user) {
-        window.location.href = "/dashboard";
+        window.location.href = "/";
         return;
       }
 
@@ -120,7 +120,7 @@ export default function SignUpPage() {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session && session.user) {
-          window.location.href = "/dashboard";
+          window.location.href = "/";
           return;
         }
 

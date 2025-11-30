@@ -25,8 +25,8 @@ function EmailPageContent() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
-          // User is already logged in, redirect to dashboard
-          router.replace("/dashboard");
+          // User is already logged in, redirect to home
+          router.replace("/");
           return;
         }
       } catch (err) {
@@ -41,7 +41,7 @@ function EmailPageContent() {
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        router.replace("/dashboard");
+        router.replace("/");
       }
     });
 

@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const next = requestUrl.searchParams.get("next") || "/dashboard";
+  const next = requestUrl.searchParams.get("next") || "/";
   const error = requestUrl.searchParams.get("error");
   const errorDescription = requestUrl.searchParams.get("error_description");
 
@@ -99,6 +99,6 @@ export async function GET(request: Request) {
     }
   }
 
-  // Redirect to dashboard or next URL
+  // Redirect to home or next URL
   return NextResponse.redirect(new URL(next, requestUrl.origin));
 }

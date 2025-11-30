@@ -63,7 +63,7 @@ export function Header() {
           </Link>
           {isAuthenticated ? (
             <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/">Home</Link>
             </Button>
           ) : (
             <>

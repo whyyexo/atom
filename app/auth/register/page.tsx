@@ -32,8 +32,8 @@ function RegisterPageContent() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
-          // User is already logged in, redirect to dashboard
-          router.replace("/dashboard");
+          // User is already logged in, redirect to home
+          router.replace("/");
           return;
         }
       } catch (err) {
@@ -48,7 +48,7 @@ function RegisterPageContent() {
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        router.replace("/dashboard");
+        router.replace("/");
       }
     });
 
@@ -161,8 +161,8 @@ function RegisterPageContent() {
 
       // Check if we have a session (user is logged in)
       if (data.session && data.user) {
-        // User is automatically logged in, redirect to dashboard
-        window.location.href = "/dashboard";
+        // User is automatically logged in, redirect to home
+        window.location.href = "/";
         return;
       }
 
@@ -175,8 +175,8 @@ function RegisterPageContent() {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (session && session.user) {
-          // Session exists, redirect to dashboard
-          window.location.href = "/dashboard";
+          // Session exists, redirect to home
+          window.location.href = "/";
           return;
         }
 

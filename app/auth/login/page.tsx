@@ -30,8 +30,8 @@ function LoginPageContent() {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
-          // User is already logged in, redirect to dashboard
-          router.replace("/dashboard");
+          // User is already logged in, redirect to home
+          router.replace("/");
           return;
         }
       } catch (err) {
@@ -46,7 +46,7 @@ function LoginPageContent() {
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session?.user) {
-        router.replace("/dashboard");
+        router.replace("/");
       }
     });
 
@@ -130,7 +130,7 @@ function LoginPageContent() {
         }
         
         const redirect = searchParams.get("redirect");
-        window.location.href = redirect || "/dashboard";
+        window.location.href = redirect || "/";
       }
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");

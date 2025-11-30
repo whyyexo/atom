@@ -83,7 +83,6 @@ export async function middleware(request: NextRequest) {
 
   // Protected routes that require authentication
   const protectedRoutes = [
-    "/dashboard",
     "/workspace",
   ];
 
@@ -95,7 +94,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from login/signup pages
   if ((pathname === "/login" || pathname === "/signup") && user) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   // Protect dashboard and workspace routes
