@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/providers/theme-provider";
+import { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 
 interface Category {
   title: string;
@@ -31,6 +33,24 @@ export function PricingCard({
 }: PricingCardProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      setShowScrollIndicator(!isAtBottom);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <div
@@ -77,30 +97,65 @@ export function PricingCard({
       </div>
 
       {categories ? (
-        <div className={cn("space-y-3 max-h-[500px] overflow-y-auto pr-2", highlight ? "mt-4" : "border-t pt-4", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
-          {categories.map((category, index) => (
-            <div
-              key={index}
-              className={cn(
-                "rounded-lg p-3 border",
-                isDark 
-                  ? "bg-black/50 border-white/10 hover:border-white/20" 
-                  : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.08)] hover:border-[rgba(0,0,0,0.12)]"
-              )}
+        <div className={cn("relative", highlight ? "mt-4" : "border-t pt-4", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
+          <div
+            ref={scrollContainerRef}
+            className="space-y-3 max-h-[500px] overflow-y-auto scrollbar-hide"
+          >
+            {categories.map((category, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "rounded-lg p-3 border",
+                  isDark 
+                    ? "bg-black/50 border-white/10 hover:border-white/20" 
+                    : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.08)] hover:border-[rgba(0,0,0,0.12)]"
+                )}
+              >
+                <h4 className={cn("text-xs font-semibold mb-2", isDark ? "text-white" : "text-[#000000]")}>
+                  {category.title}
+                </h4>
+                <ul className="space-y-1.5">
+                  {category.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className={cn("flex items-start gap-2 text-xs", isDark ? "text-white/80" : "text-[#333333]")}>
+                      <Check className={cn("size-3 flex-shrink-0 mt-0.5", isDark ? "text-white" : "text-[#000000]")} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Scroll Indicator Bubble */}
+          {showScrollIndicator && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
             >
-              <h4 className={cn("text-xs font-semibold mb-2", isDark ? "text-white" : "text-[#000000]")}>
-                {category.title}
-              </h4>
-              <ul className="space-y-1.5">
-                {category.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className={cn("flex items-start gap-2 text-xs", isDark ? "text-white/80" : "text-[#333333]")}>
-                    <Check className={cn("size-3 flex-shrink-0 mt-0.5", isDark ? "text-white" : "text-[#000000]")} />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+              <div className={cn(
+                "relative w-10 h-10 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg",
+                isDark 
+                  ? "bg-black/80 border-white/10" 
+                  : "bg-white/80 border-[rgba(0,0,0,0.08)]"
+              )}>
+                <motion.div
+                  animate={{
+                    y: [0, 4, 0],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <ChevronDown className={cn("w-5 h-5", isDark ? "text-white" : "text-[#000000]")} />
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
         </div>
       ) : features ? (
         <ul className={cn("border-t pt-4 list-outside space-y-3 text-sm", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>

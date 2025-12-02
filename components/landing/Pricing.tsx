@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -98,6 +99,25 @@ const proCategories = [
 ];
 
 export function Pricing() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      setShowScrollIndicator(!isAtBottom);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section id="pricing" className="section-spacing bg-gradient-to-b from-white to-muted/20 dark:from-black dark:to-muted/10">
       <div className="container-padding max-w-5xl mx-auto">
@@ -174,7 +194,7 @@ export function Pricing() {
               </h3>
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="text-4xl font-semibold text-foreground">
-                  $12
+                  $6.99
                 </span>
                 <span className="text-muted-foreground">/month</span>
               </div>
@@ -182,29 +202,59 @@ export function Pricing() {
               <p className="text-xs text-muted-foreground mt-2 font-medium">Includes everything in Free, plus:</p>
             </div>
 
-            <div className="space-y-4 mb-8 max-h-[600px] overflow-y-auto pr-2">
-              {proCategories.map((category, index) => (
+            <div className="relative">
+              <div
+                ref={scrollContainerRef}
+                className="space-y-4 mb-8 max-h-[600px] overflow-y-auto scrollbar-hide"
+              >
+                {proCategories.map((category, index) => (
+                  <motion.div
+                    key={category.title}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="rounded-xl bg-white/50 dark:bg-black/50 border border-border/50 p-4 hover:border-border transition-all"
+                  >
+                    <h4 className="text-sm font-semibold text-foreground mb-2">
+                      {category.title}
+                    </h4>
+                    <ul className="space-y-2">
+                      {category.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2">
+                          <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                          <span className="text-xs text-muted-foreground">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Scroll Indicator Bubble */}
+              {showScrollIndicator && (
                 <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="rounded-xl bg-white/50 dark:bg-black/50 border border-border/50 p-4 hover:border-border transition-all"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
                 >
-                  <h4 className="text-sm font-semibold text-foreground mb-2">
-                    {category.title}
-                  </h4>
-                  <ul className="space-y-2">
-                    {category.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2">
-                        <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                        <span className="text-xs text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="relative w-10 h-10 rounded-full backdrop-blur-md bg-white/80 dark:bg-black/80 border border-border/50 flex items-center justify-center shadow-lg">
+                    <motion.div
+                      animate={{
+                        y: [0, 4, 0],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    >
+                      <ChevronDown className="w-5 h-5 text-foreground" />
+                    </motion.div>
+                  </div>
                 </motion.div>
-              ))}
+              )}
             </div>
 
             <Button
