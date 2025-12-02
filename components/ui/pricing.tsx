@@ -70,11 +70,6 @@ export function PricingCard({
             <h2 className={cn("font-medium", isDark ? "text-white" : "text-[#000000]")}>{title}</h2>
             <span className={cn("my-3 block text-2xl font-semibold", isDark ? "text-white" : "text-[#000000]")}>{price}</span>
             <p className={cn("text-sm font-light", isDark ? "text-white/80" : "text-[#333333]")}>{description}</p>
-            {highlight && (
-              <p className={cn("text-xs font-medium mt-2", isDark ? "text-white/70" : "text-[#666666]")}>
-                Includes everything in Free, plus:
-              </p>
-            )}
           </div>
           <Button 
             asChild 
@@ -91,8 +86,13 @@ export function PricingCard({
             )}
             variant={buttonVariant}
           >
-            <Link href="/download">Get Started</Link>
+            <Link href="/download">{highlight ? "Upgrade to Pro" : "Get Started"}</Link>
           </Button>
+          {highlight && (
+            <p className={cn("text-sm font-semibold mt-4 text-center", isDark ? "text-white" : "text-[#000000]")}>
+              Includes everything in Free, plus:
+            </p>
+          )}
         </div>
       </div>
 

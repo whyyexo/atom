@@ -199,7 +199,6 @@ export function Pricing() {
                 <span className="text-muted-foreground">/month</span>
               </div>
               <p className="text-sm text-muted-foreground">Unlock the full power of Atom.</p>
-              <p className="text-xs text-muted-foreground mt-2 font-medium">Includes everything in Free, plus:</p>
             </div>
 
             <div className="relative">
@@ -263,8 +262,9 @@ export function Pricing() {
               size="lg"
               className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
             >
-              <Link href="/signup">Start Free Trial</Link>
+              <Link href="/signup">Upgrade to Pro</Link>
             </Button>
+            <p className="text-sm font-semibold text-foreground mt-4 text-center">Includes everything in Free, plus:</p>
           </motion.div>
         </div>
       </div>
