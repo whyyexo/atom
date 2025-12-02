@@ -48,7 +48,7 @@ export default function ContactPage() {
           <div className="grid gap-16 lg:grid-cols-[1fr_0.8fr]">
             {/* Left Side - Form */}
             <div>
-              <h1 className="text-6xl font-semibold leading-tight tracking-tight text-[#000000] mb-8 sm:text-7xl lg:text-8xl">
+              <h1 className="text-5xl font-semibold leading-tight tracking-tight text-[#000000] mb-8 sm:text-6xl lg:text-7xl">
                 Get in touch
               </h1>
 
@@ -126,7 +126,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right Side - Contact Emails */}
-            <div className="space-y-8 lg:pl-8">
+            <div className="space-y-8 flex flex-col justify-center" style={{ width: '70%', marginLeft: 'auto' }}>
               {emails.map((item, index) => (
                 <div key={index} className="space-y-2">
                   <h3 className="text-sm font-semibold text-[#000000]">
