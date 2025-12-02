@@ -3,8 +3,6 @@ import { Resend } from "resend";
 
 const RECIPIENT_EMAIL = "fx.bergeron011@gmail.com";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -44,6 +42,7 @@ This email was sent from the Atom contact form.
     // Send email using Resend
     if (process.env.RESEND_API_KEY) {
       try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: "Atom Contact Form <onboarding@resend.dev>", // Change this to your verified domain
           to: RECIPIENT_EMAIL,
