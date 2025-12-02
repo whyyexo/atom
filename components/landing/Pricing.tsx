@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { Check, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
@@ -109,7 +109,9 @@ const proCategories = [
 
 export function Pricing() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [showSticky, setShowSticky] = useState(false);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -127,23 +129,47 @@ export function Pricing() {
     return () => container.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowSticky(!entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+        rootMargin: "-80px 0px 0px 0px", // Account for navbar height (64px) + some margin
+      }
+    );
+
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+
+    return () => {
+      if (headerRef.current) {
+        observer.unobserve(headerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="pricing" className="section-spacing bg-gradient-to-b from-white to-muted/20 dark:from-black dark:to-muted/10">
-      <div className="container-padding max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4">
-            Simple Pricing
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Choose the plan that fits your workflow.
-          </p>
-        </motion.div>
+    <>
+      <section id="pricing" className="section-spacing bg-gradient-to-b from-white to-muted/20 dark:from-black dark:to-muted/10">
+        <div className="container-padding max-w-5xl mx-auto">
+          <motion.div
+            ref={headerRef}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4">
+              Simple Pricing
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Choose the plan that fits your workflow.
+            </p>
+          </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {/* Free Plan */}
@@ -293,6 +319,67 @@ export function Pricing() {
         </div>
       </div>
     </section>
+
+    {/* Sticky Header */}
+    <AnimatePresence>
+      {showSticky && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="fixed top-16 left-0 right-0 z-50 bg-white/95 dark:bg-black/95 border-b border-border/50 backdrop-blur-xl"
+        >
+          <div className="container-padding max-w-5xl mx-auto py-4">
+            <div className="text-center mb-4">
+              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground mb-1">
+                Simple Pricing
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Choose the plan that fits your workflow.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+              {/* Free Plan Sticky */}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-white dark:bg-black">
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">{freePlan.name}</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-semibold text-foreground">{freePlan.price}</span>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                >
+                  <Link href={freePlan.href}>{freePlan.cta}</Link>
+                </Button>
+              </div>
+              {/* Pro Plan Sticky */}
+              <div className="flex items-center justify-between p-3 rounded-lg border border-blue-500/50 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20">
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground">Pro</h3>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-xl font-semibold text-foreground">$6.99</span>
+                    <span className="text-xs text-muted-foreground">/month</span>
+                  </div>
+                </div>
+                <Button
+                  asChild
+                  variant="default"
+                  size="sm"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+                >
+                  <Link href="/signup">Upgrade to Pro</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
 
