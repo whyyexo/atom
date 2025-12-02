@@ -69,12 +69,12 @@ export function PremiumNavbar() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
-            {/* Download Button */}
+            {/* Sign In Button */}
             <Link
-              href="/download"
+              href="/login"
               className="hidden rounded-full bg-[#0071e3] px-6 py-2 text-sm font-normal text-white hover:bg-[#0077ed] transition-all duration-200 md:block"
             >
-              Download
+              Sign in
             </Link>
 
             {/* Mobile menu button */}
@@ -151,11 +151,11 @@ export function PremiumNavbar() {
                     </Link>
                   ))}
                   <Link
-                    href="/download"
+                    href="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="mt-4 rounded-full bg-[#0071e3] px-6 py-3 text-base font-normal text-white hover:bg-[#0077ed] transition-colors text-center"
                   >
-                    Download
+                    Sign in
                   </Link>
                 </nav>
               </div>
