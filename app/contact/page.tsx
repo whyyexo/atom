@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Copy, Check } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -44,10 +45,10 @@ export default function ContactPage() {
     <PublicLayout>
       <section className="bg-white px-6 py-32 lg:px-12">
         <div className="mx-auto max-w-[1180px]">
-          <div className="grid gap-16 lg:grid-cols-2">
+          <div className="grid gap-16 lg:grid-cols-[1fr_0.8fr]">
             {/* Left Side - Form */}
             <div>
-              <h1 className="text-5xl font-semibold leading-tight tracking-tight text-[#000000] mb-8">
+              <h1 className="text-6xl font-semibold leading-tight tracking-tight text-[#000000] mb-8 sm:text-7xl lg:text-8xl">
                 Get in touch
               </h1>
 
@@ -106,27 +107,26 @@ export default function ContactPage() {
                   />
                 </div>
 
-                {/* Submit Button - Invisible until form is valid */}
-                <AnimatePresence>
-                  {isFormValid && (
-                    <motion.button
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      type="submit"
-                      className="flex items-center gap-2 rounded-full bg-white border border-[rgba(0,0,0,0.08)] px-6 py-3 text-base font-normal text-[#000000] hover:bg-[rgba(0,0,0,0.04)] transition-all"
-                    >
-                      Submit
-                      <span className="text-[#000000]">&gt;</span>
-                    </motion.button>
-                  )}
-                </AnimatePresence>
+                {/* Submit Button - Visible but subtle, becomes more visible when form is valid */}
+                <motion.button
+                  animate={{
+                    opacity: isFormValid ? 1 : 0.3,
+                    backgroundColor: isFormValid ? "#ffffff" : "rgba(255, 255, 255, 0.5)",
+                    borderColor: isFormValid ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.03)",
+                  }}
+                  transition={{ duration: 0.3 }}
+                  type="submit"
+                  disabled={!isFormValid}
+                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal text-[#000000] hover:bg-[rgba(0,0,0,0.04)] transition-all disabled:cursor-not-allowed"
+                >
+                  Submit
+                  <span className="text-[#000000]">&gt;</span>
+                </motion.button>
               </form>
             </div>
 
             {/* Right Side - Contact Emails */}
-            <div className="space-y-8">
+            <div className="space-y-8 lg:pl-8">
               {emails.map((item, index) => (
                 <div key={index} className="space-y-2">
                   <h3 className="text-sm font-semibold text-[#000000]">
@@ -148,9 +148,14 @@ export default function ContactPage() {
                           exit={{ opacity: 0, x: -10 }}
                           transition={{ duration: 0.2 }}
                           onClick={() => copyToClipboard(item.email)}
-                          className="text-xs font-normal text-[#666666] hover:text-[#000000] transition-colors"
+                          className="p-1 text-[#666666] hover:text-[#000000] transition-colors"
+                          aria-label="Copy email"
                         >
-                          {copiedEmail === item.email ? "Copied!" : "Copy"}
+                          {copiedEmail === item.email ? (
+                            <Check className="h-4 w-4" />
+                          ) : (
+                            <Copy className="h-4 w-4" />
+                          )}
                         </motion.button>
                       )}
                     </AnimatePresence>
