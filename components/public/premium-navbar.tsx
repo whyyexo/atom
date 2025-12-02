@@ -69,6 +69,13 @@ export function PremiumNavbar() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
+            {/* Contact Us Link */}
+            <Link
+              href="/contact"
+              className="hidden text-sm font-normal text-[#000000]/80 hover:text-[#000000] transition-colors duration-200 md:block"
+            >
+              Contact us
+            </Link>
             {/* Download Button */}
             <Link
               href="/download"
@@ -150,6 +157,13 @@ export function PremiumNavbar() {
                       {link.label}
                     </Link>
                   ))}
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-lg font-normal text-white/80 hover:text-white transition-colors"
+                  >
+                    Contact us
+                  </Link>
                   <Link
                     href="/download"
                     onClick={() => setIsMobileMenuOpen(false)}

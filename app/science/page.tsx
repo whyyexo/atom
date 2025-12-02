@@ -11,10 +11,14 @@ import {
   BookOpen,
   CheckCircle2,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { PublicLayout } from "@/components/public/public-layout";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
+
+const subtleFade = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function SciencePage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -73,161 +77,164 @@ export default function SciencePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-[#0a0a0a] dark:via-black dark:to-[#1a1a1a]">
-      <div className="max-w-6xl mx-auto p-6 space-y-8">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-4"
-        >
-          <h1 className="text-5xl font-semibold tracking-tight">
-            Why Atom Works
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Built on proven scientific research in productivity, neuroscience,
-            and cognitive psychology
-          </p>
-        </motion.div>
+    <PublicLayout>
+      <section className="bg-white px-6 py-32 lg:px-12">
+        <div className="mx-auto max-w-[1180px]">
+          {/* Header */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={subtleFade}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4 mb-20"
+          >
+            <h1 className="text-5xl font-semibold leading-tight tracking-tight text-[#000000] sm:text-6xl lg:text-7xl">
+              Why Atom Works
+            </h1>
+            <p className="mx-auto max-w-2xl text-xl font-light leading-relaxed text-[#333333] sm:text-2xl">
+              Built on proven scientific research in productivity, neuroscience,
+              and cognitive psychology
+            </p>
+          </motion.div>
 
-        {/* Science Sections */}
-        <div className="grid gap-6 md:grid-cols-2">
-          {sections.map((section, idx) => {
-            const Icon = section.icon;
-            const isExpanded = expandedSection === section.id;
+          {/* Science Sections */}
+          <div className="grid gap-8 md:grid-cols-2 mb-20">
+            {sections.map((section, idx) => {
+              const Icon = section.icon;
+              const isExpanded = expandedSection === section.id;
 
-            return (
-              <motion.div
-                key={section.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-              >
-                <Card className="rounded-3xl border-0 bg-white/60 dark:bg-black/40 backdrop-blur-xl shadow-lg hover:shadow-xl transition-all cursor-pointer">
-                  <CardHeader>
-                    <div
-                      className="flex items-start justify-between"
-                      onClick={() =>
-                        setExpandedSection(
-                          isExpanded ? null : section.id
-                        )
-                      }
-                    >
-                      <div className="flex items-start gap-4 flex-1">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#007AFF] to-[#5856D6] flex items-center justify-center flex-shrink-0">
-                          <Icon className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="flex-1">
-                          <CardTitle className="text-xl mb-2">
-                            {section.title}
-                          </CardTitle>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {section.description}
-                          </p>
-                        </div>
+              return (
+                <motion.div
+                  key={section.id}
+                  initial="hidden"
+                  animate="visible"
+                  variants={subtleFade}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                >
+                  <div
+                    className="rounded-xl border border-[rgba(0,0,0,0.08)] bg-white p-6 shadow-sm hover:shadow-md transition-all cursor-pointer"
+                    onClick={() =>
+                      setExpandedSection(
+                        isExpanded ? null : section.id
+                      )
+                    }
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#0071e3] to-[#0077ed] flex items-center justify-center flex-shrink-0">
+                        <Icon className="h-6 w-6 text-white" />
                       </div>
-                      <button className="ml-4">
-                        <Info className="h-5 w-5 text-gray-400" />
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold text-[#000000] mb-2">
+                          {section.title}
+                        </h3>
+                        <p className="text-sm font-light text-[#333333] mb-4">
+                          {section.description}
+                        </p>
+                        {isExpanded && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="space-y-4 pt-4 border-t border-[rgba(0,0,0,0.08)]"
+                          >
+                            <div className="p-4 rounded-lg bg-[#f5f5f5] border border-[rgba(0,0,0,0.08)]">
+                              <h4 className="font-semibold text-[#000000] mb-2">Explanation</h4>
+                              <p className="text-sm font-light text-[#333333]">
+                                {section.explanation}
+                              </p>
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-[#000000] mb-3 flex items-center gap-2">
+                                <BookOpen className="h-4 w-4" />
+                                Studies Cited
+                              </h4>
+                              <div className="space-y-2">
+                                {section.studies.map((study, studyIdx) => (
+                                  <div
+                                    key={studyIdx}
+                                    className="text-xs font-light text-[#333333] p-3 rounded-lg bg-[#f5f5f5] border border-[rgba(0,0,0,0.08)]"
+                                  >
+                                    {study}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+                      <button className="ml-2">
+                        <Info className={`h-5 w-5 transition-transform ${isExpanded ? 'rotate-180' : ''} text-[#666666]`} />
                       </button>
                     </div>
-                  </CardHeader>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                    >
-                      <CardContent className="pt-0 space-y-4">
-                        <div className="p-4 rounded-2xl bg-gradient-to-br from-white/80 to-gray-50/80 dark:from-black/60 dark:to-gray-900/60 border border-black/5 dark:border-white/5">
-                          <h4 className="font-semibold mb-2">Explanation</h4>
-                          <p className="text-sm text-gray-700 dark:text-gray-300">
-                            {section.explanation}
-                          </p>
-                        </div>
-                        <div>
-                          <h4 className="font-semibold mb-2 flex items-center gap-2">
-                            <BookOpen className="h-4 w-4" />
-                            Studies Cited
-                          </h4>
-                          <div className="space-y-2">
-                            {section.studies.map((study, studyIdx) => (
-                              <div
-                                key={studyIdx}
-                                className="text-xs text-gray-600 dark:text-gray-400 p-2 rounded-lg bg-gray-50 dark:bg-gray-900"
-                              >
-                                {study}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </motion.div>
-                  )}
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
 
-        {/* How It Works */}
-        <Card className="rounded-3xl border-0 bg-gradient-to-br from-[#007AFF]/10 to-[#5856D6]/10 dark:from-[#007AFF]/20 dark:to-[#5856D6]/20 backdrop-blur-xl shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl">How Atom Applies Science</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="p-4 rounded-2xl bg-white/80 dark:bg-black/60">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-5 w-5 text-[#34C759]" />
-                  <h4 className="font-semibold">Task Prioritization</h4>
+          {/* How It Works */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={subtleFade}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="rounded-xl border border-[rgba(0,0,0,0.08)] bg-white p-8 mb-20"
+          >
+            <h2 className="text-2xl font-semibold text-[#000000] mb-8">How Atom Applies Science</h2>
+            <div className="grid gap-6 md:grid-cols-3">
+              <div className="p-6 rounded-lg bg-[#f5f5f5] border border-[rgba(0,0,0,0.08)]">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#0071e3]" />
+                  <h4 className="font-semibold text-[#000000]">Task Prioritization</h4>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm font-light text-[#333333]">
                   AI analyzes tasks using Pareto Principle and cognitive load
                   theory
                 </p>
               </div>
-              <div className="p-4 rounded-2xl bg-white/80 dark:bg-black/60">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-5 w-5 text-[#34C759]" />
-                  <h4 className="font-semibold">Deep Work Scheduling</h4>
+              <div className="p-6 rounded-lg bg-[#f5f5f5] border border-[rgba(0,0,0,0.08)]">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#0071e3]" />
+                  <h4 className="font-semibold text-[#000000]">Deep Work Scheduling</h4>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm font-light text-[#333333]">
                   Optimal focus blocks based on your energy patterns and
                   chronobiology
                 </p>
               </div>
-              <div className="p-4 rounded-2xl bg-white/80 dark:bg-black/60">
-                <div className="flex items-center gap-2 mb-2">
-                  <CheckCircle2 className="h-5 w-5 text-[#34C759]" />
-                  <h4 className="font-semibold">Email Intelligence</h4>
+              <div className="p-6 rounded-lg bg-[#f5f5f5] border border-[rgba(0,0,0,0.08)]">
+                <div className="flex items-center gap-2 mb-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#0071e3]" />
+                  <h4 className="font-semibold text-[#000000]">Email Intelligence</h4>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm font-light text-[#333333]">
                   Contextual sorting reduces cognitive switching costs
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </motion.div>
 
-        {/* Download Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="text-center space-y-6 py-12"
-        >
-          <div className="space-y-2">
-            <h2 className="text-3xl font-semibold">Ready to Experience Science-Based Productivity?</h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
-              Download Atom and start applying these principles to your daily workflow
-            </p>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <AppStoreBadge />
-            <GooglePlayBadge />
-          </div>
-        </motion.div>
-      </div>
-    </div>
+          {/* Download Section */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={subtleFade}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="text-center space-y-6 py-12"
+          >
+            <div className="space-y-4">
+              <h2 className="text-3xl font-semibold text-[#000000]">Ready to Experience Science-Based Productivity?</h2>
+              <p className="text-lg font-light text-[#333333]">
+                Download Atom and start applying these principles to your daily workflow
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <AppStoreBadge />
+              <GooglePlayBadge />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </PublicLayout>
   );
 }
