@@ -22,6 +22,7 @@
     "date-fns": "^4.1.0",
     "expo": "^54.0.25",
     "framer-motion": "^11.0.3",
+    "geist": "^1.5.1",
     "lucide-react": "^0.553.0",
     "next": "16.0.1",
     "openai": "^6.8.1",
