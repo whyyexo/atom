@@ -113,14 +113,15 @@ export default function ContactPage() {
                     opacity: isFormValid ? 1 : 0.3,
                     backgroundColor: isFormValid ? "#ffffff" : "rgba(255, 255, 255, 0.5)",
                     borderColor: isFormValid ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.03)",
+                    color: isFormValid ? "#000000" : "#000000",
                   }}
                   transition={{ duration: 0.3 }}
                   type="submit"
                   disabled={!isFormValid}
-                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal text-[#000000] hover:bg-[rgba(0,0,0,0.04)] transition-all disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed hover:bg-[#0071e3] hover:text-white hover:border-[#0071e3] group"
                 >
-                  Submit
-                  <span className="text-[#000000]">&gt;</span>
+                  <span className="group-hover:text-white">Submit</span>
+                  <span className="group-hover:text-white">&gt;</span>
                 </motion.button>
               </form>
             </div>
