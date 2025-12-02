@@ -133,17 +133,17 @@ export function PricingCard({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
             >
               <div className={cn(
-                "relative w-10 h-10 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg",
+                "relative w-full h-10 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg",
                 isDark 
                   ? "bg-black/80 border-white/10" 
                   : "bg-white/80 border-[rgba(0,0,0,0.08)]"
               )}>
                 <motion.div
                   animate={{
-                    y: [0, 4, 0],
+                    y: [0, 6, 0],
                   }}
                   transition={{
                     duration: 1.5,

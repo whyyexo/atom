@@ -236,12 +236,12 @@ export function Pricing() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
+                  className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
                 >
-                  <div className="relative w-10 h-10 rounded-full backdrop-blur-md bg-white/80 dark:bg-black/80 border border-border/50 flex items-center justify-center shadow-lg">
+                  <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/80 dark:bg-black/80 border border-border/50 flex items-center justify-center shadow-lg">
                     <motion.div
                       animate={{
-                        y: [0, 4, 0],
+                        y: [0, 6, 0],
                       }}
                       transition={{
                         duration: 1.5,
