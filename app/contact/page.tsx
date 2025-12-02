@@ -118,9 +118,21 @@ export default function ContactPage() {
                   transition={{ duration: 0.3 }}
                   type="submit"
                   disabled={!isFormValid}
-                  className={`flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed ${
-                    isFormValid ? "hover:bg-[#0071e3] hover:text-white hover:border-[#0071e3]" : ""
-                  }`}
+                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed"
+                  onMouseEnter={(e) => {
+                    if (isFormValid && !e.currentTarget.disabled) {
+                      e.currentTarget.style.backgroundColor = "#0071e3";
+                      e.currentTarget.style.color = "#ffffff";
+                      e.currentTarget.style.borderColor = "#0071e3";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (isFormValid && !e.currentTarget.disabled) {
+                      e.currentTarget.style.backgroundColor = "#ffffff";
+                      e.currentTarget.style.color = "#000000";
+                      e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.08)";
+                    }
+                  }}
                 >
                   <span>Submit</span>
                   <span>&gt;</span>
