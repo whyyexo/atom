@@ -65,8 +65,7 @@ function HeroSection() {
             productivity app.
           </h1>
           <p className="mt-8 text-xl font-light leading-relaxed text-[#333333] sm:text-2xl">
-            Built on cognitive science and behavioral research. A workspace that adapts to how your
-            mind actually works—not how productivity apps think it should.
+            <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">Reclaim hours</span> every week with an <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">intelligent workspace</span> powered by <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">science</span> — tasks, notes, and your <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">AI assistant</span>, all working seamlessly together. Built for builders, operators, and relentless achievers.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button

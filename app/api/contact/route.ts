@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
 
 const RECIPIENT_EMAIL = "fx.bergeron011@gmail.com";
 
@@ -40,9 +39,11 @@ This email was sent from the Atom contact form.
     `.trim();
 
     // Send email using Resend
-    if (process.env.RESEND_API_KEY) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (apiKey && apiKey.trim() !== "") {
       try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const { Resend } = await import("resend");
+        const resend = new Resend(apiKey);
         await resend.emails.send({
           from: "Atom Contact Form <onboarding@resend.dev>", // Change this to your verified domain
           to: RECIPIENT_EMAIL,
@@ -50,10 +51,11 @@ This email was sent from the Atom contact form.
           text: emailContent,
           replyTo: email,
         });
+        console.log("Email sent successfully via Resend");
       } catch (resendError) {
         console.error("Resend error:", resendError);
         // Fallback to logging if Resend fails
-        console.log("=== CONTACT FORM SUBMISSION ===");
+        console.log("=== CONTACT FORM SUBMISSION (Fallback) ===");
         console.log("To:", RECIPIENT_EMAIL);
         console.log("From:", email);
         console.log("Subject:", subject);
