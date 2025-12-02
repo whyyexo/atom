@@ -118,10 +118,12 @@ export default function ContactPage() {
                   transition={{ duration: 0.3 }}
                   type="submit"
                   disabled={!isFormValid}
-                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed hover:bg-[#0071e3] hover:text-white hover:border-[#0071e3] group"
+                  className={`flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed ${
+                    isFormValid ? "hover:bg-[#0071e3] hover:text-white hover:border-[#0071e3]" : ""
+                  }`}
                 >
-                  <span className="group-hover:text-white">Submit</span>
-                  <span className="group-hover:text-white">&gt;</span>
+                  <span>Submit</span>
+                  <span>&gt;</span>
                 </motion.button>
               </form>
             </div>
@@ -145,9 +147,9 @@ export default function ContactPage() {
                       <AnimatePresence>
                         {hoveredEmail === item.email && (
                           <motion.button
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -10 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             onClick={() => copyToClipboard(item.email)}
                             className="absolute p-1 text-[#666666] hover:text-[#000000] transition-colors"
