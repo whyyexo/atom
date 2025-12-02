@@ -16,13 +16,42 @@ export default function ContactPage() {
 
   const [hoveredEmail, setHoveredEmail] = useState<string | null>(null);
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const isFormValid = formData.email.trim() !== "" && formData.subject.trim() !== "" && formData.message.trim() !== "";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    if (!isFormValid || isSubmitting) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setFormData({ email: "", subject: "", message: "" });
+        setTimeout(() => setSubmitStatus("idle"), 3000);
+      } else {
+        setSubmitStatus("error");
+        setTimeout(() => setSubmitStatus("idle"), 3000);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 3000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const copyToClipboard = async (email: string) => {
@@ -108,35 +137,45 @@ export default function ContactPage() {
                 </div>
 
                 {/* Submit Button - Visible but subtle, becomes more visible when form is valid */}
-                <motion.button
-                  animate={{
-                    opacity: isFormValid ? 1 : 0.3,
-                    backgroundColor: isFormValid ? "#ffffff" : "rgba(255, 255, 255, 0.5)",
-                    borderColor: isFormValid ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.03)",
-                    color: isFormValid ? "#000000" : "#000000",
-                  }}
-                  transition={{ duration: 0.3 }}
-                  type="submit"
-                  disabled={!isFormValid}
-                  className="flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all disabled:cursor-not-allowed"
-                  onMouseEnter={(e) => {
-                    if (isFormValid && !e.currentTarget.disabled) {
-                      e.currentTarget.style.backgroundColor = "#0071e3";
-                      e.currentTarget.style.color = "#ffffff";
-                      e.currentTarget.style.borderColor = "#0071e3";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (isFormValid && !e.currentTarget.disabled) {
-                      e.currentTarget.style.backgroundColor = "#ffffff";
-                      e.currentTarget.style.color = "#000000";
-                      e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.08)";
-                    }
-                  }}
-                >
-                  <span>Submit</span>
-                  <span>&gt;</span>
-                </motion.button>
+                <div className="space-y-2">
+                  <motion.button
+                    animate={{
+                      opacity: isFormValid ? 1 : 0.3,
+                      backgroundColor: isFormValid ? "#ffffff" : "rgba(255, 255, 255, 0.5)",
+                      borderColor: isFormValid ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.03)",
+                      color: isFormValid ? "#000000" : "#000000",
+                    }}
+                    transition={{ duration: 0.3 }}
+                    type="submit"
+                    disabled={!isFormValid || isSubmitting}
+                    className={`flex items-center gap-2 rounded-full border px-6 py-3 text-base font-normal transition-all ${
+                      isFormValid && !isSubmitting ? "cursor-pointer" : "cursor-not-allowed"
+                    }`}
+                    onMouseEnter={(e) => {
+                      if (isFormValid && !e.currentTarget.disabled && !isSubmitting) {
+                        e.currentTarget.style.backgroundColor = "#0071e3";
+                        e.currentTarget.style.color = "#ffffff";
+                        e.currentTarget.style.borderColor = "#0071e3";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (isFormValid && !e.currentTarget.disabled && !isSubmitting) {
+                        e.currentTarget.style.backgroundColor = "#ffffff";
+                        e.currentTarget.style.color = "#000000";
+                        e.currentTarget.style.borderColor = "rgba(0, 0, 0, 0.08)";
+                      }
+                    }}
+                  >
+                    <span>{isSubmitting ? "Sending..." : "Submit"}</span>
+                    {!isSubmitting && <span>&gt;</span>}
+                  </motion.button>
+                  {submitStatus === "success" && (
+                    <p className="text-sm text-[#0071e3]">Message sent successfully!</p>
+                  )}
+                  {submitStatus === "error" && (
+                    <p className="text-sm text-red-500">Failed to send message. Please try again.</p>
+                  )}
+                </div>
               </form>
             </div>
 
