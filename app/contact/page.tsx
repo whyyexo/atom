@@ -134,32 +134,34 @@ export default function ContactPage() {
                     {item.label}
                   </h3>
                   <div
-                    className="flex items-center gap-2 group"
+                    className="flex items-center gap-2 group relative"
                     onMouseEnter={() => setHoveredEmail(item.email)}
                     onMouseLeave={() => setHoveredEmail(null)}
                   >
                     <span className="text-sm font-light text-[#333333]">
                       {item.email}
                     </span>
-                    <AnimatePresence>
-                      {hoveredEmail === item.email && (
-                        <motion.button
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -10 }}
-                          transition={{ duration: 0.2 }}
-                          onClick={() => copyToClipboard(item.email)}
-                          className="p-1 text-[#666666] hover:text-[#000000] transition-colors"
-                          aria-label="Copy email"
-                        >
-                          {copiedEmail === item.email ? (
-                            <Check className="h-4 w-4" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </motion.button>
-                      )}
-                    </AnimatePresence>
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      <AnimatePresence>
+                        {hoveredEmail === item.email && (
+                          <motion.button
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -10 }}
+                            transition={{ duration: 0.2 }}
+                            onClick={() => copyToClipboard(item.email)}
+                            className="absolute p-1 text-[#666666] hover:text-[#000000] transition-colors"
+                            aria-label="Copy email"
+                          >
+                            {copiedEmail === item.email ? (
+                              <Check className="h-4 w-4" />
+                            ) : (
+                              <Copy className="h-4 w-4" />
+                            )}
+                          </motion.button>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
               ))}
