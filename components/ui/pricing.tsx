@@ -59,7 +59,7 @@ export function PricingCard({
             )}
             variant={buttonVariant}
           >
-            <Link href="/signup">Get Started</Link>
+            <Link href="/download">Get Started</Link>
           </Button>
         </div>
       </div>

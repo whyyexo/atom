@@ -71,7 +71,7 @@ export function Header() {
                 <Link href="/login">Sign In</Link>
               </Button>
               <Button asChild size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                <Link href="/signup">Get Started</Link>
+                <Link href="/download">Get Started</Link>
               </Button>
             </>
           )}

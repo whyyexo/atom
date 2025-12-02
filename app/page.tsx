@@ -73,7 +73,7 @@ function HeroSection() {
               className="rounded-full bg-[#0071e3] px-8 py-3 text-base font-normal text-white hover:bg-[#0077ed] border-0"
               asChild
             >
-              <Link href="/signup">Get Started</Link>
+              <Link href="/download">Get Started</Link>
             </Button>
             <Button
               variant="outline"
@@ -221,7 +221,7 @@ function PricingSection() {
                   className="w-full rounded-full border border-[rgba(0,0,0,0.08)] bg-transparent text-[#000000] hover:bg-[rgba(0,0,0,0.04)]"
                   variant="outline"
                 >
-                  <Link href="/signup">Get Started</Link>
+                  <Link href="/download">Get Started</Link>
                 </Button>
               </div>
               <ul className="border-t border-[rgba(0,0,0,0.08)] pt-4 list-outside space-y-3 text-sm">
@@ -253,7 +253,7 @@ function PricingSection() {
                     className="w-full rounded-full bg-[#0071e3] text-white hover:bg-[#0077ed] border-0"
                     variant="default"
                   >
-                    <Link href="/signup">Get Started</Link>
+                    <Link href="/download">Get Started</Link>
                   </Button>
                 </div>
               </div>

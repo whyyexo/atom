@@ -72,7 +72,7 @@ export function Hero() {
               size="lg"
               className="group h-12 px-8 text-base font-medium rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/30 transition-all"
             >
-              <Link href="/signup">
+              <Link href="/download">
                 Get Started
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
