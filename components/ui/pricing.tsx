@@ -4,11 +4,17 @@ import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/providers/theme-provider";
 
+interface Category {
+  title: string;
+  features: string[];
+}
+
 interface PricingCardProps {
   title: string;
   price: string;
   description: string;
-  features: string[];
+  features?: string[];
+  categories?: Category[];
   highlight?: boolean;
   highlightLabel?: string;
   buttonVariant?: "default" | "outline";
@@ -19,6 +25,7 @@ export function PricingCard({
   price,
   description,
   features,
+  categories,
   highlight = false,
   buttonVariant = "outline",
 }: PricingCardProps) {
@@ -43,6 +50,11 @@ export function PricingCard({
             <h2 className={cn("font-medium", isDark ? "text-white" : "text-[#000000]")}>{title}</h2>
             <span className={cn("my-3 block text-2xl font-semibold", isDark ? "text-white" : "text-[#000000]")}>{price}</span>
             <p className={cn("text-sm font-light", isDark ? "text-white/80" : "text-[#333333]")}>{description}</p>
+            {highlight && (
+              <p className={cn("text-xs font-medium mt-2", isDark ? "text-white/70" : "text-[#666666]")}>
+                Includes everything in Free, plus:
+              </p>
+            )}
           </div>
           <Button 
             asChild 
@@ -64,20 +76,42 @@ export function PricingCard({
         </div>
       </div>
 
-      {highlight && (
-        <div>
-          <div className={cn("text-sm font-medium", isDark ? "text-white" : "text-[#000000]")}>Everything in Free, plus:</div>
+      {categories ? (
+        <div className={cn("space-y-3 max-h-[500px] overflow-y-auto pr-2", highlight ? "mt-4" : "border-t pt-4", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              className={cn(
+                "rounded-lg p-3 border",
+                isDark 
+                  ? "bg-black/50 border-white/10 hover:border-white/20" 
+                  : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.08)] hover:border-[rgba(0,0,0,0.12)]"
+              )}
+            >
+              <h4 className={cn("text-xs font-semibold mb-2", isDark ? "text-white" : "text-[#000000]")}>
+                {category.title}
+              </h4>
+              <ul className="space-y-1.5">
+                {category.features.map((feature, featureIndex) => (
+                  <li key={featureIndex} className={cn("flex items-start gap-2 text-xs", isDark ? "text-white/80" : "text-[#333333]")}>
+                    <Check className={cn("size-3 flex-shrink-0 mt-0.5", isDark ? "text-white" : "text-[#000000]")} />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      )}
-
-      <ul className={cn(highlight ? "mt-4" : "border-t pt-4", "list-outside space-y-3 text-sm", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
-        {features.map((item, index) => (
-          <li key={index} className={cn("flex items-center gap-2", isDark ? "text-white/80" : "text-[#333333]")}>
-            <Check className={cn("size-3", isDark ? "text-white" : "text-[#000000]")} />
-            {item}
-          </li>
-        ))}
-      </ul>
+      ) : features ? (
+        <ul className={cn("border-t pt-4 list-outside space-y-3 text-sm", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
+          {features.map((item, index) => (
+            <li key={index} className={cn("flex items-center gap-2", isDark ? "text-white/80" : "text-[#333333]")}>
+              <Check className={cn("size-3", isDark ? "text-white" : "text-[#000000]")} />
+              {item}
+            </li>
+          ))}
+        </ul>
+      ) : null}
     </div>
   );
 }

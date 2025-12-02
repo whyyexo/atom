@@ -6,38 +6,94 @@ import { Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-const plans = [
+const freePlan = {
+  name: "Free",
+  price: "$0",
+  description: "Everything you need to experience the Atom ecosystem.",
+  features: [
+    "Atom Assistant (Lite) — quick answers, basic help, simple summaries",
+    "Smart Workspace access — notes, tasks & calendar in one place",
+    "Unlimited notes",
+    "Up to 3 projects",
+    "Daily smart suggestions (Lite)",
+    "Basic planning assistance",
+    "Cross-device sync (Web + Mobile)",
+    "Community support",
+  ],
+  cta: "Get Started",
+  href: "/signup",
+};
+
+const proCategories = [
   {
-    name: "Free",
-    price: "$0",
-    description: "Get started with essential features",
+    title: "Atom Assistant (Pro)",
     features: [
-      "Basic task management",
-      "Up to 3 projects",
-      "Mobile app access",
-      "Community support",
+      "Deep reasoning",
+      "Advanced summaries & rewrites",
+      "Context-aware help (school, work, personal)",
+      "Memory-based suggestions",
+      "Proactive recommendations",
     ],
-    cta: "Get Started",
-    href: "/signup",
-    featured: false,
   },
   {
-    name: "Atom Pro",
-    price: "$12",
-    period: "/month",
-    description: "Full productivity system",
+    title: "Smart Planning OS",
     features: [
-      "Unlimited tasks & projects",
-      "Advanced notes & documents",
-      "Science-backed focus tools",
-      "Habit tracking & routines",
-      "Weekly review system",
-      "Priority support",
-      "Early access to new features",
+      "Auto-plan your day, week, and priorities",
+      "Dynamic scheduling based on your energy & free time",
+      "Personalized focus windows",
     ],
-    cta: "Start Free Trial",
-    href: "/signup",
-    featured: true,
+  },
+  {
+    title: "Intelligent Notes & Tasks",
+    features: [
+      "Automatic structuring of your notes",
+      "Task prioritization that adapts to your day",
+      "Instant study sheets creating (science-based)",
+    ],
+  },
+  {
+    title: "Unlimited Workspace",
+    features: [
+      "Unlimited projects",
+      "Unlimited workspaces",
+    ],
+  },
+  {
+    title: "Real-time collaboration",
+    features: [
+      "Share docs, notes, and tasks",
+      "Collaborative editing",
+    ],
+  },
+  {
+    title: "Export & Data Freedom",
+    features: [
+      "Export to Markdown, PDF, and more",
+      "Cloud backup options",
+    ],
+  },
+  {
+    title: "Full Integrations",
+    features: [
+      "Google Calendar",
+      "Notion Calendar",
+    ],
+  },
+  {
+    title: "Advanced Analytics",
+    features: [
+      "Productivity metrics",
+      "Focus time tracking",
+      "Weekly insights",
+    ],
+  },
+  {
+    title: "Priority Support",
+    features: [
+      "Faster response",
+      "Priority beta access",
+      "Early feature unlocks",
+    ],
   },
 ];
 
@@ -60,64 +116,106 @@ export function Pricing() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`relative rounded-2xl border-2 p-8 ${
-                plan.featured
-                  ? "border-blue-500/50 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20 shadow-lg shadow-blue-500/10"
-                  : "border-border bg-white dark:bg-black"
-              }`}
-            >
-              {plan.featured && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium">
-                  Most Popular
-                </div>
-              )}
-
-              <div className="mb-6">
-                <h3 className="text-2xl font-semibold text-foreground mb-2">
-                  {plan.name}
-                </h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-semibold text-foreground">
-                    {plan.price}
-                  </span>
-                  {plan.period && (
-                    <span className="text-muted-foreground">{plan.period}</span>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">{plan.description}</p>
+        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {/* Free Plan */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+            className="relative rounded-2xl border-2 p-8 border-border bg-white dark:bg-black"
+          >
+            <div className="mb-6">
+              <h3 className="text-2xl font-semibold text-foreground mb-2">
+                {freePlan.name}
+              </h3>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-4xl font-semibold text-foreground">
+                  {freePlan.price}
+                </span>
               </div>
+              <p className="text-sm text-muted-foreground">{freePlan.description}</p>
+            </div>
 
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+            <ul className="space-y-3 mb-8">
+              {freePlan.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-3">
+                  <Check className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-muted-foreground">{feature}</span>
+                </li>
+              ))}
+            </ul>
 
-              <Button
-                asChild
-                variant={plan.featured ? "default" : "outline"}
-                size="lg"
-                className={`w-full h-12 ${
-                  plan.featured
-                    ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
-                    : ""
-                }`}
-              >
-                <Link href={plan.href}>{plan.cta}</Link>
-              </Button>
-            </motion.div>
-          ))}
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="w-full h-12"
+            >
+              <Link href={freePlan.href}>{freePlan.cta}</Link>
+            </Button>
+          </motion.div>
+
+          {/* Pro Plan */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="relative rounded-2xl border-2 p-8 border-blue-500/50 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20 shadow-lg shadow-blue-500/10"
+          >
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium">
+              Most Popular
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-2xl font-semibold text-foreground mb-2">
+                Pro
+              </h3>
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className="text-4xl font-semibold text-foreground">
+                  $12
+                </span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Unlock the full power of Atom.</p>
+              <p className="text-xs text-muted-foreground mt-2 font-medium">Includes everything in Free, plus:</p>
+            </div>
+
+            <div className="space-y-4 mb-8 max-h-[600px] overflow-y-auto pr-2">
+              {proCategories.map((category, index) => (
+                <motion.div
+                  key={category.title}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="rounded-xl bg-white/50 dark:bg-black/50 border border-border/50 p-4 hover:border-border transition-all"
+                >
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
+                    {category.title}
+                  </h4>
+                  <ul className="space-y-2">
+                    {category.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-2">
+                        <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-xs text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+
+            <Button
+              asChild
+              variant="default"
+              size="lg"
+              className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+            >
+              <Link href="/signup">Start Free Trial</Link>
+            </Button>
+          </motion.div>
         </div>
       </div>
     </section>

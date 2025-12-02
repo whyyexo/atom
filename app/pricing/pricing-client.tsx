@@ -6,6 +6,90 @@ import { useTheme } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
+const freeFeatures = [
+  "Atom Assistant (Lite) — quick answers, basic help, simple summaries",
+  "Smart Workspace access — notes, tasks & calendar in one place",
+  "Unlimited notes",
+  "Up to 3 projects",
+  "Daily smart suggestions (Lite)",
+  "Basic planning assistance",
+  "Cross-device sync (Web + Mobile)",
+  "Community support",
+];
+
+const proCategories = [
+  {
+    title: "Atom Assistant (Pro)",
+    features: [
+      "Deep reasoning",
+      "Advanced summaries & rewrites",
+      "Context-aware help (school, work, personal)",
+      "Memory-based suggestions",
+      "Proactive recommendations",
+    ],
+  },
+  {
+    title: "Smart Planning OS",
+    features: [
+      "Auto-plan your day, week, and priorities",
+      "Dynamic scheduling based on your energy & free time",
+      "Personalized focus windows",
+    ],
+  },
+  {
+    title: "Intelligent Notes & Tasks",
+    features: [
+      "Automatic structuring of your notes",
+      "Task prioritization that adapts to your day",
+      "Instant study sheets creating (science-based)",
+    ],
+  },
+  {
+    title: "Unlimited Workspace",
+    features: [
+      "Unlimited projects",
+      "Unlimited workspaces",
+    ],
+  },
+  {
+    title: "Real-time collaboration",
+    features: [
+      "Share docs, notes, and tasks",
+      "Collaborative editing",
+    ],
+  },
+  {
+    title: "Export & Data Freedom",
+    features: [
+      "Export to Markdown, PDF, and more",
+      "Cloud backup options",
+    ],
+  },
+  {
+    title: "Full Integrations",
+    features: [
+      "Google Calendar",
+      "Notion Calendar",
+    ],
+  },
+  {
+    title: "Advanced Analytics",
+    features: [
+      "Productivity metrics",
+      "Focus time tracking",
+      "Weekly insights",
+    ],
+  },
+  {
+    title: "Priority Support",
+    features: [
+      "Faster response",
+      "Priority beta access",
+      "Early feature unlocks",
+    ],
+  },
+];
+
 export function PricingPageClient() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
@@ -24,33 +108,17 @@ export function PricingPageClient() {
           <PricingCard
             title="Free"
             price="$0 / mo"
-            description="Everything you need to get started"
+            description="Everything you need to experience the Atom ecosystem."
             buttonVariant="outline"
-            features={[
-              "Unlimited notes and documents",
-              "Up to 3 projects",
-              "Basic AI features",
-              "Community support",
-            ]}
+            features={freeFeatures}
           />
           <PricingCard
             title="Pro"
-            price="$6.99 / mo"
-            description="Unlock AI actions and unlimited projects"
+            price="$12 / mo"
+            description="Unlock the full power of Atom."
             buttonVariant="default"
             highlight
-            features={[
-              "Unlimited notes and documents",
-              "Unlimited projects and workspaces",
-              "Real-time collaboration",
-              "Export to markdown, PDF, and more",
-              "Priority support",
-              "Advanced AI automation",
-              "Unlimited AI actions",
-              "Custom integrations",
-              "Advanced analytics",
-              "Team management",
-            ]}
+            categories={proCategories}
           />
         </div>
       </div>
