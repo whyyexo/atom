@@ -48,7 +48,7 @@ export default function LandingPage() {
 
 function HeroSection() {
   return (
-    <section className="flex min-h-[90vh] flex-col items-center justify-center px-6 py-32 text-center lg:px-12">
+    <section className="flex min-h-[90vh] flex-col items-center justify-center px-6 pt-20 pb-32 text-center lg:px-12">
       <div className="mx-auto max-w-[1180px]">
         <motion.div
           initial="hidden"
@@ -64,7 +64,7 @@ function HeroSection() {
             </span>{" "}
             productivity app.
           </h1>
-          <p className="mt-8 text-xl font-light leading-relaxed text-[#333333] sm:text-2xl">
+          <p className="mt-8 text-base font-light leading-relaxed text-[#333333] sm:text-lg">
             <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">Reclaim hours</span> every week with an <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">intelligent workspace</span> powered by <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">science</span> — tasks, notes, and your <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">AI assistant</span>, all working seamlessly together. Built for builders, operators, and relentless achievers.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
