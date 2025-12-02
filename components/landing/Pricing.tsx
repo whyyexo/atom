@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, ArrowUpRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,7 @@ const proCategories = [
       "Memory-based suggestions",
       "Proactive recommendations",
     ],
+    href: "/features/atom-assistant",
   },
   {
     title: "Smart Planning OS",
@@ -43,6 +44,7 @@ const proCategories = [
       "Dynamic scheduling based on your energy & free time",
       "Personalized focus windows",
     ],
+    href: "/features/planning",
   },
   {
     title: "Intelligent Notes & Tasks",
@@ -51,6 +53,7 @@ const proCategories = [
       "Task prioritization that adapts to your day",
       "Instant study sheets creating (science-based)",
     ],
+    href: "/features/notes-tasks",
   },
   {
     title: "Unlimited Workspace",
@@ -58,6 +61,7 @@ const proCategories = [
       "Unlimited projects",
       "Unlimited workspaces",
     ],
+    href: "/features/workspace",
   },
   {
     title: "Real-time collaboration",
@@ -65,6 +69,7 @@ const proCategories = [
       "Share docs, notes, and tasks",
       "Collaborative editing",
     ],
+    href: "/features/collaboration",
   },
   {
     title: "Export & Data Freedom",
@@ -72,6 +77,7 @@ const proCategories = [
       "Export to Markdown, PDF, and more",
       "Cloud backup options",
     ],
+    href: "/features/export",
   },
   {
     title: "Full Integrations",
@@ -79,6 +85,7 @@ const proCategories = [
       "Google Calendar",
       "Notion Calendar",
     ],
+    href: "/features/integrations",
   },
   {
     title: "Advanced Analytics",
@@ -87,6 +94,7 @@ const proCategories = [
       "Focus time tracking",
       "Weekly insights",
     ],
+    href: "/features/analytics",
   },
   {
     title: "Priority Support",
@@ -95,6 +103,7 @@ const proCategories = [
       "Priority beta access",
       "Early feature unlocks",
     ],
+    href: "/features/support",
   },
 ];
 
@@ -213,11 +222,26 @@ export function Pricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="rounded-xl bg-white/50 dark:bg-black/50 border border-border/50 p-4 hover:border-border transition-all"
+                    className="group rounded-xl bg-white/50 dark:bg-black/50 border border-[rgba(0,0,0,0.15)] dark:border-[rgba(255,255,255,0.15)] p-4 hover:border-white dark:hover:border-white transition-all relative"
                   >
-                    <h4 className="text-sm font-semibold text-foreground mb-2">
-                      {category.title}
-                    </h4>
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="text-sm font-semibold text-foreground">
+                        {category.title}
+                      </h4>
+                      <Link 
+                        href={category.href}
+                        className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 hover:gap-2"
+                      >
+                        <span className="text-xs text-foreground whitespace-nowrap overflow-hidden w-0 hover:w-12 transition-all duration-300 inline-block">details</span>
+                        <motion.div
+                          whileHover={{ x: -4 }}
+                          transition={{ duration: 0.2 }}
+                          className="flex-shrink-0"
+                        >
+                          <ArrowUpRight className="w-4 h-4 text-foreground" />
+                        </motion.div>
+                      </Link>
+                    </div>
                     <ul className="space-y-2">
                       {category.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2">
@@ -238,7 +262,7 @@ export function Pricing() {
                   exit={{ opacity: 0 }}
                   className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
                 >
-                  <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/80 dark:bg-black/80 border border-border/50 flex items-center justify-center shadow-lg">
+                  <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/30 dark:bg-black/30 border border-border/50 flex items-center justify-center shadow-lg">
                     <motion.div
                       animate={{
                         y: [0, 6, 0],

@@ -27,6 +27,7 @@ const proCategories = [
       "Memory-based suggestions",
       "Proactive recommendations",
     ],
+    href: "/features/atom-assistant",
   },
   {
     title: "Smart Planning OS",
@@ -35,6 +36,7 @@ const proCategories = [
       "Dynamic scheduling based on your energy & free time",
       "Personalized focus windows",
     ],
+    href: "/features/planning",
   },
   {
     title: "Intelligent Notes & Tasks",
@@ -43,6 +45,7 @@ const proCategories = [
       "Task prioritization that adapts to your day",
       "Instant study sheets creating (science-based)",
     ],
+    href: "/features/notes-tasks",
   },
   {
     title: "Unlimited Workspace",
@@ -50,6 +53,7 @@ const proCategories = [
       "Unlimited projects",
       "Unlimited workspaces",
     ],
+    href: "/features/workspace",
   },
   {
     title: "Real-time collaboration",
@@ -57,6 +61,7 @@ const proCategories = [
       "Share docs, notes, and tasks",
       "Collaborative editing",
     ],
+    href: "/features/collaboration",
   },
   {
     title: "Export & Data Freedom",
@@ -64,6 +69,7 @@ const proCategories = [
       "Export to Markdown, PDF, and more",
       "Cloud backup options",
     ],
+    href: "/features/export",
   },
   {
     title: "Full Integrations",
@@ -71,6 +77,7 @@ const proCategories = [
       "Google Calendar",
       "Notion Calendar",
     ],
+    href: "/features/integrations",
   },
   {
     title: "Advanced Analytics",
@@ -79,6 +86,7 @@ const proCategories = [
       "Focus time tracking",
       "Weekly insights",
     ],
+    href: "/features/analytics",
   },
   {
     title: "Priority Support",
@@ -87,6 +95,7 @@ const proCategories = [
       "Priority beta access",
       "Early feature unlocks",
     ],
+    href: "/features/support",
   },
 ];
 

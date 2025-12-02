@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/components/providers/theme-provider";
 import { useState, useRef, useEffect } from "react";
@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 interface Category {
   title: string;
   features: string[];
+  href?: string;
 }
 
 interface PricingCardProps {
@@ -106,15 +107,35 @@ export function PricingCard({
               <div
                 key={index}
                 className={cn(
-                  "rounded-lg p-3 border",
+                  "group rounded-lg p-3 border relative",
                   isDark 
-                    ? "bg-black/50 border-white/10 hover:border-white/20" 
-                    : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.08)] hover:border-[rgba(0,0,0,0.12)]"
+                    ? "bg-black/50 border-[rgba(255,255,255,0.15)] hover:border-white" 
+                    : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.15)] hover:border-white"
                 )}
               >
-                <h4 className={cn("text-xs font-semibold mb-2", isDark ? "text-white" : "text-[#000000]")}>
-                  {category.title}
-                </h4>
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className={cn("text-xs font-semibold", isDark ? "text-white" : "text-[#000000]")}>
+                    {category.title}
+                  </h4>
+                  {category.href && (
+                    <Link 
+                      href={category.href}
+                      className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 hover:gap-2"
+                    >
+                      <span className={cn(
+                        "text-xs whitespace-nowrap overflow-hidden w-0 hover:w-12 transition-all duration-300 inline-block",
+                        isDark ? "text-white" : "text-[#000000]"
+                      )}>details</span>
+                      <motion.div
+                        whileHover={{ x: -4 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex-shrink-0"
+                      >
+                        <ArrowUpRight className={cn("w-3.5 h-3.5", isDark ? "text-white" : "text-[#000000]")} />
+                      </motion.div>
+                    </Link>
+                  )}
+                </div>
                 <ul className="space-y-1.5">
                   {category.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className={cn("flex items-start gap-2 text-xs", isDark ? "text-white/80" : "text-[#333333]")}>
@@ -138,8 +159,8 @@ export function PricingCard({
               <div className={cn(
                 "relative w-full h-10 rounded-full backdrop-blur-md border flex items-center justify-center shadow-lg",
                 isDark 
-                  ? "bg-black/80 border-white/10" 
-                  : "bg-white/80 border-[rgba(0,0,0,0.08)]"
+                  ? "bg-black/30 border-white/10" 
+                  : "bg-white/30 border-[rgba(0,0,0,0.08)]"
               )}>
                 <motion.div
                   animate={{
