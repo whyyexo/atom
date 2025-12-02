@@ -8,19 +8,19 @@ import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
-  title: "Atom OS – Your AI-driven life, organized.",
+  title: "Atom — Smart Workspace Powered by AI",
   description:
     "Atom OS centralizes your calendar, goals, notes and habits — and actually helps you move forward. Personal AI co-pilot that learns from you and acts for you.",
   keywords: ["AI", "productivity", "personal assistant", "automation", "life organization"],
   authors: [{ name: "Atom Labs" }],
   openGraph: {
-    title: "Atom OS – Your AI-driven life, organized.",
+    title: "Atom — Smart Workspace Powered by AI",
     description: "Atom OS centralizes your calendar, goals, notes and habits — and actually helps you move forward.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Atom OS – Your AI-driven life, organized.",
+    title: "Atom — Smart Workspace Powered by AI",
     description: "Atom OS centralizes your calendar, goals, notes and habits — and actually helps you move forward.",
   },
   icons: {

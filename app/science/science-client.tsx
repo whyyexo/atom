@@ -1,20 +1,26 @@
-import type { Metadata } from "next";
-import { SciencePageClient } from "./science-client";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Science — Atom",
-};
-
-export default function SciencePage() {
-  return <SciencePageClient />;
-}
+import { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Brain,
+  Target,
+  Zap,
+  TrendingUp,
+  Info,
+  BookOpen,
+  CheckCircle2,
+} from "lucide-react";
+import { PublicLayout } from "@/components/public/public-layout";
+import { AppStoreBadge } from "@/components/download/AppStoreBadge";
+import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 
 const subtleFade = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
 };
 
-export default function SciencePage() {
+export function SciencePageClient() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
 
   const sections = [
@@ -232,3 +238,4 @@ export default function SciencePage() {
     </PublicLayout>
   );
 }
+

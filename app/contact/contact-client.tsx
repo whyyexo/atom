@@ -1,15 +1,13 @@
-import type { Metadata } from "next";
-import { ContactPageClient } from "./contact-client";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Contact — Atom",
-};
+import { PublicLayout } from "@/components/public/public-layout";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Copy, Check } from "lucide-react";
 
-export default function ContactPage() {
-  return <ContactPageClient />;
-}
-
-export default function ContactPage() {
+export function ContactPageClient() {
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
