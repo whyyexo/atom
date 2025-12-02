@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AppStoreBadge } from "@/components/download/AppStoreBadge";
+import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 
 export default function SciencePage() {
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
@@ -206,6 +208,25 @@ export default function SciencePage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Download Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="text-center space-y-6 py-12"
+        >
+          <div className="space-y-2">
+            <h2 className="text-3xl font-semibold">Ready to Experience Science-Based Productivity?</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Download Atom and start applying these principles to your daily workflow
+            </p>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <AppStoreBadge />
+            <GooglePlayBadge />
+          </div>
+        </motion.div>
       </div>
     </div>
   );

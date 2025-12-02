@@ -11,7 +11,7 @@ export function GooglePlayBadge({ href = "https://play.google.com/store/apps/det
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-2 rounded-lg bg-black px-4 py-2.5 ${className}`}
+      className={`inline-flex items-center gap-2 rounded-lg bg-black px-4 py-2.5 min-w-[140px] justify-center ${className}`}
     >
       {/* Google Play Logo - Colorful triangle */}
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
