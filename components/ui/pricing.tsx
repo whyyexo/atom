@@ -36,6 +36,7 @@ export function PricingCard({
   const isDark = theme === "dark";
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
 
   useEffect(() => {
     const container = scrollContainerRef.current;
@@ -45,6 +46,7 @@ export function PricingCard({
       const { scrollTop, scrollHeight, clientHeight } = container;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
       setShowScrollIndicator(!isAtBottom);
+      setIsScrolling(scrollTop > 0);
     };
 
     container.addEventListener("scroll", handleScroll);
@@ -99,9 +101,21 @@ export function PricingCard({
 
       {categories ? (
         <div className={cn("relative", highlight ? "mt-4" : "border-t pt-4", isDark ? "border-white/10" : "border-[rgba(0,0,0,0.08)]")}>
+          {isScrolling && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={cn(
+                "absolute inset-0 -mx-6 backdrop-blur-md rounded-lg -z-0",
+                isDark ? "bg-black/30" : "bg-white/30"
+              )}
+              style={{ width: 'calc(100% + 3rem)', height: '100%' }}
+            />
+          )}
           <div
             ref={scrollContainerRef}
-            className="space-y-3 max-h-[500px] overflow-y-auto scrollbar-hide"
+            className="space-y-3 max-h-[500px] overflow-y-auto scrollbar-hide relative z-10"
           >
             {categories.map((category, index) => (
               <div
