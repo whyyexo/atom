@@ -248,7 +248,7 @@ export function Pricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="group rounded-xl bg-white/50 dark:bg-black/50 border border-[rgba(0,0,0,0.15)] dark:border-[rgba(255,255,255,0.15)] p-4 hover:border-white dark:hover:border-white transition-all relative"
+                    className="group rounded-xl bg-white/50 dark:bg-black/50 border border-[rgba(0,0,0,0.15)] dark:border-[rgba(255,255,255,0.15)] p-4 hover:border-[rgba(0,0,0,0.25)] dark:hover:border-[rgba(255,255,255,0.25)] transition-all relative"
                   >
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="text-sm font-semibold text-foreground">
@@ -256,16 +256,9 @@ export function Pricing() {
                       </h4>
                       <Link 
                         href={category.href}
-                        className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 hover:gap-2"
+                        className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2"
                       >
-                        <span className="text-xs text-foreground whitespace-nowrap overflow-hidden w-0 hover:w-12 transition-all duration-300 inline-block">details</span>
-                        <motion.div
-                          whileHover={{ x: -4 }}
-                          transition={{ duration: 0.2 }}
-                          className="flex-shrink-0"
-                        >
-                          <ArrowUpRight className="w-4 h-4 text-foreground" />
-                        </motion.div>
+                        <ArrowUpRight className="w-4 h-4 text-[rgba(0,0,0,0.25)] dark:text-[rgba(255,255,255,0.25)] hover:text-white dark:hover:text-white transition-colors" />
                       </Link>
                     </div>
                     <ul className="space-y-2">

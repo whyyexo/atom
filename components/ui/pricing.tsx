@@ -109,8 +109,8 @@ export function PricingCard({
                 className={cn(
                   "group rounded-lg p-3 border relative",
                   isDark 
-                    ? "bg-black/50 border-[rgba(255,255,255,0.15)] hover:border-white" 
-                    : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.15)] hover:border-white"
+                    ? "bg-black/50 border-[rgba(255,255,255,0.15)] hover:border-[rgba(255,255,255,0.25)]" 
+                    : "bg-[rgba(0,0,0,0.02)] border-[rgba(0,0,0,0.15)] hover:border-[rgba(0,0,0,0.25)]"
                 )}
               >
                 <div className="flex items-start justify-between mb-2">
@@ -120,19 +120,14 @@ export function PricingCard({
                   {category.href && (
                     <Link 
                       href={category.href}
-                      className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2 hover:gap-2"
+                      className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2"
                     >
-                      <span className={cn(
-                        "text-xs whitespace-nowrap overflow-hidden w-0 hover:w-12 transition-all duration-300 inline-block",
-                        isDark ? "text-white" : "text-[#000000]"
-                      )}>details</span>
-                      <motion.div
-                        whileHover={{ x: -4 }}
-                        transition={{ duration: 0.2 }}
-                        className="flex-shrink-0"
-                      >
-                        <ArrowUpRight className={cn("w-3.5 h-3.5", isDark ? "text-white" : "text-[#000000]")} />
-                      </motion.div>
+                      <ArrowUpRight className={cn(
+                        "w-3.5 h-3.5 transition-colors",
+                        isDark 
+                          ? "text-[rgba(255,255,255,0.25)] hover:text-white" 
+                          : "text-[rgba(0,0,0,0.25)] hover:text-white"
+                      )} />
                     </Link>
                   )}
                 </div>
