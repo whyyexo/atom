@@ -432,7 +432,7 @@ function PricingSection() {
                     exit={{ opacity: 0 }}
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
                   >
-                    <div className="relative w-full h-10 rounded-full backdrop-blur-sm bg-white/20 border border-[rgba(0,0,0,0.1)] flex items-center justify-center shadow-lg">
+                    <div className="relative w-full h-10 rounded-full backdrop-blur-sm bg-white/10 border border-[rgba(0,0,0,0.1)] flex items-center justify-center shadow-lg">
                       <motion.div
                         animate={{
                           y: [0, 6, 0],
