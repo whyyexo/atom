@@ -131,7 +131,7 @@ export function Pricing() {
 
   return (
     <>
-      <section id="pricing" className="section-spacing bg-gradient-to-b from-white to-muted/20 dark:from-black dark:to-muted/10">
+      <section id="pricing" className="section-spacing bg-white">
         <div className="container-padding max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -140,10 +140,10 @@ export function Pricing() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-[#000000] mb-4">
               Simple Pricing
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-[#666666] max-w-2xl mx-auto">
               Choose the plan that fits your workflow.
             </p>
           </motion.div>
@@ -155,25 +155,25 @@ export function Pricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6 }}
-            className="relative rounded-2xl border-2 p-8 border-border bg-white dark:bg-black"
+            className="relative rounded-2xl border-2 p-8 border-[rgba(0,0,0,0.1)] bg-white"
           >
             <div className="mb-6">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">
+              <h3 className="text-2xl font-semibold text-[#000000] mb-2">
                 {freePlan.name}
               </h3>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-4xl font-semibold text-foreground">
+                <span className="text-4xl font-semibold text-[#000000]">
                   {freePlan.price}
                 </span>
               </div>
-              <p className="text-sm text-muted-foreground">{freePlan.description}</p>
+              <p className="text-sm text-[#666666]">{freePlan.description}</p>
             </div>
 
             <ul className="space-y-3 mb-8">
               {freePlan.features.map((feature) => (
                 <li key={feature} className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-muted-foreground">{feature}</span>
+                  <Check className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-[#666666]">{feature}</span>
                 </li>
               ))}
             </ul>
@@ -182,7 +182,7 @@ export function Pricing() {
               asChild
               variant="outline"
               size="lg"
-              className="w-full h-12"
+              className="w-full h-12 border-[rgba(0,0,0,0.1)] text-[#000000] hover:bg-[rgba(0,0,0,0.05)]"
             >
               <Link href={freePlan.href}>{freePlan.cta}</Link>
             </Button>
@@ -194,23 +194,23 @@ export function Pricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative rounded-2xl border-2 p-8 border-blue-500/50 bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/20 dark:to-purple-950/20 shadow-lg shadow-blue-500/10"
+            className="relative rounded-2xl border-2 p-8 border-blue-500/50 bg-gradient-to-br from-blue-50/50 to-purple-50/50 shadow-lg shadow-blue-500/10"
           >
             <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium">
               Most Popular
             </div>
 
             <div className="mb-6">
-              <h3 className="text-2xl font-semibold text-foreground mb-2">
+              <h3 className="text-2xl font-semibold text-[#000000] mb-2">
                 Pro
               </h3>
               <div className="flex items-baseline gap-1 mb-2">
-                <span className="text-4xl font-semibold text-foreground">
+                <span className="text-4xl font-semibold text-[#000000]">
                   $6.99
                 </span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-[#666666]">/month</span>
               </div>
-              <p className="text-sm text-muted-foreground">Unlock the full power of Atom.</p>
+              <p className="text-sm text-[#666666]">Unlock the full power of Atom.</p>
             </div>
 
             <div className="relative">
@@ -225,24 +225,24 @@ export function Pricing() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: index * 0.05 }}
-                    className="group rounded-xl bg-white/50 dark:bg-black/50 border border-[rgba(0,0,0,0.15)] dark:border-[rgba(255,255,255,0.15)] p-4 hover:border-[rgba(0,0,0,0.25)] dark:hover:border-[rgba(255,255,255,0.25)] transition-all relative"
+                    className="group rounded-xl bg-white/80 border border-[rgba(0,0,0,0.15)] p-4 hover:border-[rgba(0,0,0,0.25)] transition-all relative"
                   >
                     <div className="flex items-start justify-between mb-2">
-                      <h4 className="text-sm font-semibold text-foreground">
+                      <h4 className="text-sm font-semibold text-[#000000]">
                         {category.title}
                       </h4>
                       <Link 
                         href={category.href}
                         className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2"
                       >
-                        <ArrowUpRight className="w-4 h-4 text-[rgba(0,0,0,0.25)] dark:text-[rgba(255,255,255,0.25)] hover:text-white dark:hover:text-white transition-colors" />
+                        <ArrowUpRight className="w-4 h-4 text-[rgba(0,0,0,0.25)] hover:text-[#000000] transition-colors" />
                       </Link>
                     </div>
                     <ul className="space-y-2">
                       {category.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-2">
-                          <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-xs text-muted-foreground">{feature}</span>
+                          <Check className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                          <span className="text-xs text-[#666666]">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -258,7 +258,7 @@ export function Pricing() {
                   exit={{ opacity: 0 }}
                   className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
                 >
-                  <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/30 dark:bg-black/30 border border-border/50 flex items-center justify-center shadow-lg">
+                  <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/30 border border-[rgba(0,0,0,0.1)] flex items-center justify-center shadow-lg">
                     <motion.div
                       animate={{
                         y: [0, 6, 0],
@@ -269,7 +269,7 @@ export function Pricing() {
                         ease: "easeInOut",
                       }}
                     >
-                      <ChevronDown className="w-5 h-5 text-foreground" />
+                      <ChevronDown className="w-5 h-5 text-[#000000]" />
                     </motion.div>
                   </div>
                 </motion.div>
@@ -285,7 +285,7 @@ export function Pricing() {
               <Link href="/signup">Upgrade to Pro</Link>
             </Button>
             <div className="relative mt-4 -mx-8 px-8">
-              <p className="text-sm font-semibold text-foreground text-center relative z-10">
+              <p className="text-sm font-semibold text-[#000000] text-center relative z-10">
                 Includes everything in Free, plus:
               </p>
               {isScrolling && (
@@ -293,7 +293,7 @@ export function Pricing() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 backdrop-blur-md bg-white/30 dark:bg-black/30 rounded-xl -z-0"
+                  className="absolute inset-0 backdrop-blur-md bg-white/30 rounded-xl -z-0"
                   style={{ 
                     left: '-2rem',
                     right: '-2rem',
