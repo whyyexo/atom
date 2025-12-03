@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Sparkles, Calendar, FileText, Brain, Layers, Target } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
 import { PublicLayout } from "@/components/public/public-layout";
@@ -95,14 +96,158 @@ function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="mt-24 w-full"
         >
-          <div className="mx-auto aspect-video w-full max-w-5xl rounded-lg bg-[#f5f5f5] shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-            <div className="flex h-full items-center justify-center text-[#999999]">
-              Product Mockup
-            </div>
-          </div>
+          <MacMockup />
         </motion.div>
       </div>
     </section>
+  );
+}
+
+const featureItems = [
+  {
+    id: "assistant",
+    icon: Brain,
+    name: "AI Assistant",
+    description: "Intelligent help that understands context and adapts to your workflow.",
+  },
+  {
+    id: "planning",
+    icon: Calendar,
+    name: "Smart Planning",
+    description: "Auto-plan your day based on energy levels and priorities.",
+  },
+  {
+    id: "notes",
+    icon: FileText,
+    name: "Notes & Tasks",
+    description: "Structure your thoughts with automatic organization.",
+  },
+  {
+    id: "workspace",
+    icon: Layers,
+    name: "Workspaces",
+    description: "Organize everything in focused spaces for clarity.",
+  },
+  {
+    id: "focus",
+    icon: Target,
+    name: "Focus Mode",
+    description: "Science-backed tools to maintain deep concentration.",
+  },
+];
+
+function MacMockup() {
+  const [selectedFeature, setSelectedFeature] = useState(featureItems[0]);
+
+  return (
+    <div className="mx-auto w-full max-w-5xl">
+      {/* Title Section */}
+      <div className="mb-8 text-center">
+        <h2 className="text-2xl font-semibold text-[#000000]">Engineered for clarity</h2>
+        <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
+      </div>
+
+      {/* Mac Skeleton */}
+      <div className="relative mx-auto w-full max-w-5xl">
+        {/* Mac Frame */}
+        <div className="relative rounded-t-[20px] bg-[#1a1a1a] p-2 shadow-2xl">
+          {/* Mac Top Bar */}
+          <div className="mb-2 flex items-center gap-2 px-4">
+            <div className="h-3 w-3 rounded-full bg-[#ff5f57]"></div>
+            <div className="h-3 w-3 rounded-full bg-[#ffbd2e]"></div>
+            <div className="h-3 w-3 rounded-full bg-[#28ca42]"></div>
+          </div>
+
+          {/* Screen with blurred logo background */}
+          <div className="relative aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0]">
+            {/* Blurred Logo Background */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-5">
+              <Image
+                src="/ATOM_blanc.png"
+                alt="Atom Logo"
+                width={400}
+                height={112}
+                className="h-auto w-[400px] blur-[2px] invert"
+              />
+            </div>
+
+            {/* Product Mockup Center */}
+            <div className="absolute inset-4 flex items-center justify-center">
+              <div className="h-full w-full max-w-2xl rounded-xl bg-white/90 shadow-xl backdrop-blur-sm">
+                <div className="flex h-full items-center justify-center p-8">
+                  <div className="text-center">
+                    {(() => {
+                      const Icon = selectedFeature.icon;
+                      return <Icon className="mx-auto h-16 w-16 text-[#0071e3]" />;
+                    })()}
+                    <h3 className="mt-4 text-xl font-semibold text-[#000000]">{selectedFeature.name}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* macOS-like Dock */}
+        <div className="relative -mt-4 flex justify-center">
+          <div className="relative rounded-2xl bg-white/80 backdrop-blur-xl px-4 py-3 shadow-lg">
+            <div className="flex items-end gap-3">
+              {featureItems.map((feature) => {
+                const Icon = feature.icon;
+                const isSelected = selectedFeature.id === feature.id;
+                return (
+                  <button
+                    key={feature.id}
+                    onClick={() => setSelectedFeature(feature)}
+                    className="relative flex flex-col items-center transition-all duration-300"
+                    style={{
+                      transform: isSelected ? "translateY(-8px) scale(1.15)" : "translateY(0) scale(1)",
+                    }}
+                  >
+                    <div
+                      className={`rounded-lg p-2 transition-colors ${
+                        isSelected ? "bg-[#0071e3]/10" : "bg-transparent"
+                      }`}
+                    >
+                      <Icon
+                        className={`h-6 w-6 transition-colors ${
+                          isSelected ? "text-[#0071e3]" : "text-[#666666]"
+                        }`}
+                      />
+                    </div>
+                    {/* Selection Line */}
+                    {isSelected && (
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        className="mt-1 h-0.5 rounded-full bg-[#0071e3]"
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Mac Base */}
+        <div className="mx-auto h-2 w-3/4 rounded-b-full bg-[#1a1a1a]"></div>
+      </div>
+
+      {/* Feature Description */}
+      <motion.div
+        key={selectedFeature.id}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="mt-8 text-center"
+      >
+        <p className="text-lg leading-relaxed">
+          <span className="font-semibold text-[#000000]">{selectedFeature.name}.</span>{" "}
+          <span className="font-light text-[#666666]">{selectedFeature.description}</span>
+        </p>
+      </motion.div>
+    </div>
   );
 }
 
@@ -354,7 +499,7 @@ function PricingSection() {
                 <div className="space-y-4">
                   <div>
                     <h2 className="font-medium text-[#000000]">Pro</h2>
-                    <span className="my-3 block text-2xl font-semibold text-[#000000]">$6.99 / mo</span>
+                    <span className="my-3 block text-2xl font-semibold text-[#000000]">$7 / mo</span>
                     <p className="text-sm font-light text-[#333333]">Unlock the full power of Atom.</p>
                   </div>
                   <Button

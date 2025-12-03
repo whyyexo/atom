@@ -206,7 +206,7 @@ export function Pricing() {
               </h3>
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="text-4xl font-semibold text-[#000000]">
-                  $6.99
+                  $7
                 </span>
                 <span className="text-[#666666]">/month</span>
               </div>

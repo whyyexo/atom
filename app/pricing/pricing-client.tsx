@@ -123,7 +123,7 @@ export function PricingPageClient() {
           />
           <PricingCard
             title="Pro"
-            price="$6.99 / mo"
+            price="$7 / mo"
             description="Unlock the full power of Atom."
             buttonVariant="default"
             highlight
