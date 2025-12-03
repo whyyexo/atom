@@ -134,7 +134,6 @@ export function Pricing() {
       <section id="pricing" className="section-spacing bg-gradient-to-b from-white to-muted/20 dark:from-black dark:to-muted/10">
         <div className="container-padding max-w-5xl mx-auto">
           <motion.div
-            ref={headerRef}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
