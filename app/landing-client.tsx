@@ -11,6 +11,7 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { Check, Heart } from "lucide-react";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
+import { InteractiveMenu, type InteractiveMenuItem } from "@/components/ui/modern-mobile-menu";
 
 const features = [
   {
@@ -139,6 +140,19 @@ const featureItems = [
 function MacMockup() {
   const [selectedFeature, setSelectedFeature] = useState(featureItems[0]);
 
+  // Convert featureItems to InteractiveMenuItem format
+  const menuItems: InteractiveMenuItem[] = featureItems.map((item) => ({
+    label: item.name,
+    icon: item.icon,
+  }));
+
+  // Handle menu selection change
+  const handleMenuChange = (index: number) => {
+    if (index >= 0 && index < featureItems.length) {
+      setSelectedFeature(featureItems[index]);
+    }
+  };
+
   return (
     <div className="mx-auto w-full max-w-5xl">
       {/* Title Section */}
@@ -149,13 +163,24 @@ function MacMockup() {
 
       {/* Mac Skeleton */}
       <div className="relative mx-auto w-full max-w-5xl">
-        {/* Mac Frame */}
-        <div className="relative rounded-t-[20px] bg-[#1a1a1a] p-2 shadow-2xl">
-          {/* Mac Top Bar */}
-          <div className="mb-2 flex items-center gap-2 px-4">
-            <div className="h-3 w-3 rounded-full bg-[#ff5f57]"></div>
-            <div className="h-3 w-3 rounded-full bg-[#ffbd2e]"></div>
-            <div className="h-3 w-3 rounded-full bg-[#28ca42]"></div>
+        {/* Mac Frame - Gray borders */}
+        <div className="relative rounded-t-[20px] border-2 border-[#888888] bg-[#2a2a2a] p-2 shadow-2xl">
+          {/* macOS Menu Bar */}
+          <div className="mb-2 flex items-center justify-between rounded-t-lg bg-[#3a3a3a] px-4 py-1.5">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-[#ff5f57]"></div>
+              <div className="h-3 w-3 rounded-full bg-[#ffbd2e]"></div>
+              <div className="h-3 w-3 rounded-full bg-[#28ca42]"></div>
+            </div>
+            <div className="flex items-center gap-4 text-xs text-white/70">
+              <span>Atom</span>
+              <span>File</span>
+              <span>Edit</span>
+              <span>View</span>
+              <span>Window</span>
+              <span>Help</span>
+            </div>
+            <div className="w-12"></div>
           </div>
 
           {/* Screen with blurred logo background */}
@@ -178,7 +203,7 @@ function MacMockup() {
                   <div className="text-center">
                     {(() => {
                       const Icon = selectedFeature.icon;
-                      return <Icon className="mx-auto h-16 w-16 text-[#0071e3]" />;
+                      return <Icon className="mx-auto h-16 w-16 text-[#a8d5ff]" />;
                     })()}
                     <h3 className="mt-4 text-xl font-semibold text-[#000000]">{selectedFeature.name}</h3>
                   </div>
@@ -188,53 +213,16 @@ function MacMockup() {
           </div>
         </div>
 
-        {/* macOS-like Dock */}
+        {/* macOS-like Dock with InteractiveMenu */}
         <div className="relative -mt-4 flex justify-center">
-          <div className="relative rounded-2xl bg-white/80 backdrop-blur-xl px-4 py-3 shadow-lg">
-            <div className="flex items-end gap-3">
-              {featureItems.map((feature) => {
-                const Icon = feature.icon;
-                const isSelected = selectedFeature.id === feature.id;
-                return (
-                  <button
-                    key={feature.id}
-                    onClick={() => setSelectedFeature(feature)}
-                    className="relative flex flex-col items-center transition-all duration-300"
-                    style={{
-                      transform: isSelected ? "translateY(-8px) scale(1.15)" : "translateY(0) scale(1)",
-                    }}
-                  >
-                    <div
-                      className={`rounded-lg p-2 transition-colors ${
-                        isSelected ? "bg-[#0071e3]/10" : "bg-transparent"
-                      }`}
-                    >
-                      <Icon
-                        className={`h-6 w-6 transition-colors ${
-                          isSelected ? "text-[#0071e3]" : "text-[#666666]"
-                        }`}
-                      />
-                    </div>
-                    {/* Selection Line */}
-                    {isSelected && (
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "100%" }}
-                        className="mt-1 h-0.5 rounded-full bg-[#0071e3]"
-                      />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          <InteractiveMenu items={menuItems} accentColor="#a8d5ff" onItemChange={handleMenuChange} />
         </div>
 
-        {/* Mac Base */}
-        <div className="mx-auto h-2 w-3/4 rounded-b-full bg-[#1a1a1a]"></div>
+        {/* Mac Base - Gray */}
+        <div className="mx-auto h-2 w-3/4 rounded-b-full border-2 border-t-0 border-[#888888] bg-[#2a2a2a]"></div>
       </div>
 
-      {/* Feature Description */}
+      {/* Feature Description - No line above */}
       <motion.div
         key={selectedFeature.id}
         initial={{ opacity: 0, y: 10 }}
