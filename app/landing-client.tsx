@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { PublicLayout } from "@/components/public/public-layout";
@@ -193,7 +195,121 @@ function ShowcaseSection() {
   );
 }
 
+const freePlanFeatures = [
+  "Atom Assistant (Lite) — quick answers, basic help, simple summaries",
+  "Smart Workspace access — notes, tasks & calendar in one place",
+  "Unlimited notes",
+  "Up to 3 projects",
+  "Daily smart suggestions (Lite)",
+  "Basic planning assistance",
+  "Cross-device sync (Web + Mobile)",
+  "Community support",
+];
+
+const proCategories = [
+  {
+    title: "Atom Assistant (Pro)",
+    features: [
+      "Deep reasoning",
+      "Advanced summaries & rewrites",
+      "Context-aware help (school, work, personal)",
+      "Memory-based suggestions",
+      "Proactive recommendations",
+    ],
+    href: "/features/atom-assistant",
+  },
+  {
+    title: "Smart Planning OS",
+    features: [
+      "Auto-plan your day, week, and priorities",
+      "Dynamic scheduling based on your energy & free time",
+      "Personalized focus windows",
+    ],
+    href: "/features/planning",
+  },
+  {
+    title: "Intelligent Notes & Tasks",
+    features: [
+      "Automatic structuring of your notes",
+      "Task prioritization that adapts to your day",
+      "Instant study sheets creating (science-based)",
+    ],
+    href: "/features/notes-tasks",
+  },
+  {
+    title: "Unlimited Workspace",
+    features: [
+      "Unlimited projects",
+      "Unlimited workspaces",
+    ],
+    href: "/features/workspace",
+  },
+  {
+    title: "Real-time collaboration",
+    features: [
+      "Share docs, notes, and tasks",
+      "Collaborative editing",
+    ],
+    href: "/features/collaboration",
+  },
+  {
+    title: "Export & Data Freedom",
+    features: [
+      "Export to Markdown, PDF, and more",
+      "Cloud backup options",
+    ],
+    href: "/features/export",
+  },
+  {
+    title: "Full Integrations",
+    features: [
+      "Google Calendar",
+      "Notion Calendar",
+    ],
+    href: "/features/integrations",
+  },
+  {
+    title: "Advanced Analytics",
+    features: [
+      "Productivity metrics",
+      "Focus time tracking",
+      "Weekly insights",
+    ],
+    href: "/features/analytics",
+  },
+  {
+    title: "Priority Support",
+    features: [
+      "Faster response",
+      "Priority beta access",
+      "Early feature unlocks",
+    ],
+    href: "/features/support",
+  },
+];
+
 function PricingSection() {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10;
+      setShowScrollIndicator(!isAtBottom);
+      setIsScrolling(scrollTop > 0);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section id="pricing" className="bg-white px-6 py-32 lg:px-12">
       <div className="mx-auto max-w-[1180px]">
@@ -212,7 +328,7 @@ function PricingSection() {
                 <div>
                   <h2 className="font-medium text-[#000000]">Free</h2>
                   <span className="my-3 block text-2xl font-semibold text-[#000000]">$0 / mo</span>
-                  <p className="text-sm font-light text-[#000000]">Everything you need to get started</p>
+                  <p className="text-sm font-light text-[#333333]">Everything you need to experience the Atom ecosystem.</p>
                 </div>
                 <Button
                   asChild
@@ -223,14 +339,9 @@ function PricingSection() {
                 </Button>
               </div>
               <ul className="border-t border-[rgba(0,0,0,0.08)] pt-4 list-outside space-y-3 text-sm">
-                {[
-                  "Unlimited notes and documents",
-                  "Up to 3 projects",
-                  "Basic AI features",
-                  "Community support",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-2 text-[#000000]">
-                    <Check className="size-3 text-[#000000]" />
+                {freePlanFeatures.map((item, index) => (
+                  <li key={index} className="flex items-start gap-2 text-[#333333]">
+                    <Check className="size-3 text-blue-600 flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
@@ -244,39 +355,100 @@ function PricingSection() {
                   <div>
                     <h2 className="font-medium text-[#000000]">Pro</h2>
                     <span className="my-3 block text-2xl font-semibold text-[#000000]">$6.99 / mo</span>
-                    <p className="text-sm font-light text-[#000000]">Unlock AI actions and unlimited projects</p>
+                    <p className="text-sm font-light text-[#333333]">Unlock the full power of Atom.</p>
                   </div>
                   <Button
                     asChild
                     className="w-full rounded-full bg-[#0071e3] text-white hover:bg-[#0077ed] border-0"
                     variant="default"
                   >
-                    <Link href="/download">Get Started</Link>
+                    <Link href="/download">Upgrade to Pro</Link>
                   </Button>
                 </div>
               </div>
-              <div>
-                <div className="text-sm font-medium text-[#000000]">Everything in Free, plus:</div>
+              <div className="relative mt-4">
+                <p className="text-sm font-semibold text-[#000000] text-center relative z-10">
+                  Includes everything in Free, plus:
+                </p>
+                {isScrolling && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 backdrop-blur-md bg-white/30 rounded-xl -z-0"
+                    style={{ 
+                      left: '-1.5rem',
+                      right: '-1.5rem',
+                      top: '-100%',
+                      bottom: '-100%',
+                      height: 'calc(100% + 200%)'
+                    }}
+                  />
+                )}
               </div>
-              <ul className="mt-4 list-outside space-y-3 text-sm">
-                {[
-                  "Unlimited notes and documents",
-                  "Unlimited projects and workspaces",
-                  "Real-time collaboration",
-                  "Export to markdown, PDF, and more",
-                  "Priority support",
-                  "Advanced AI automation",
-                  "Unlimited AI actions",
-                  "Custom integrations",
-                  "Advanced analytics",
-                  "Team management",
-                ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-2 text-[#000000]">
-                    <Check className="size-3 text-[#000000]" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <div className="relative">
+                <div
+                  ref={scrollContainerRef}
+                  className="space-y-3 max-h-[500px] overflow-y-auto scrollbar-hide mt-4"
+                >
+                  {proCategories.map((category, index) => (
+                    <motion.div
+                      key={index}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      variants={subtleFade}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                      className="group rounded-lg p-3 border border-[rgba(0,0,0,0.15)] bg-[rgba(0,0,0,0.02)] hover:border-[rgba(0,0,0,0.25)] transition-all relative"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="text-xs font-semibold text-[#000000]">
+                          {category.title}
+                        </h4>
+                        <Link 
+                          href={category.href}
+                          className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2"
+                        >
+                          <ArrowUpRight className="w-3.5 h-3.5 text-[rgba(0,0,0,0.25)] hover:text-[#000000] transition-colors" />
+                        </Link>
+                      </div>
+                      <ul className="space-y-1.5">
+                        {category.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-start gap-2 text-xs text-[#333333]">
+                            <Check className="size-3 flex-shrink-0 mt-0.5 text-blue-600" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Scroll Indicator Bubble */}
+                {showScrollIndicator && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
+                  >
+                    <div className="relative w-full h-10 rounded-full backdrop-blur-md bg-white/30 border border-[rgba(0,0,0,0.1)] flex items-center justify-center shadow-lg">
+                      <motion.div
+                        animate={{
+                          y: [0, 6, 0],
+                        }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <ChevronDown className="w-5 h-5 text-[#000000]" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
             </div>
           </div>
         </motion.div>
