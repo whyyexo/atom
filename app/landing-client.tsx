@@ -11,7 +11,7 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { Check, Heart } from "lucide-react";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
-import { InteractiveMenu, type InteractiveMenuItem } from "@/components/ui/modern-mobile-menu";
+import LumaBar from "@/components/ui/futuristic-nav";
 
 const features = [
   {
@@ -139,16 +139,22 @@ const featureItems = [
 
 function MacMockup() {
   const [selectedFeature, setSelectedFeature] = useState(featureItems[0]);
+  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
 
-  // Convert featureItems to InteractiveMenuItem format
-  const menuItems: InteractiveMenuItem[] = featureItems.map((item) => ({
-    label: item.name,
-    icon: item.icon,
-  }));
+  // Convert featureItems to NavItem format for LumaBar
+  const navItems = featureItems.map((item, index) => {
+    const Icon = item.icon;
+    return {
+      id: index,
+      icon: <Icon size={24} />,
+      label: item.name,
+    };
+  });
 
   // Handle menu selection change
   const handleMenuChange = (index: number) => {
     if (index >= 0 && index < featureItems.length) {
+      setActiveMenuIndex(index);
       setSelectedFeature(featureItems[index]);
     }
   };
@@ -162,7 +168,7 @@ function MacMockup() {
       </div>
 
       {/* Mac Screen - Just the rectangle, larger, no support */}
-      <div className="relative mx-auto w-full max-w-6xl">
+      <div className="relative mx-auto w-full max-w-7xl">
         {/* Screen with blurred logo background */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl">
           {/* macOS Menu Bar - Inside the screen */}
@@ -209,9 +215,9 @@ function MacMockup() {
             </div>
           </div>
 
-          {/* macOS-like Dock with InteractiveMenu - Inside the screen at bottom */}
+          {/* macOS-like Dock with LumaBar - Inside the screen at bottom */}
           <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
-            <InteractiveMenu items={menuItems} accentColor="#a8d5ff" onItemChange={handleMenuChange} />
+            <LumaBar items={navItems} activeIndex={activeMenuIndex} onItemChange={handleMenuChange} />
           </div>
         </div>
       </div>
