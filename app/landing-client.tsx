@@ -158,9 +158,9 @@ function MacMockup() {
       </div>
 
       {/* Mac Screen - Just the rectangle, larger, no support - 90% width centered */}
-      <div className="relative mx-auto w-[95%] max-w-[1600px]">
-        {/* Screen with blurred logo background - Larger */}
-        <div className="relative h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
+      <div className="relative mx-auto w-[95%] max-w-[1800px]">
+        {/* Screen with blurred logo background - Larger with original aspect ratio */}
+        <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
           <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-3 py-1 select-none">
             {/* Left side - Apple Logo + Menu Items */}
