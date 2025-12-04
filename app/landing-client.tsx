@@ -11,7 +11,6 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { Check, Heart } from "lucide-react";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
-import LumaBar from "@/components/ui/futuristic-nav";
 
 const features = [
   {
@@ -139,22 +138,12 @@ const featureItems = [
 
 function MacMockup() {
   const [selectedFeature, setSelectedFeature] = useState(featureItems[0]);
-  const [activeMenuIndex, setActiveMenuIndex] = useState(0);
-
-  // Convert featureItems to NavItem format for LumaBar
-  const navItems = featureItems.map((item, index) => {
-    const Icon = item.icon;
-    return {
-      id: index,
-      icon: <Icon size={24} />,
-      label: item.name,
-    };
-  });
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Handle menu selection change
   const handleMenuChange = (index: number) => {
     if (index >= 0 && index < featureItems.length) {
-      setActiveMenuIndex(index);
+      setActiveIndex(index);
       setSelectedFeature(featureItems[index]);
     }
   };
@@ -215,9 +204,44 @@ function MacMockup() {
             </div>
           </div>
 
-          {/* macOS-like Dock with LumaBar - Inside the screen at bottom */}
-          <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
-            <LumaBar items={navItems} activeIndex={activeMenuIndex} onItemChange={handleMenuChange} />
+          {/* macOS-like Dock - Inside the screen at bottom */}
+          <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
+            <div className="relative flex items-center gap-2 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl px-3 py-2 shadow-lg border border-[rgba(0,0,0,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+              {featureItems.map((feature, index) => {
+                const Icon = feature.icon;
+                const isActive = index === activeIndex;
+                return (
+                  <button
+                    key={feature.id}
+                    onClick={() => handleMenuChange(index)}
+                    className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300"
+                  >
+                    <motion.div
+                      animate={{
+                        scale: isActive ? 1.15 : 1,
+                        y: isActive ? -4 : 0,
+                      }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className="relative z-10"
+                    >
+                      <Icon
+                        className={`w-5 h-5 transition-colors duration-300 ${
+                          isActive ? "text-[#a8d5ff]" : "text-[#666666] dark:text-[#999999]"
+                        }`}
+                      />
+                    </motion.div>
+                    {/* Active background indicator */}
+                    {isActive && (
+                      <motion.div
+                        layoutId="active-indicator"
+                        className="absolute inset-0 rounded-lg bg-[#a8d5ff]/20"
+                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
