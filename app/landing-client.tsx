@@ -11,6 +11,7 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { Check, Heart } from "lucide-react";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
+import { AppleIcon } from "@/components/auth/social-icons";
 
 const features = [
   {
@@ -149,33 +150,39 @@ function MacMockup() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-5xl">
+    <div className="mx-auto w-full">
       {/* Title Section */}
       <div className="mb-8 text-center">
         <h2 className="text-2xl font-semibold text-[#000000]">Engineered for clarity</h2>
         <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
       </div>
 
-      {/* Mac Screen - Just the rectangle, larger, no support */}
-      <div className="relative mx-auto w-full max-w-7xl">
+      {/* Mac Screen - Just the rectangle, larger, no support - 80% width centered */}
+      <div className="relative mx-auto w-[80%]">
         {/* Screen with blurred logo background */}
-        <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl">
+        <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
-          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#3a3a3a]/90 backdrop-blur-sm px-4 py-1.5">
-            <div className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-full bg-[#ff5f57]"></div>
-              <div className="h-3 w-3 rounded-full bg-[#ffbd2e]"></div>
-              <div className="h-3 w-3 rounded-full bg-[#28ca42]"></div>
+          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-4 py-1.5 select-none">
+            {/* Apple Logo */}
+            <div className="flex items-center">
+              <AppleIcon className="w-4 h-4 text-white" />
             </div>
-            <div className="flex items-center gap-4 text-xs text-white/70">
-              <span>Atom</span>
-              <span>File</span>
-              <span>Edit</span>
-              <span>View</span>
-              <span>Window</span>
-              <span>Help</span>
+            {/* Menu Items */}
+            <div className="flex items-center gap-6 text-xs text-white/90">
+              <span className="cursor-default">Atom</span>
+              <span className="cursor-default">File</span>
+              <span className="cursor-default">Edit</span>
+              <span className="cursor-default">View</span>
+              <span className="cursor-default">Go</span>
+              <span className="cursor-default">Window</span>
+              <span className="cursor-default">Help</span>
             </div>
-            <div className="w-12"></div>
+            {/* Right side - Status icons */}
+            <div className="flex items-center gap-3 text-xs text-white/70">
+              <span className="cursor-default">Wi-Fi</span>
+              <span className="cursor-default">Battery</span>
+              <span className="cursor-default">12:34</span>
+            </div>
           </div>
 
           {/* Blurred Logo Background */}
@@ -190,7 +197,7 @@ function MacMockup() {
           </div>
 
           {/* Product Mockup Center */}
-          <div className="absolute inset-4 top-16 flex items-center justify-center">
+          <div className="absolute inset-4 top-16 flex items-center justify-center select-none">
             <div className="h-full w-full max-w-2xl rounded-xl bg-white/90 shadow-xl backdrop-blur-sm">
               <div className="flex h-full items-center justify-center p-8">
                 <div className="text-center">
@@ -198,7 +205,7 @@ function MacMockup() {
                     const Icon = selectedFeature.icon;
                     return <Icon className="mx-auto h-16 w-16 text-[#a8d5ff]" />;
                   })()}
-                  <h3 className="mt-4 text-xl font-semibold text-[#000000]">{selectedFeature.name}</h3>
+                  <h3 className="mt-4 text-xl font-semibold text-[#000000] select-none">{selectedFeature.name}</h3>
                 </div>
               </div>
             </div>
