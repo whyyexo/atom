@@ -157,8 +157,8 @@ function MacMockup() {
         <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
       </div>
 
-      {/* Mac Screen - Just the rectangle, larger, no support - 90% width centered */}
-      <div className="relative mx-auto w-[95%] max-w-[1800px]">
+      {/* Mac Screen - Just the rectangle, larger, no support - 85% width centered */}
+      <div className="relative mx-auto w-[85%] max-w-[1400px]">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
