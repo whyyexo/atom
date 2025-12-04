@@ -162,26 +162,45 @@ function MacMockup() {
         {/* Screen with blurred logo background - Larger */}
         <div className="relative h-[600px] sm:h-[700px] lg:h-[800px] overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
-          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-4 py-1.5 select-none">
-            {/* Apple Logo */}
-            <div className="flex items-center">
-              <AppleIcon className="w-4 h-4 text-white" />
+          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-3 py-1 select-none">
+            {/* Left side - Apple Logo + Menu Items */}
+            <div className="flex items-center gap-6">
+              {/* Apple Logo */}
+              <div className="flex items-center">
+                <AppleIcon className="w-4 h-4 text-white" />
+              </div>
+              {/* Menu Items */}
+              <div className="flex items-center gap-5 text-xs text-white/90">
+                <span className="cursor-default hover:text-white transition-colors">Finder</span>
+                <span className="cursor-default hover:text-white transition-colors">File</span>
+                <span className="cursor-default hover:text-white transition-colors">Edit</span>
+                <span className="cursor-default hover:text-white transition-colors">View</span>
+                <span className="cursor-default hover:text-white transition-colors">Go</span>
+                <span className="cursor-default hover:text-white transition-colors">Window</span>
+                <span className="cursor-default hover:text-white transition-colors">Help</span>
+              </div>
             </div>
-            {/* Menu Items */}
-            <div className="flex items-center gap-6 text-xs text-white/90">
-              <span className="cursor-default">Atom</span>
-              <span className="cursor-default">File</span>
-              <span className="cursor-default">Edit</span>
-              <span className="cursor-default">View</span>
-              <span className="cursor-default">Go</span>
-              <span className="cursor-default">Window</span>
-              <span className="cursor-default">Help</span>
-            </div>
-            {/* Right side - Status icons */}
-            <div className="flex items-center gap-3 text-xs text-white/70">
-              <span className="cursor-default">Wi-Fi</span>
-              <span className="cursor-default">Battery</span>
-              <span className="cursor-default">12:34</span>
+            
+            {/* Right side - Status icons (like real macOS) */}
+            <div className="flex items-center gap-4 text-xs text-white/80">
+              {/* Control Center */}
+              <div className="flex items-center gap-1.5">
+                <div className="w-1 h-1 rounded-full bg-white/60"></div>
+                <div className="w-1 h-1 rounded-full bg-white/60"></div>
+                <div className="w-1 h-1 rounded-full bg-white/60"></div>
+              </div>
+              {/* Wi-Fi Icon */}
+              <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2C7.2 2 4.5 2.5 2.1 3.4L3.5 5.1C5.6 4.3 7.8 3.9 10 3.9S14.4 4.3 16.5 5.1L17.9 3.4C15.5 2.5 12.8 2 10 2ZM10 6C8.1 6 6.3 6.3 4.6 6.9L6 8.3C7.4 7.8 8.7 7.5 10 7.5S12.6 7.8 14 8.3L15.4 6.9C13.7 6.3 11.9 6 10 6ZM10 10C9.1 10 8.2 10.1 7.4 10.3L8.8 11.7C9.4 11.5 10.2 11.4 10.9 11.4C11.6 11.4 12.4 11.5 13 11.7L14.4 10.3C13.6 10.1 12.7 10 10 10ZM12 14H8V16H12V14Z" />
+              </svg>
+              {/* Battery Icon */}
+              <svg className="w-5 h-3 text-white/80" fill="currentColor" viewBox="0 0 20 12">
+                <rect x="1" y="4" width="15" height="4" rx="1" fill="currentColor" />
+                <rect x="16" y="5.5" width="1.5" height="1" rx="0.5" fill="currentColor" />
+                <rect x="2" y="5" width="13" height="2" rx="0.5" fill="#34C759" />
+              </svg>
+              {/* Time */}
+              <span className="cursor-default text-white/90 font-medium">12:34</span>
             </div>
           </div>
 
