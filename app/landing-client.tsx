@@ -161,12 +161,12 @@ function MacMockup() {
         <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
       </div>
 
-      {/* Mac Skeleton */}
-      <div className="relative mx-auto w-full max-w-5xl">
-        {/* Mac Frame - Gray borders */}
-        <div className="relative rounded-t-[20px] border-2 border-[#888888] bg-[#2a2a2a] p-2 shadow-2xl">
-          {/* macOS Menu Bar */}
-          <div className="mb-2 flex items-center justify-between rounded-t-lg bg-[#3a3a3a] px-4 py-1.5">
+      {/* Mac Screen - Just the rectangle, larger, no support */}
+      <div className="relative mx-auto w-full max-w-6xl">
+        {/* Screen with blurred logo background */}
+        <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl">
+          {/* macOS Menu Bar - Inside the screen */}
+          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#3a3a3a]/90 backdrop-blur-sm px-4 py-1.5">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded-full bg-[#ff5f57]"></div>
               <div className="h-3 w-3 rounded-full bg-[#ffbd2e]"></div>
@@ -183,43 +183,37 @@ function MacMockup() {
             <div className="w-12"></div>
           </div>
 
-          {/* Screen with blurred logo background */}
-          <div className="relative aspect-video overflow-hidden rounded-lg bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0]">
-            {/* Blurred Logo Background */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-5">
-              <Image
-                src="/ATOM_blanc.png"
-                alt="Atom Logo"
-                width={400}
-                height={112}
-                className="h-auto w-[400px] blur-[2px] invert"
-              />
-            </div>
+          {/* Blurred Logo Background */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-5">
+            <Image
+              src="/ATOM_blanc.png"
+              alt="Atom Logo"
+              width={400}
+              height={112}
+              className="h-auto w-[400px] blur-[2px] invert"
+            />
+          </div>
 
-            {/* Product Mockup Center */}
-            <div className="absolute inset-4 flex items-center justify-center">
-              <div className="h-full w-full max-w-2xl rounded-xl bg-white/90 shadow-xl backdrop-blur-sm">
-                <div className="flex h-full items-center justify-center p-8">
-                  <div className="text-center">
-                    {(() => {
-                      const Icon = selectedFeature.icon;
-                      return <Icon className="mx-auto h-16 w-16 text-[#a8d5ff]" />;
-                    })()}
-                    <h3 className="mt-4 text-xl font-semibold text-[#000000]">{selectedFeature.name}</h3>
-                  </div>
+          {/* Product Mockup Center */}
+          <div className="absolute inset-4 top-16 flex items-center justify-center">
+            <div className="h-full w-full max-w-2xl rounded-xl bg-white/90 shadow-xl backdrop-blur-sm">
+              <div className="flex h-full items-center justify-center p-8">
+                <div className="text-center">
+                  {(() => {
+                    const Icon = selectedFeature.icon;
+                    return <Icon className="mx-auto h-16 w-16 text-[#a8d5ff]" />;
+                  })()}
+                  <h3 className="mt-4 text-xl font-semibold text-[#000000]">{selectedFeature.name}</h3>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* macOS-like Dock with InteractiveMenu */}
-        <div className="relative -mt-4 flex justify-center">
-          <InteractiveMenu items={menuItems} accentColor="#a8d5ff" onItemChange={handleMenuChange} />
+          {/* macOS-like Dock with InteractiveMenu - Inside the screen at bottom */}
+          <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
+            <InteractiveMenu items={menuItems} accentColor="#a8d5ff" onItemChange={handleMenuChange} />
+          </div>
         </div>
-
-        {/* Mac Base - Gray */}
-        <div className="mx-auto h-2 w-3/4 rounded-b-full border-2 border-t-0 border-[#888888] bg-[#2a2a2a]"></div>
       </div>
 
       {/* Feature Description - No line above */}
