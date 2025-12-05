@@ -166,10 +166,10 @@ function MacMockup() {
           <div className="absolute top-0 left-0 right-0 z-20 h-6 select-none overflow-hidden">
             {!menuBarImageError ? (
               <Image
-                src="/macos-menu-bar.png"
+                src="/macnav.png"
                 alt="macOS Menu Bar"
                 width={1920}
-                height={24}
+                height={28}
                 className="w-full h-full object-cover object-top"
                 priority
                 onError={() => setMenuBarImageError(true)}
