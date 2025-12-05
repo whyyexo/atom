@@ -161,65 +161,16 @@ function MacMockup() {
       <div className="relative w-[140%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
-          {/* macOS Menu Bar - Inside the screen */}
-          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-3 py-1 select-none">
-            {/* Left side - Apple Logo + Menu Items */}
-            <div className="flex items-center gap-6">
-              {/* Apple Logo */}
-              <div className="flex items-center">
-                <AppleIcon className="w-4 h-4 text-white" />
-              </div>
-              {/* Menu Items */}
-              <div className="flex items-center gap-5 text-xs text-white/90">
-                <span className="cursor-default hover:text-white transition-colors">Finder</span>
-                <span className="cursor-default hover:text-white transition-colors">File</span>
-                <span className="cursor-default hover:text-white transition-colors">Edit</span>
-                <span className="cursor-default hover:text-white transition-colors">View</span>
-                <span className="cursor-default hover:text-white transition-colors">Go</span>
-                <span className="cursor-default hover:text-white transition-colors">Window</span>
-                <span className="cursor-default hover:text-white transition-colors">Help</span>
-              </div>
-            </div>
-            
-            {/* Right side - Status icons (like real macOS) */}
-            <div className="flex items-center gap-3 text-[11px] text-white/90">
-              {/* Eyedropper Icon - macOS style pipette */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeWidth="1.2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 1.5L6.5 3v1.5h3V3L8 1.5z"/>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 4.5v2L8 8.5l1.5-2v-2"/>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8 8.5v4.5"/>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 13h2"/>
-              </svg>
-              {/* GitHub Icon with badge */}
-              <div className="flex items-center gap-1">
-                <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-                </svg>
-                <span className="text-white/90 text-[10px]">49</span>
-              </div>
-              {/* Activity/Notification Icon with badge - Curved stacked lines */}
-              <div className="flex items-center gap-1">
-                <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2 3c2 0 4 0 6 0s4 0 6 0M2 6c1.5 0 3 0 4.5 0s3 0 4.5 0M2 9c1 0 2 0 3 0s2 0 3 0"/>
-                </svg>
-                <span className="text-white/90 text-[10px]">1</span>
-              </div>
-              {/* Wi-Fi Icon - Realistic macOS style with arcs */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2" strokeLinecap="round">
-                <path d="M2 8.5c2-2 4-2.5 6-2.5s4 .5 6 2.5"/>
-                <path d="M3.5 10c1.5-1.5 2.5-2 4.5-2s3 .5 4.5 2"/>
-                <path d="M5.5 11.5c1-1 1.5-1.5 2.5-1.5s1.5 .5 2.5 1.5"/>
-                <circle cx="8" cy="8.5" r="0.6" fill="currentColor"/>
-              </svg>
-              {/* Battery Icon - Realistic macOS style (white outline, green fill ~75%) */}
-              <svg className="w-6 h-3.5 text-white/90" viewBox="0 0 22 12">
-                <rect x="1" y="3.5" width="18" height="5" rx="0.8" fill="none" stroke="currentColor" strokeWidth="1.2"/>
-                <rect x="19.5" y="5.5" width="1.5" height="1" rx="0.2" fill="currentColor"/>
-                <rect x="2.5" y="4.5" width="13.5" height="3" rx="0.3" fill="#34C759"/>
-              </svg>
-              {/* Date and Time - Full format like real macOS */}
-              <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">Mon Jun 22 9:41 AM</span>
-            </div>
+          {/* macOS Menu Bar - Real image from macOS */}
+          <div className="absolute top-0 left-0 right-0 z-20 h-6 select-none overflow-hidden">
+            <Image
+              src="/macos-menu-bar.png"
+              alt="macOS Menu Bar"
+              width={1920}
+              height={24}
+              className="w-full h-full object-cover object-top"
+              priority
+            />
           </div>
 
           {/* Blurred Logo Background */}
