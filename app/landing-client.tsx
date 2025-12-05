@@ -368,15 +368,23 @@ function MacMockup() {
 function TextRevealSection() {
   return (
     <section className="relative w-full bg-white py-32">
-      <div className="relative min-h-[200vh]">
+      <div className="relative min-h-[150vh]">
         <div className="sticky top-0 flex items-center justify-center min-h-screen">
           <div className="w-full max-w-5xl mx-auto px-4">
-            <div className="flex items-center justify-center">
-              <TextRevealByWord text="It's not about working faster. It's about finally feeling in control of your time." />
+            <div className="flex flex-col items-center justify-center space-y-8">
+              {/* First phrase - always visible, bigger */}
+              <p className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#000000] text-center">
+                It's not about working faster.
+              </p>
+              
+              {/* Second phrase - revealed on scroll */}
+              <div className="w-full">
+                <TextRevealByWord text="It's about finally feeling in control of your time." />
+              </div>
             </div>
           </div>
         </div>
-        <div className="h-[200vh]" aria-hidden="true" />
+        <div className="h-[150vh]" aria-hidden="true" />
       </div>
     </section>
   );
