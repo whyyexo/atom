@@ -171,6 +171,17 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Text selection color - Pale blue */
+::selection {
+  background-color: #a8d5ff;
+  color: #000000;
+}
+
+::-moz-selection {
+  background-color: #a8d5ff;
+  color: #000000;
+}
+
 /* Hide scrollbar */
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
