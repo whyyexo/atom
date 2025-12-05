@@ -74,4 +74,3 @@ const Word: FC<WordProps> = ({ children, progress, range }) => {
 };
 
 export { TextRevealByWord };
-

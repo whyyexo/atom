@@ -367,22 +367,11 @@ function MacMockup() {
 
 function TextRevealSection() {
   return (
-    <section className="relative w-full bg-white min-h-[200vh]">
+    <section className="min-h-[200vh] w-full relative bg-white">
       <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-full max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex flex-col items-center justify-center text-center">
-            {/* First part - always visible */}
-            <p className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#000000] mb-8 pointer-events-auto">
-              It's not about working faster.
-            </p>
-            
-            {/* Second part - revealed on scroll */}
-            <div className="w-full pointer-events-auto">
-              <TextRevealByWord 
-                text="It's about finally feeling in control of your time." 
-                className="h-[200vh]"
-              />
-            </div>
+        <div className="w-full max-w-5xl mx-auto p-4">
+          <div className="rounded-lg w-full border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center pointer-events-auto">
+            <TextRevealByWord text="Magic UI will change the way you design." />
           </div>
         </div>
       </div>
