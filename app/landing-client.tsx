@@ -368,23 +368,23 @@ function MacMockup() {
 function TextRevealSection() {
   return (
     <section className="relative w-full bg-white py-32">
-      <div className="relative min-h-[150vh]">
-        <div className="sticky top-[20vh] flex items-center justify-center min-h-[60vh]">
+      <div className="relative min-h-[120vh]">
+        <div className="sticky top-0 flex items-center justify-center min-h-screen">
           <div className="w-full max-w-5xl mx-auto px-4">
-            <div className="flex flex-col items-center justify-center space-y-3">
+            <div className="flex flex-col items-center justify-center">
               {/* First phrase - always visible, bigger, single line */}
-              <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#000000] text-center whitespace-nowrap overflow-hidden">
+              <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#000000] text-center whitespace-nowrap mb-2">
                 It's not about working faster.
               </p>
               
               {/* Second phrase - revealed on scroll, centered */}
-              <div className="w-full flex justify-center">
+              <div className="w-full flex justify-center -mt-2">
                 <TextRevealByWord text="It's about finally feeling in control of your time." />
               </div>
             </div>
           </div>
         </div>
-        <div className="h-[150vh]" aria-hidden="true" />
+        <div className="h-[120vh]" aria-hidden="true" />
       </div>
     </section>
   );
