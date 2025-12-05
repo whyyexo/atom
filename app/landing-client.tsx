@@ -367,15 +367,17 @@ function MacMockup() {
 
 function TextRevealSection() {
   return (
-    <section className="min-h-[200vh] w-full relative bg-white">
-      <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-full max-w-5xl mx-auto p-4">
-          <div className="rounded-lg w-full border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 backdrop-blur-sm flex items-center justify-center pointer-events-auto">
-            <TextRevealByWord text="Magic UI will change the way you design." />
+    <section className="relative w-full bg-white py-32">
+      <div className="relative min-h-[200vh]">
+        <div className="sticky top-0 flex items-center justify-center min-h-screen">
+          <div className="w-full max-w-5xl mx-auto px-4">
+            <div className="flex items-center justify-center">
+              <TextRevealByWord text="It's not about working faster. It's about finally feeling in control of your time." />
+            </div>
           </div>
         </div>
+        <div className="h-[200vh]" aria-hidden="true" />
       </div>
-      <div className="h-[200vh]" aria-hidden="true" />
     </section>
   );
 }
