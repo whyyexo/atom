@@ -367,29 +367,26 @@ function MacMockup() {
 
 function TextRevealSection() {
   return (
-    <section className="relative w-full bg-white">
-      <div className="relative w-full">
-        <div className="sticky top-0 flex items-center justify-center min-h-screen">
-          <div className="w-full max-w-6xl mx-auto px-6 lg:px-12">
-            <div className="flex flex-col items-center justify-center text-center">
-              {/* First part - always visible */}
-              <p className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#000000] mb-8">
-                It's not about working faster.
-              </p>
-              
-              {/* Second part - revealed on scroll */}
-              <div className="w-full">
-                <TextRevealByWord 
-                  text="It's about finally feeling in control of your time." 
-                  className="h-[200vh]"
-                />
-              </div>
+    <section className="relative w-full bg-white min-h-[200vh]">
+      <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-full max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex flex-col items-center justify-center text-center">
+            {/* First part - always visible */}
+            <p className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#000000] mb-8 pointer-events-auto">
+              It's not about working faster.
+            </p>
+            
+            {/* Second part - revealed on scroll */}
+            <div className="w-full pointer-events-auto">
+              <TextRevealByWord 
+                text="It's about finally feeling in control of your time." 
+                className="h-[200vh]"
+              />
             </div>
           </div>
         </div>
-        {/* Spacer to allow scrolling after reveal */}
-        <div className="h-[200vh]" aria-hidden="true" />
       </div>
+      <div className="h-[200vh]" aria-hidden="true" />
     </section>
   );
 }
