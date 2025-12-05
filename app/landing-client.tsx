@@ -183,33 +183,39 @@ function MacMockup() {
             
             {/* Right side - Status icons (like real macOS) */}
             <div className="flex items-center gap-3 text-[11px] text-white/90">
-              {/* Eyedropper Icon */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1a1 1 0 011-1h10zm-1-4a1 1 0 011 1v1a1 1 0 01-1 1H6a1 1 0 01-1-1V8a1 1 0 011-1h8zM9 3v2M11 3v2M13 3v2"/>
+              {/* Eyedropper Icon - macOS style pipette */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeWidth="1.2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 1.5L6.5 3v1.5h3V3L8 1.5z"/>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6.5 4.5v2L8 8.5l1.5-2v-2"/>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 8.5v4.5"/>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 13h2"/>
               </svg>
               {/* GitHub Icon with badge */}
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
                 <span className="text-white/90 text-[10px]">49</span>
               </div>
-              {/* Activity/Notification Icon with badge */}
+              {/* Activity/Notification Icon with badge - Curved stacked lines */}
               <div className="flex items-center gap-1">
-                <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h12M4 10h12M4 14h12"/>
+                <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2 3c2 0 4 0 6 0s4 0 6 0M2 6c1.5 0 3 0 4.5 0s3 0 4.5 0M2 9c1 0 2 0 3 0s2 0 3 0"/>
                 </svg>
                 <span className="text-white/90 text-[10px]">1</span>
               </div>
-              {/* Wi-Fi Icon - Realistic macOS style */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
+              {/* Wi-Fi Icon - Realistic macOS style with arcs */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2" strokeLinecap="round">
+                <path d="M2 8.5c2-2 4-2.5 6-2.5s4 .5 6 2.5"/>
+                <path d="M3.5 10c1.5-1.5 2.5-2 4.5-2s3 .5 4.5 2"/>
+                <path d="M5.5 11.5c1-1 1.5-1.5 2.5-1.5s1.5 .5 2.5 1.5"/>
+                <circle cx="8" cy="8.5" r="0.6" fill="currentColor"/>
               </svg>
-              {/* Battery Icon - Realistic macOS style (75-80% full) */}
-              <svg className="w-6 h-3.5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 12" strokeWidth="1.2">
-                <rect x="1" y="3" width="18" height="6" rx="1" fill="none"/>
-                <rect x="19" y="5" width="1.5" height="2" rx="0.3" fill="currentColor"/>
-                <rect x="2.5" y="4.5" width="13.5" height="3" rx="0.5" fill="#34C759"/>
+              {/* Battery Icon - Realistic macOS style (white outline, green fill ~75%) */}
+              <svg className="w-6 h-3.5 text-white/90" viewBox="0 0 22 12">
+                <rect x="1" y="3.5" width="18" height="5" rx="0.8" fill="none" stroke="currentColor" strokeWidth="1.2"/>
+                <rect x="19.5" y="5.5" width="1.5" height="1" rx="0.2" fill="currentColor"/>
+                <rect x="2.5" y="4.5" width="13.5" height="3" rx="0.3" fill="#34C759"/>
               </svg>
               {/* Date and Time - Full format like real macOS */}
               <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">Mon Jun 22 9:41 AM</span>
