@@ -158,7 +158,7 @@ function MacMockup() {
       </div>
 
       {/* Mac Screen - Just the rectangle, larger, no support - 120% width centered */}
-      <div className="relative mx-auto w-[120%] max-w-none -mx-[10%]">
+      <div className="relative w-[120%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
