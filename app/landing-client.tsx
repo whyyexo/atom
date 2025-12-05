@@ -12,6 +12,7 @@ import { Check, Heart } from "lucide-react";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 import { AppleIcon } from "@/components/auth/social-icons";
+import { TextRevealByWord } from "@/components/ui/text-reveal";
 
 const features = [
   {
