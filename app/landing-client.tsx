@@ -41,6 +41,7 @@ export function LandingPageClient() {
   return (
     <PublicLayout>
       <HeroSection />
+      <TextRevealSection />
       <FeaturesSection />
       <ShowcaseSection />
       <FeatureHighlightsSection />
@@ -302,9 +303,9 @@ function MacMockup() {
             </div>
           </div>
 
-          {/* macOS-like Dock - Inside the screen at bottom */}
-          <div className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2">
-            <div className="relative flex items-center gap-2 rounded-full bg-white/80 dark:bg-black/80 backdrop-blur-xl px-3 py-2 shadow-lg border border-[rgba(0,0,0,0.1)] dark:border-[rgba(255,255,255,0.1)]">
+          {/* macOS Sequoia Dock - More discrete and modern */}
+          <div className="absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
+            <div className="relative flex items-center gap-1.5 rounded-2xl bg-white/30 dark:bg-black/30 backdrop-blur-2xl px-2.5 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white/10 dark:border-white/5">
               {featureItems.map((feature, index) => {
                 const Icon = feature.icon;
                 const isActive = index === activeIndex;
@@ -312,28 +313,30 @@ function MacMockup() {
                   <button
                     key={feature.id}
                     onClick={() => handleMenuChange(index)}
-                    className="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-300"
+                    className="relative flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-200"
                   >
                     <motion.div
                       animate={{
-                        scale: isActive ? 1.15 : 1,
-                        y: isActive ? -4 : 0,
+                        scale: isActive ? 1.2 : 1,
+                        y: isActive ? -3 : 0,
                       }}
-                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
                       className="relative z-10"
                     >
                       <Icon
-                        className={`w-5 h-5 transition-colors duration-300 ${
-                          isActive ? "text-[#a8d5ff]" : "text-[#666666] dark:text-[#999999]"
+                        className={`w-4 h-4 transition-all duration-200 ${
+                          isActive 
+                            ? "text-[#a8d5ff] drop-shadow-sm" 
+                            : "text-[#666666]/70 dark:text-[#999999]/70"
                         }`}
                       />
                     </motion.div>
-                    {/* Active background indicator */}
+                    {/* Active background indicator - more subtle */}
                     {isActive && (
                       <motion.div
                         layoutId="active-indicator"
-                        className="absolute inset-0 rounded-lg bg-[#a8d5ff]/20"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        className="absolute inset-0 rounded-lg bg-[#a8d5ff]/15 dark:bg-[#a8d5ff]/20"
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
                       />
                     )}
                   </button>
@@ -358,6 +361,35 @@ function MacMockup() {
         </p>
       </motion.div>
     </div>
+  );
+}
+
+function TextRevealSection() {
+  return (
+    <section className="relative w-full bg-white">
+      <div className="relative w-full">
+        <div className="sticky top-0 flex items-center justify-center min-h-screen">
+          <div className="w-full max-w-6xl mx-auto px-6 lg:px-12">
+            <div className="flex flex-col items-center justify-center text-center">
+              {/* First part - always visible */}
+              <p className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#000000] mb-8">
+                It's not about working faster.
+              </p>
+              
+              {/* Second part - revealed on scroll */}
+              <div className="w-full">
+                <TextRevealByWord 
+                  text="It's about finally feeling in control of your time." 
+                  className="h-[200vh]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Spacer to allow scrolling after reveal */}
+        <div className="h-[200vh]" aria-hidden="true" />
+      </div>
+    </section>
   );
 }
 
