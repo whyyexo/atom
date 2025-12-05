@@ -140,6 +140,7 @@ const featureItems = [
 function MacMockup() {
   const [selectedFeature, setSelectedFeature] = useState(featureItems[0]);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [menuBarImageError, setMenuBarImageError] = useState(false);
 
   // Handle menu selection change
   const handleMenuChange = (index: number) => {
@@ -161,16 +162,39 @@ function MacMockup() {
       <div className="relative w-[140%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
-          {/* macOS Menu Bar - Real image from macOS */}
+          {/* macOS Menu Bar - Real image from macOS or fallback */}
           <div className="absolute top-0 left-0 right-0 z-20 h-6 select-none overflow-hidden">
-            <Image
-              src="/macos-menu-bar.png"
-              alt="macOS Menu Bar"
-              width={1920}
-              height={24}
-              className="w-full h-full object-cover object-top"
-              priority
-            />
+            {!menuBarImageError ? (
+              <Image
+                src="/macos-menu-bar.png"
+                alt="macOS Menu Bar"
+                width={1920}
+                height={24}
+                className="w-full h-full object-cover object-top"
+                priority
+                onError={() => setMenuBarImageError(true)}
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-3 py-1">
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center">
+                    <AppleIcon className="w-4 h-4 text-white" />
+                  </div>
+                  <div className="flex items-center gap-5 text-xs text-white/90">
+                    <span className="cursor-default hover:text-white transition-colors">Finder</span>
+                    <span className="cursor-default hover:text-white transition-colors">File</span>
+                    <span className="cursor-default hover:text-white transition-colors">Edit</span>
+                    <span className="cursor-default hover:text-white transition-colors">View</span>
+                    <span className="cursor-default hover:text-white transition-colors">Go</span>
+                    <span className="cursor-default hover:text-white transition-colors">Window</span>
+                    <span className="cursor-default hover:text-white transition-colors">Help</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 text-[11px] text-white/90">
+                  <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">Mon Jun 22 9:41 AM</span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Blurred Logo Background */}
