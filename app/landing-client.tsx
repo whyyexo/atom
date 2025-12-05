@@ -157,8 +157,8 @@ function MacMockup() {
         <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
       </div>
 
-      {/* Mac Screen - Just the rectangle, larger, no support - 120% width centered */}
-      <div className="relative w-[120%] max-w-none left-1/2 -translate-x-1/2">
+      {/* Mac Screen - Just the rectangle, larger, no support - 130% width centered */}
+      <div className="relative w-[130%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
@@ -182,25 +182,38 @@ function MacMockup() {
             </div>
             
             {/* Right side - Status icons (like real macOS) */}
-            <div className="flex items-center gap-4 text-xs text-white/80">
-              {/* Control Center */}
-              <div className="flex items-center gap-1.5">
-                <div className="w-1 h-1 rounded-full bg-white/60"></div>
-                <div className="w-1 h-1 rounded-full bg-white/60"></div>
-                <div className="w-1 h-1 rounded-full bg-white/60"></div>
+            <div className="flex items-center gap-3 text-xs text-white/90">
+              {/* Control Center - Three dots */}
+              <div className="flex items-center gap-1">
+                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
+                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
+                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
               </div>
-              {/* Wi-Fi Icon */}
-              <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2C7.2 2 4.5 2.5 2.1 3.4L3.5 5.1C5.6 4.3 7.8 3.9 10 3.9S14.4 4.3 16.5 5.1L17.9 3.4C15.5 2.5 12.8 2 10 2ZM10 6C8.1 6 6.3 6.3 4.6 6.9L6 8.3C7.4 7.8 8.7 7.5 10 7.5S12.6 7.8 14 8.3L15.4 6.9C13.7 6.3 11.9 6 10 6ZM10 10C9.1 10 8.2 10.1 7.4 10.3L8.8 11.7C9.4 11.5 10.2 11.4 10.9 11.4C11.6 11.4 12.4 11.5 13 11.7L14.4 10.3C13.6 10.1 12.7 10 10 10ZM12 14H8V16H12V14Z" />
+              {/* Siri Icon */}
+              <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 2C5.6 2 2 5.6 2 10s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
+                <path d="M10 6c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z"/>
               </svg>
-              {/* Battery Icon */}
-              <svg className="w-5 h-3 text-white/80" fill="currentColor" viewBox="0 0 20 12">
-                <rect x="1" y="4" width="15" height="4" rx="1" fill="currentColor" />
-                <rect x="16" y="5.5" width="1.5" height="1" rx="0.5" fill="currentColor" />
-                <rect x="2" y="5" width="13" height="2" rx="0.5" fill="#34C759" />
+              {/* Spotlight Icon */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 9l5 5m0-5l-5 5m5-10a7 7 0 11-7 7 7 7 0 017-7z"/>
               </svg>
-              {/* Time */}
-              <span className="cursor-default text-white/90 font-medium">12:34</span>
+              {/* Wi-Fi Icon - Realistic macOS style */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m6-4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m-6 4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m-6 4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+              </svg>
+              {/* Bluetooth Icon */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 2l6 6-6 6M6 18l6-6-6-6"/>
+              </svg>
+              {/* Battery Icon - Realistic macOS style */}
+              <svg className="w-6 h-3.5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 12">
+                <rect x="1" y="3" width="18" height="6" rx="1" strokeWidth="1.2" fill="none"/>
+                <rect x="19" y="5" width="1.5" height="2" rx="0.3" fill="currentColor"/>
+                <rect x="2.5" y="4.5" width="15" height="3" rx="0.5" fill="#34C759"/>
+              </svg>
+              {/* Time - AM/PM format like real macOS */}
+              <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">9:41 AM</span>
             </div>
           </div>
 
