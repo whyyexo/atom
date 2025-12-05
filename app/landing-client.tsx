@@ -162,39 +162,118 @@ function MacMockup() {
       <div className="relative w-[140%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
-          {/* macOS Menu Bar - Real image from macOS or fallback */}
-          <div className="absolute top-0 left-0 right-0 z-20 h-6 select-none overflow-hidden">
-            {!menuBarImageError ? (
-              <Image
-                src="/macnav.png"
-                alt="macOS Menu Bar"
-                width={1920}
-                height={28}
-                className="w-full h-full object-cover object-top"
-                priority
-                onError={() => setMenuBarImageError(true)}
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-between bg-[#000000]/60 backdrop-blur-md px-3 py-1">
-                <div className="flex items-center gap-6">
-                  <div className="flex items-center">
-                    <AppleIcon className="w-4 h-4 text-white" />
-                  </div>
-                  <div className="flex items-center gap-5 text-xs text-white/90">
-                    <span className="cursor-default hover:text-white transition-colors">Finder</span>
-                    <span className="cursor-default hover:text-white transition-colors">File</span>
-                    <span className="cursor-default hover:text-white transition-colors">Edit</span>
-                    <span className="cursor-default hover:text-white transition-colors">View</span>
-                    <span className="cursor-default hover:text-white transition-colors">Go</span>
-                    <span className="cursor-default hover:text-white transition-colors">Window</span>
-                    <span className="cursor-default hover:text-white transition-colors">Help</span>
+          {/* macOS Menu Bar - From Figma CSS */}
+          <div className="absolute top-0 left-0 right-0 z-20 h-[34px] select-none overflow-hidden">
+            {/* Background with blur and gradient */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" style={{ background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%)' }}></div>
+            <div className="absolute inset-0 bg-black/12 backdrop-blur-md"></div>
+            
+            <div className="absolute inset-0 flex flex-row justify-between items-center px-[10px] py-[5px] gap-[98px] isolate w-full h-[34px] relative z-10">
+              {/* Leading Group - Left side */}
+              <div className="flex flex-row items-center p-0 w-[464px] h-6 flex-none order-0 flex-grow-0 z-0">
+                {/* Apple Logo */}
+                <div className="w-[33px] h-6 rounded-[4px] flex-none order-0 flex-grow-0 relative">
+                  <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[15px] h-5 text-center text-white" style={{ fontFamily: 'SF Pro', fontWeight: 400, fontSize: '16.3px', lineHeight: '20px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    <AppleIcon className="w-[15px] h-5 text-white" />
                   </div>
                 </div>
-                <div className="flex items-center gap-3 text-[11px] text-white/90">
-                  <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">Mon Jun 22 9:41 AM</span>
+                
+                {/* App Name */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[57px] h-6 rounded-[4px] flex-none order-1 flex-grow-0">
+                  <div className="w-[35px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 700, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Atom
+                  </div>
+                </div>
+                
+                {/* Menu Items */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[63px] h-6 rounded-[4px] flex-none order-2 flex-grow-0">
+                  <div className="w-[41px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Finder
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[45px] h-6 rounded-[4px] flex-none order-3 flex-grow-0">
+                  <div className="w-[23px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    File
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[47px] h-6 rounded-[4px] flex-none order-4 flex-grow-0">
+                  <div className="w-[25px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Edit
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[53px] h-6 rounded-[4px] flex-none order-5 flex-grow-0">
+                  <div className="w-[31px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    View
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[40px] h-6 rounded-[4px] flex-none order-6 flex-grow-0">
+                  <div className="w-[18px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Go
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[74px] h-6 rounded-[4px] flex-none order-7 flex-grow-0">
+                  <div className="w-[52px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Window
+                  </div>
+                </div>
+                
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[52px] h-6 rounded-[4px] flex-none order-8 flex-grow-0">
+                  <div className="w-[30px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Help
+                  </div>
                 </div>
               </div>
-            )}
+              
+              {/* Trailing Group - Right side */}
+              <div className="flex flex-row justify-end items-center p-0 w-[309px] h-6 flex-none order-1 flex-grow-0 z-[1]">
+                {/* Wi-Fi Icon */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[40px] h-6 rounded-[4px] flex-none order-0 flex-grow-0">
+                  <svg className="w-[18px] h-4 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2" strokeLinecap="round">
+                    <path d="M2 8.5c2-2 4-2.5 6-2.5s4 .5 6 2.5"/>
+                    <path d="M3.5 10c1.5-1.5 2.5-2 4.5-2s3 .5 4.5 2"/>
+                    <path d="M5.5 11.5c1-1 1.5-1.5 2.5-1.5s1.5 .5 2.5 1.5"/>
+                    <circle cx="8" cy="8.5" r="0.6" fill="currentColor"/>
+                  </svg>
+                </div>
+                
+                {/* Search/Spotlight Icon */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[38px] h-6 rounded-[4px] flex-none order-1 flex-grow-0">
+                  <svg className="w-[16px] h-4 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 16 16" strokeWidth="1.5">
+                    <circle cx="7" cy="7" r="4"/>
+                    <path d="m11 11 3 3" strokeLinecap="round"/>
+                  </svg>
+                </div>
+                
+                {/* Control Center Icon */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[38px] h-6 rounded-[4px] flex-none order-2 flex-grow-0">
+                  <svg className="w-[16px] h-4 text-white/85" fill="none" stroke="currentColor" viewBox="0 0 16 12" strokeWidth="1.2">
+                    <rect x="2" y="4" width="12" height="1.5" rx="0.75"/>
+                    <rect x="2" y="6.25" width="12" height="1.5" rx="0.75"/>
+                  </svg>
+                </div>
+                
+                {/* Battery Icon */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[38px] h-6 rounded-[4px] flex-none order-3 flex-grow-0">
+                  <svg className="w-[16px] h-4 text-white/85" viewBox="0 0 22 12">
+                    <rect x="1" y="3.5" width="18" height="5" rx="0.8" fill="none" stroke="currentColor" strokeWidth="1.2"/>
+                    <rect x="19.5" y="5.5" width="1.5" height="1" rx="0.2" fill="currentColor"/>
+                    <rect x="2.5" y="4.5" width="13.5" height="3" rx="0.3" fill="currentColor"/>
+                  </svg>
+                </div>
+                
+                {/* Date and Time */}
+                <div className="flex flex-row items-start px-[11px] py-1 gap-[10px] w-[155px] h-6 rounded-[4px] flex-none order-4 flex-grow-0">
+                  <div className="w-[133px] h-4 text-white flex items-center text-center flex-none order-0 flex-grow-0" style={{ fontFamily: 'SF Pro', fontWeight: 590, fontSize: '13px', lineHeight: '16px', textShadow: '0px 1px 6px #CCCCCC' }}>
+                    Mon Jun 10 9:41 AM
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Blurred Logo Background */}
