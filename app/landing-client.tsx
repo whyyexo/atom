@@ -157,8 +157,8 @@ function MacMockup() {
         <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
       </div>
 
-      {/* Mac Screen - Just the rectangle, larger, no support - 130% width centered */}
-      <div className="relative w-[130%] max-w-none left-1/2 -translate-x-1/2">
+      {/* Mac Screen - Just the rectangle, larger, no support - 140% width centered */}
+      <div className="relative w-[140%] max-w-none left-1/2 -translate-x-1/2">
         {/* Screen with blurred logo background - Larger with original aspect ratio */}
         <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-[#f5f5f5] to-[#e0e0e0] shadow-2xl select-none">
           {/* macOS Menu Bar - Inside the screen */}
@@ -182,38 +182,37 @@ function MacMockup() {
             </div>
             
             {/* Right side - Status icons (like real macOS) */}
-            <div className="flex items-center gap-3 text-xs text-white/90">
-              {/* Control Center - Three dots */}
+            <div className="flex items-center gap-3 text-[11px] text-white/90">
+              {/* Eyedropper Icon */}
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1a1 1 0 011-1h10zm-1-4a1 1 0 011 1v1a1 1 0 01-1 1H6a1 1 0 01-1-1V8a1 1 0 011-1h8zM9 3v2M11 3v2M13 3v2"/>
+              </svg>
+              {/* GitHub Icon with badge */}
               <div className="flex items-center gap-1">
-                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
-                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
-                <div className="w-0.5 h-0.5 rounded-full bg-white/70"></div>
+                <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span className="text-white/90 text-[10px]">49</span>
               </div>
-              {/* Siri Icon */}
-              <svg className="w-4 h-4 text-white/90" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 2C5.6 2 2 5.6 2 10s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z"/>
-                <path d="M10 6c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z"/>
-              </svg>
-              {/* Spotlight Icon */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 9l5 5m0-5l-5 5m5-10a7 7 0 11-7 7 7 7 0 017-7z"/>
-              </svg>
+              {/* Activity/Notification Icon with badge */}
+              <div className="flex items-center gap-1">
+                <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h12M4 10h12M4 14h12"/>
+                </svg>
+                <span className="text-white/90 text-[10px]">1</span>
+              </div>
               {/* Wi-Fi Icon - Realistic macOS style */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2 8l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m6-4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m-6 4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m-6 4l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/>
+              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/>
               </svg>
-              {/* Bluetooth Icon */}
-              <svg className="w-4 h-4 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 20 20">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 2l6 6-6 6M6 18l6-6-6-6"/>
-              </svg>
-              {/* Battery Icon - Realistic macOS style */}
-              <svg className="w-6 h-3.5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 12">
-                <rect x="1" y="3" width="18" height="6" rx="1" strokeWidth="1.2" fill="none"/>
+              {/* Battery Icon - Realistic macOS style (75-80% full) */}
+              <svg className="w-6 h-3.5 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 12" strokeWidth="1.2">
+                <rect x="1" y="3" width="18" height="6" rx="1" fill="none"/>
                 <rect x="19" y="5" width="1.5" height="2" rx="0.3" fill="currentColor"/>
-                <rect x="2.5" y="4.5" width="15" height="3" rx="0.5" fill="#34C759"/>
+                <rect x="2.5" y="4.5" width="13.5" height="3" rx="0.5" fill="#34C759"/>
               </svg>
-              {/* Time - AM/PM format like real macOS */}
-              <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">9:41 AM</span>
+              {/* Date and Time - Full format like real macOS */}
+              <span className="cursor-default text-white/90 font-medium text-[11px] tracking-tight">Mon Jun 22 9:41 AM</span>
             </div>
           </div>
 
