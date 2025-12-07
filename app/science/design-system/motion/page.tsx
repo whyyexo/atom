@@ -133,7 +133,7 @@ export default function MotionPage() {
             </h2>
             <div className="space-y-4 text-lg font-light text-[#333333] leading-relaxed">
               <p>
-                Animation duration is critical. Too fast (<100ms) feels jarring. Too slow (>300ms) feels sluggish. The sweet spot is 100-180ms—fast enough to feel instant, slow enough to be perceived.
+                Animation duration is critical. Too fast ({'<'}100ms) feels jarring. Too slow ({'>'}300ms) feels sluggish. The sweet spot is 100-180ms—fast enough to feel instant, slow enough to be perceived.
               </p>
               <p>
                 Atom uses calibrated durations: 100ms for micro-interactions (button presses), 150ms for state changes (menu toggles), 180ms for transitions (page changes). Each duration is chosen based on the cognitive importance of the change.

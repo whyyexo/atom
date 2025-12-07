@@ -40,7 +40,7 @@ export default function PlacementPage() {
             className="space-y-6"
           >
             <h2 className="text-3xl font-semibold tracking-tight text-[#000000]">
-              Distance Naturelle Main > Écran
+              Distance Naturelle Main {'>'} Écran
             </h2>
             <div className="space-y-4 text-lg font-light text-[#333333] leading-relaxed">
               <p>
