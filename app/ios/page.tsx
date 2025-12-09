@@ -4,9 +4,106 @@ import Image from "next/image";
 import Link from "next/link";
 import { PublicLayout } from "@/components/public/public-layout";
 import { ArrowButton } from "@/components/ui/arrow-button";
-import { Features8 } from "@/components/ui/features-8";
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
 import iosHeadImage from "@/components/public/IOS_HEAD.webp";
+import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.svg";
+import activityViewImage from "@/components/public/Activity View (1).svg";
+import { Lightbulb, Sparkles, Tag, Target, Calendar, Zap } from 'lucide-react';
+
+// Grid component for Section 3 - Notes features
+function NotesFeaturesGrid() {
+  return (
+    <section className="bg-[#0C0C0D] py-16 md:py-32">
+      <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
+        <div className="relative">
+          <div className="relative z-10 grid grid-cols-6 gap-3">
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Lightbulb className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Smart Suggestions</h2>
+                  <p className="text-[#C9C9C9]">Atom automatically suggests actions based on your context.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Sparkles className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Natural Sorting</h2>
+                  <p className="text-[#C9C9C9]">Your notes sort themselves by importance and usage.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Tag className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Instant Tags</h2>
+                  <p className="text-[#C9C9C9]">Keywords are created in a second, without a complicated interface.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Grid component for Section 6 - Tasks features
+function TasksFeaturesGrid() {
+  return (
+    <section className="bg-[#0C0C0D] py-16 md:py-32">
+      <div className="mx-auto max-w-3xl lg:max-w-5xl px-6">
+        <div className="relative">
+          <div className="relative z-10 grid grid-cols-6 gap-3">
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Target className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Context Tasks</h2>
+                  <p className="text-[#C9C9C9]">Tasks appear only when you can actually do them.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Calendar className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Auto-Reschedule</h2>
+                  <p className="text-[#C9C9C9]">Reminders move intelligently, without creating overload.</p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-[#1A1A1D] border-[#2A2A2E]">
+              <CardContent className="pt-6">
+                <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-[#2A2A2E] before:absolute before:-inset-2 before:rounded-full before:border before:border-[#2A2A2E]">
+                  <Zap className="m-auto h-24 w-24 text-[#0A84FF]" strokeWidth={1} />
+                </div>
+                <div className="relative z-10 mt-6 space-y-2 text-center">
+                  <h2 className="text-lg font-medium transition text-white">Focus Triggers</h2>
+                  <p className="text-[#C9C9C9]">Atom activates focus mode based on your key moments.</p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function IOSPage() {
   return (
@@ -58,13 +155,7 @@ export default function IOSPage() {
 
       {/* SECTION 1 — Notes (Full-width centered) */}
       <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0C0C0D]/80 to-[#0C0C0D] z-10" />
-          <div className="absolute inset-0 flex items-center justify-center opacity-20">
-            <div className="text-[#8A8A8A] text-sm">Background image placeholder</div>
-          </div>
-        </div>
-        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto">
+        <div className="relative z-20 text-center px-6 max-w-4xl mx-auto mb-16">
           <p className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider mb-4">
             Notes
           </p>
@@ -75,10 +166,46 @@ export default function IOSPage() {
             Atom Notes on iOS combines speed, structure, and clarity so every idea becomes action, naturally.
           </p>
         </div>
+        
+        {/* Images section */}
+        <div className="relative w-full max-w-7xl mx-auto px-6">
+          {/* Background images - Left and Right */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-30">
+              <Image
+                src={activityViewImage}
+                alt="Activity View Left"
+                width={200}
+                height={437}
+                className="object-contain"
+              />
+            </div>
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-30">
+              <Image
+                src={activityViewImage}
+                alt="Activity View Right"
+                width={200}
+                height={437}
+                className="object-contain"
+              />
+            </div>
+          </div>
+          
+          {/* Main centered image */}
+          <div className="relative z-10 flex justify-center">
+            <Image
+              src={phoneMakeupImage}
+              alt="Phone Makeup"
+              width={450}
+              height={920}
+              className="object-contain"
+            />
+          </div>
+        </div>
       </section>
 
       {/* SECTION 2 — Quick Entry (Text left + Image right) */}
-      <section className="py-32 bg-[#121214]">
+      <section className="py-32 bg-[#0C0C0D]">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
@@ -108,38 +235,19 @@ export default function IOSPage() {
       </section>
 
       {/* SECTION 3 — Grid of 3 blocks */}
-      <section className="py-32 bg-[#0C0C0D]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Smart Suggestions</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Atom automatically suggests actions based on your context.
-              </p>
-            </div>
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Natural Sorting</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Your notes sort themselves by importance and usage.
-              </p>
-            </div>
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Instant Tags</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Keywords are created in a second, without a complicated interface.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <NotesFeaturesGrid />
 
       {/* SECTION 4 — Tasks (Full-width centered) */}
-      <section className="relative py-32 bg-[#121214] overflow-hidden">
+      <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#121214]/80 to-[#121214] z-10" />
-          <div className="absolute inset-0 flex items-center justify-center opacity-20">
-            <div className="text-[#8A8A8A] text-sm">Background image placeholder</div>
-          </div>
+          <Image
+            src={iosHeadImage}
+            alt="Tasks background"
+            fill
+            className="object-cover object-center opacity-20"
+            style={{ objectPosition: "center 50%" }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0C0C0D]/80 to-[#0C0C0D] z-10" />
         </div>
         <div className="relative z-20 text-center px-6 max-w-4xl mx-auto">
           <p className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider mb-4">
@@ -185,30 +293,7 @@ export default function IOSPage() {
       </section>
 
       {/* SECTION 6 — Grid of 3 blocks */}
-      <section className="py-32 bg-[#121214]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Context Tasks</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Tasks appear only when you can actually do them.
-              </p>
-            </div>
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Auto-Reschedule</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Reminders move intelligently, without creating overload.
-              </p>
-            </div>
-            <div className="bg-[#1A1A1D] border border-[#2A2A2E] rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-white mb-3">Focus Triggers</h3>
-              <p className="text-[#C9C9C9] text-sm">
-                Atom activates focus mode based on your key moments.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TasksFeaturesGrid />
     </PublicLayout>
   );
 }
