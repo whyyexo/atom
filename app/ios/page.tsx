@@ -154,19 +154,19 @@ export default function IOSPage() {
             />
           </svg>
           
-          {/* Stronger gradients to hide more than half of the phone */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0D] via-[#0C0C0D]/90 to-[#0C0C0D] z-20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0D] via-[#0C0C0D]/90 to-[#0C0C0D] z-20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0C0C0D] via-transparent to-[#0C0C0D] z-20" />
-          
           <Image
             src={heroPhoneImage}
             alt="Atom iOS"
             fill
             className="object-contain object-center"
-            style={{ objectPosition: "center center", zIndex: 10 }}
+            style={{ objectPosition: "center center", zIndex: 15 }}
             priority
           />
+          
+          {/* Stronger gradients to hide more than half of the phone - above the image */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0D] via-[#0C0C0D]/70 to-[#0C0C0D] z-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0D] via-[#0C0C0D]/70 to-[#0C0C0D] z-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0C0C0D] via-transparent to-[#0C0C0D] z-20" />
         </div>
         <div className="relative z-20 text-center px-6 max-w-4xl mx-auto mt-48">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-white mb-6">
