@@ -7,7 +7,7 @@ import { ArrowButton } from "@/components/ui/arrow-button";
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
-import iosHeadImage from "@/components/public/IOS_HEAD.webp";
+import heroPhoneImage from "@/components/public/3D_phone.png";
 import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.png";
 import activityViewImage from "@/components/public/Activity View (1).svg";
 import { Lightbulb, Sparkles, Tag, Target, Calendar, Zap } from 'lucide-react';
@@ -112,14 +112,59 @@ export default function IOSPage() {
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0C0C0D]">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0C0C0D]/60 to-[#0C0C0D] z-10" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0D] via-transparent to-transparent z-10" />
+          {/* Abstract zigzag shape with blue glow behind */}
+          <svg className="absolute inset-0 w-full h-full opacity-40" style={{ zIndex: 1 }}>
+            <defs>
+              <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0A84FF" stopOpacity="0.6" />
+                <stop offset="50%" stopColor="#0A84FF" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#0A84FF" stopOpacity="0.1" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+                <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+            <path
+              d="M0,200 Q200,100 400,200 T800,200 T1200,200 T1600,200"
+              fill="none"
+              stroke="url(#blueGlow)"
+              strokeWidth="4"
+              filter="url(#glow)"
+              transform="translate(0, 300)"
+            />
+            <path
+              d="M0,400 Q200,300 400,400 T800,400 T1200,400 T1600,400"
+              fill="none"
+              stroke="url(#blueGlow)"
+              strokeWidth="4"
+              filter="url(#glow)"
+              transform="translate(0, 200)"
+            />
+            <path
+              d="M0,300 Q200,200 400,300 T800,300 T1200,300 T1600,300"
+              fill="none"
+              stroke="url(#blueGlow)"
+              strokeWidth="4"
+              filter="url(#glow)"
+              transform="translate(0, 400)"
+            />
+          </svg>
+          
+          {/* Stronger gradients to hide more than half of the phone */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0D] via-[#0C0C0D]/90 to-[#0C0C0D] z-20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0D] via-[#0C0C0D]/90 to-[#0C0C0D] z-20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0C0C0D] via-transparent to-[#0C0C0D] z-20" />
+          
           <Image
-            src={iosHeadImage}
+            src={heroPhoneImage}
             alt="Atom iOS"
             fill
-            className="object-cover object-center"
-            style={{ objectPosition: "center 70%" }}
+            className="object-contain object-center"
+            style={{ objectPosition: "center center", zIndex: 10 }}
             priority
           />
         </div>
