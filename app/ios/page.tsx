@@ -162,8 +162,8 @@ export default function IOSPage() {
           {/* Main centered image container */}
           <div className="relative flex justify-center items-center">
             {/* Background images - Left and Right - positioned next to center image with 5% overlap behind */}
-            {/* Left image: positioned at left edge of center image (50% - 225px) minus its width (200px) */}
-            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% - 225px - 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Left image: positioned at left edge of center image (50% - 200px) minus its width (200px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% - 200px - 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Left"
@@ -172,8 +172,8 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-            {/* Right image: positioned at right edge of center image (50% + 225px) */}
-            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% + 225px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Right image: positioned at right edge of center image (50% + 200px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% + 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Right"
