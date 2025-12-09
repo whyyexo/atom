@@ -8,26 +8,32 @@
 }
 
 :root {
-  /* Light mode - Premium white/off-white palette */
-  --background: 0 0% 99.2%; /* #fdfdfd */
-  --foreground: 0 0% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 96.1%; /* #f5f5f7 */
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 9%;
+  /* NeuroFocus UI — Dark Neocortex Layer */
+  --background: 240 4% 5%;        /* #0C0C0D Deep Cognitive Black */
+  --foreground: 0 0% 100%;        /* Pure Focus White */
+  --card: 240 2% 11%;             /* #1A1A1D Dark Carbon */
+  --card-foreground: 0 0% 100%;
+  --popover: 240 2% 11%;          /* match card for consistency */
+  --popover-foreground: 0 0% 100%;
+
+  --primary: 210 100% 52%;        /* Apple Blue #0A84FF */
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 240 3% 8%;         /* #121214 Neural Graphite */
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 240 3% 17%;            /* #2A2A2E Cortex Grid */
+  --muted-foreground: 0 0% 78%;   /* #C9C9C9 Cognitive Grey */
+
+  --accent: 266 100% 67%;         /* Neuro Violet #A259FF */
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 357 100% 61%;    /* Amygdala Red #FF453A */
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 240 3% 17%;           /* Cortex Grid */
+  --input: 240 3% 17%;
+  --ring: 210 100% 52%;           /* Apple Blue ring */
 }
 
 @theme inline {
@@ -56,53 +62,53 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Dark mode - Soft black with subtle overlays */
-    --background: 0 0% 3.9%; /* #0a0a0a */
-    --foreground: 0 0% 98%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    /* Mirror NeuroFocus palette for dark preference */
+    --background: 240 4% 5%;
+    --foreground: 0 0% 100%;
+    --card: 240 2% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 2% 11%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 210 100% 52%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 3% 8%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 240 3% 17%;
+    --muted-foreground: 0 0% 78%;
+    --accent: 266 100% 67%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 357 100% 61%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 3% 17%;
+    --input: 240 3% 17%;
+    --ring: 210 100% 52%;
   }
 }
 
 [data-theme="dark"] {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 5%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 5%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
+  --background: 240 4% 5%;
+  --foreground: 0 0% 100%;
+  --card: 240 2% 11%;
+  --card-foreground: 0 0% 100%;
+  --popover: 240 2% 11%;
+  --popover-foreground: 0 0% 100%;
+  --primary: 210 100% 52%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 3% 8%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 240 3% 17%;
+  --muted-foreground: 0 0% 78%;
+  --accent: 266 100% 67%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 357 100% 61%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 240 3% 17%;
+  --input: 240 3% 17%;
+  --ring: 210 100% 52%;
 }
 
 body {
-  background-color: #fdfdfd;
+  background-color: #0C0C0D; /* Deep Cognitive Black */
   color: hsl(var(--foreground));
   font-feature-settings: "rlig" 1, "calt" 1;
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", "Segoe UI", sans-serif;
@@ -114,7 +120,7 @@ body {
 
 [data-theme="dark"] body,
 .dark body {
-  background-color: #0a0a0a;
+  background-color: #0C0C0D;
 }
 
 /* Premium spacing utilities */
@@ -199,7 +205,7 @@ html {
   --component-shadow: var(--border);
   --component-active-bg: var(--secondary);
   --component-line-inactive-color: var(--border);
-  --component-active-color-default: #a8d5ff; /* Pale blue */
+  --component-active-color-default: hsl(var(--primary)); /* Apple Blue */
 }
 
 .dark {
@@ -208,7 +214,7 @@ html {
   --component-shadow: var(--border);
   --component-active-bg: var(--secondary);
   --component-line-inactive-color: var(--muted-foreground);
-  --component-active-color-default: #a8d5ff; /* Pale blue */
+  --component-active-color-default: hsl(var(--primary));
 }
 
 @keyframes iconBounce {
