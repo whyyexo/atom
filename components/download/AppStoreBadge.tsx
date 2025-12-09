@@ -11,7 +11,7 @@ export function AppStoreBadge({ href = "https://apps.apple.com/app/atom", classN
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 min-w-[140px] justify-center hover:bg-gray-50 transition-colors ${className}`}
+      className={`inline-flex items-center gap-2 rounded-lg px-3 py-2 min-w-[120px] justify-center hover:bg-gray-50 transition-colors ${className}`}
       style={{ backgroundColor: '#FFFFFF' }}
     >
       {/* Apple Logo SVG */}

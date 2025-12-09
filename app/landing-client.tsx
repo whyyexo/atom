@@ -14,7 +14,6 @@ import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 import { AppleIcon } from "@/components/auth/social-icons";
 import { TextRevealByWord } from "@/components/ui/text-reveal";
 import { ArrowButton } from "@/components/ui/arrow-button";
-import { BorderBeam } from "@/components/ui/border-beam";
 import heroIllustration from "@/components/public/1.avif";
 
 const features = [
@@ -407,12 +406,12 @@ function DownloadPromoSection() {
             Made to feel right.
           </h3>
           <div className="flex items-center gap-3 pt-2">
-            <AppStoreBadge className="px-5 py-3" />
+            <AppStoreBadge className="px-2.5 py-1.5" />
             <ArrowButton href="/about">Learn more</ArrowButton>
           </div>
         </div>
 
-        {/* Container with BorderBeam effect */}
+        {/* Container with static light effect on border */}
         <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl border border-[#2A2A2E] bg-transparent overflow-hidden">
           <Image
             src={heroIllustration}
@@ -422,15 +421,17 @@ function DownloadPromoSection() {
             sizes="(min-width: 1024px) 50vw, 100vw"
             priority
           />
-          <BorderBeam 
-            size={250} 
-            duration={12} 
-            delay={0}
-            colorFrom="#ffffff"
-            colorTo="rgba(255,255,255,0.3)"
-            borderWidth={1.5}
-            anchor={0}
+          {/* Static light effect on border corner */}
+          <div 
+            className="absolute -top-[1px] -left-[1px] w-48 h-48 pointer-events-none z-10"
+            style={{
+              background: 'radial-gradient(circle 100px at 0% 0%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.3) 40%, rgba(255,255,255,0.1) 60%, transparent 80%)',
+              borderRadius: '15px 0 0 0',
+            }}
           />
+          {/* Static border highlight on top and left edges */}
+          <div className="absolute -top-[1px] left-0 w-32 h-[1px] bg-gradient-to-r from-white via-white/60 to-transparent pointer-events-none z-10" />
+          <div className="absolute top-0 -left-[1px] w-[1px] h-32 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10" />
         </div>
       </div>
     </section>

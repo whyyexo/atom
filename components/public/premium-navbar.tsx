@@ -7,13 +7,27 @@ import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const navLinks = [
   { label: "Product", href: "/product" },
   { label: "Pricing", href: "/pricing" },
   { label: "Docs", href: "/docs" },
   { label: "Science", href: "/science" },
-  { label: "Blog", href: "/blog" },
+];
+
+const developerLinks = [
+  { label: "iOS", href: "/ios" },
+  { label: "Android", href: "/android" },
+  { label: "Windows", href: "/windows" },
+  { label: "Pro", href: "/pro" },
 ];
 
 export function PremiumNavbar() {
@@ -66,6 +80,31 @@ export function PremiumNavbar() {
                 {link.label}
               </Link>
             ))}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-white/80 hover:text-[#FFFFFF] data-[state=open]:text-[#FFFFFF]">
+                    Developer
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-[#1A1A1D] border-[#2A2A2E]">
+                    <ul className="grid w-[200px] gap-1 p-2">
+                      {developerLinks.map((link) => (
+                        <li key={link.href}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              href={link.href}
+                              className="block select-none rounded-md px-3 py-2 text-sm text-white/80 hover:bg-[#121214] hover:text-[#FFFFFF] transition-colors"
+                            >
+                              {link.label}
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
 
           {/* Right: Actions */}
@@ -158,6 +197,19 @@ export function PremiumNavbar() {
                       {link.label}
                     </Link>
                   ))}
+                  <div className="space-y-2">
+                    <div className="text-lg font-normal text-white/80">Developer</div>
+                    {developerLinks.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block pl-4 text-base font-normal text-white/60 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
+                  </div>
                   <Link
                     href="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
