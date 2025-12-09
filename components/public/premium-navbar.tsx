@@ -34,7 +34,7 @@ export function PremiumNavbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+            ? "bg-[rgba(12,12,13,0.9)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.06)] shadow-[0_1px_12px_rgba(0,0,0,0.35)]"
             : "bg-transparent"
         )}
         style={{
@@ -49,7 +49,7 @@ export function PremiumNavbar() {
               alt="Atom"
               width={60}
               height={16}
-              className="h-5 w-auto"
+              className="h-5 w-auto invert"
               priority
             />
           </Link>
@@ -60,7 +60,7 @@ export function PremiumNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[#000000]/80 hover:text-[#000000] transition-colors duration-200"
+                className="text-white/80 hover:text-white transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -72,14 +72,14 @@ export function PremiumNavbar() {
             {/* Contact Us Link */}
             <Link
               href="/contact"
-              className="hidden text-sm font-normal text-[#000000]/80 hover:text-[#000000] transition-colors duration-200 md:block"
+              className="hidden text-sm font-normal text-white/80 hover:text-white transition-colors duration-200 md:block"
             >
               Contact us
             </Link>
             {/* Download Button */}
             <Link
               href="/download"
-              className="hidden rounded-full bg-[#0071e3] px-6 py-2 text-sm font-normal text-white hover:bg-[#0077ed] transition-all duration-200 md:block"
+              className="hidden rounded-full bg-[#0A84FF] px-6 py-2 text-sm font-normal text-white hover:bg-[#379BFF] active:bg-[#006FE8] transition-all duration-200 md:block"
             >
               Download
             </Link>
@@ -87,7 +87,7 @@ export function PremiumNavbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden text-[#000000]/80 transition-colors"
+              className="md:hidden text-white/80 transition-colors"
               aria-label="Toggle menu"
             >
               <svg
