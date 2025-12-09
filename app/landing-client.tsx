@@ -397,14 +397,14 @@ function DownloadPromoSection() {
     <section className="relative py-24 bg-[#0C0C0D] overflow-hidden">
       <div className="absolute -left-20 top-12 w-96 h-96 rounded-full bg-[#0A84FF]/8 blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-6 relative z-10 text-left">
-          <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-            A calm system that keeps you moving.
+        <div className="space-y-4 relative z-10 text-left">
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
+            Made for iOS
           </h3>
-          <p className="text-lg font-light text-[#C9C9C9] leading-relaxed max-w-xl">
-            Built on neuroscience and ergonomics to remove friction, keep focus steady, and make every action effortless.
-          </p>
-          <div className="flex items-center gap-3">
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: '#B5B9C0' }}>
+            Made to feel right.
+          </h3>
+          <div className="flex items-center gap-3 pt-2">
             <AppStoreBadge className="px-5 py-3" />
             <Link
               href="/about"
@@ -423,30 +423,15 @@ function DownloadPromoSection() {
           </div>
         </div>
 
-        {/* Outer container with gradient border effect */}
-        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl p-[1px]"
+        {/* Outer container with gradient border effect - creates the light border */}
+        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl"
           style={{
-            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.3), transparent)'
+            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.3), transparent)',
+            padding: '1px',
           }}
         >
-          {/* Inner card with border and light effect */}
+          {/* Inner card with actual border */}
           <div className="relative w-full h-full rounded-[15px] border border-[#2A2A2E] bg-transparent overflow-hidden">
-            {/* Light ray effect on top-left corner */}
-            <div 
-              className="absolute top-0 left-0 w-[220px] h-[45px] rounded-full opacity-40"
-              style={{
-                background: '#c7c7c7',
-                boxShadow: '0 0 50px #fff',
-                filter: 'blur(10px)',
-                transform: 'rotate(40deg)',
-                transformOrigin: '10%',
-              }}
-            />
-            
-            {/* Light lines on borders */}
-            <div className="absolute top-[10%] left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#888888] to-transparent" />
-            <div className="absolute left-[10%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#747474] to-transparent" />
-            
             <Image
               src={heroIllustration}
               alt="Atom interface illustration"
