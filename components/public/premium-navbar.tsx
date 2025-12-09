@@ -9,13 +9,13 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { label: "Pricing", href: "/pricing" },
-  { label: "Docs", href: "/docs" },
-  { label: "Science", href: "/science" },
+  { label: "Pro", href: "/pro" },
   { label: "iOS", href: "/ios" },
   { label: "Android", href: "/android" },
   { label: "Windows", href: "/windows" },
-  { label: "Pro", href: "/pro" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Science", href: "/science" },
+  { label: "Docs", href: "/docs" },
 ];
 
 export function PremiumNavbar() {
