@@ -8,7 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import iosHeadImage from "@/components/public/IOS_HEAD.webp";
-import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.svg";
+import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.png";
 import activityViewImage from "@/components/public/Activity View (1).svg";
 import { Lightbulb, Sparkles, Tag, Target, Calendar, Zap } from 'lucide-react';
 
