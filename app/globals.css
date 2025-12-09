@@ -60,6 +60,17 @@
   --color-ring: hsl(var(--ring));
 }
 
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+/* Border beam animation utility */
+.animate-border-beam {
+  animation: border-beam calc(var(--duration)*1s) infinite linear;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     /* Mirror NeuroFocus palette for dark preference */

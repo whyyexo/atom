@@ -14,6 +14,7 @@ import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 import { AppleIcon } from "@/components/auth/social-icons";
 import { TextRevealByWord } from "@/components/ui/text-reveal";
 import { ArrowButton } from "@/components/ui/arrow-button";
+import { BorderBeam } from "@/components/ui/border-beam";
 import heroIllustration from "@/components/public/1.avif";
 
 const features = [
@@ -411,32 +412,25 @@ function DownloadPromoSection() {
           </div>
         </div>
 
-        {/* Outer container with gradient border effect - creates the light border */}
-        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl"
-          style={{
-            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.4), transparent)',
-            padding: '1px',
-          }}
-        >
-          {/* Inner card with actual border */}
-          <div className="relative w-full h-full rounded-[15px] border border-[#2A2A2E] bg-transparent overflow-hidden">
-            {/* Light effect on border corner - white glow on the border itself */}
-            <div 
-              className="absolute -top-[1px] -left-[1px] w-48 h-48 pointer-events-none z-10"
-              style={{
-                background: 'radial-gradient(circle 100px at 0% 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 15%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
-                borderRadius: '15px 0 0 0',
-              }}
-            />
-            <Image
-              src={heroIllustration}
-              alt="Atom interface illustration"
-              fill
-              className="object-cover rounded-[15px]"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              priority
-            />
-          </div>
+        {/* Container with BorderBeam effect */}
+        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl border border-[#2A2A2E] bg-transparent overflow-hidden">
+          <Image
+            src={heroIllustration}
+            alt="Atom interface illustration"
+            fill
+            className="object-cover rounded-2xl"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            priority
+          />
+          <BorderBeam 
+            size={250} 
+            duration={12} 
+            delay={0}
+            colorFrom="#ffffff"
+            colorTo="rgba(255,255,255,0.3)"
+            borderWidth={1.5}
+            anchor={0}
+          />
         </div>
       </div>
     </section>

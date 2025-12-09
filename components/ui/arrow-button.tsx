@@ -17,7 +17,7 @@ export function ArrowButton({ href, children, className }: ArrowButtonProps) {
           position: relative;
           display: inline-flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.625rem;
           font-size: 0.875rem;
           font-weight: 600;
           color: white;
@@ -40,8 +40,8 @@ export function ArrowButton({ href, children, className }: ArrowButtonProps) {
       >
         <span>{children}</span>
         <svg
-          width="15px"
-          height="10px"
+          width="12px"
+          height="8px"
           viewBox="0 0 13 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
