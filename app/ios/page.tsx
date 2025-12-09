@@ -114,26 +114,42 @@ export default function IOSPage() {
         <div className="absolute inset-0 z-0">
           {/* Large abstract shape with blue glow behind the phone */}
           <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 5 }}>
-            <svg width="800" height="800" viewBox="0 0 800 800" className="opacity-30">
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" className="opacity-50">
               <defs>
-                <radialGradient id="blueGlowGradient" cx="50%" cy="50%">
+                <linearGradient id="blueGlowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#0A84FF" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#0A84FF" stopOpacity="0.4" />
-                  <stop offset="100%" stopColor="#0A84FF" stopOpacity="0" />
-                </radialGradient>
+                  <stop offset="50%" stopColor="#0A84FF" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#0A84FF" stopOpacity="0.2" />
+                </linearGradient>
                 <filter id="glowFilter">
-                  <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+                  <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
                   <feMerge>
                     <feMergeNode in="coloredBlur"/>
                     <feMergeNode in="SourceGraphic"/>
                   </feMerge>
                 </filter>
               </defs>
-              {/* Large abstract geometric shapes */}
-              <ellipse cx="400" cy="400" rx="300" ry="200" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" transform="rotate(-25 400 400)" />
-              <ellipse cx="400" cy="400" rx="250" ry="180" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" transform="rotate(45 400 400)" opacity="0.6" />
-              <polygon points="400,200 500,500 300,500" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.5" />
-              <circle cx="400" cy="400" r="150" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.4" />
+              {/* Abstract lines and geometric shapes */}
+              <path d="M100,300 L500,100 L900,300 L1100,200" stroke="url(#blueGlowGradient)" strokeWidth="3" fill="none" filter="url(#glowFilter)" />
+              <path d="M200,600 L400,200 L800,500 L1000,400" stroke="url(#blueGlowGradient)" strokeWidth="3" fill="none" filter="url(#glowFilter)" />
+              <path d="M300,900 L600,300 L900,700 L1100,600" stroke="url(#blueGlowGradient)" strokeWidth="3" fill="none" filter="url(#glowFilter)" />
+              <path d="M50,500 L350,150 L750,450 L1050,350" stroke="url(#blueGlowGradient)" strokeWidth="2" fill="none" filter="url(#glowFilter)" opacity="0.7" />
+              <path d="M150,800 L450,250 L850,650 L1150,550" stroke="url(#blueGlowGradient)" strokeWidth="2" fill="none" filter="url(#glowFilter)" opacity="0.7" />
+              
+              {/* Diagonal lines crossing */}
+              <line x1="0" y1="400" x2="1200" y2="800" stroke="url(#blueGlowGradient)" strokeWidth="2" filter="url(#glowFilter)" opacity="0.6" />
+              <line x1="0" y1="800" x2="1200" y2="400" stroke="url(#blueGlowGradient)" strokeWidth="2" filter="url(#glowFilter)" opacity="0.6" />
+              <line x1="200" y1="0" x2="1000" y2="1200" stroke="url(#blueGlowGradient)" strokeWidth="2" filter="url(#glowFilter)" opacity="0.5" />
+              <line x1="1000" y1="0" x2="200" y2="1200" stroke="url(#blueGlowGradient)" strokeWidth="2" filter="url(#glowFilter)" opacity="0.5" />
+              
+              {/* Angular shapes */}
+              <polygon points="300,200 700,150 800,450 400,500" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.4" />
+              <polygon points="500,600 900,550 1000,850 600,900" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.3" />
+              <polygon points="200,700 600,650 700,950 300,1000" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.35" />
+              
+              {/* Zigzag patterns */}
+              <path d="M100,400 L300,300 L500,400 L700,300 L900,400 L1100,300" stroke="url(#blueGlowGradient)" strokeWidth="2" fill="none" filter="url(#glowFilter)" opacity="0.6" />
+              <path d="M200,700 L400,600 L600,700 L800,600 L1000,700" stroke="url(#blueGlowGradient)" strokeWidth="2" fill="none" filter="url(#glowFilter)" opacity="0.6" />
             </svg>
           </div>
           
