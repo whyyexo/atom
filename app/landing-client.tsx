@@ -406,8 +406,8 @@ function DownloadPromoSection() {
             Made to feel right.
           </h3>
           <div className="flex items-center gap-3 pt-2">
-            <AppStoreBadge className="px-2.5 py-1.5" />
-            <ArrowButton href="/about">Learn more</ArrowButton>
+            <AppStoreBadge className="px-8 py-3" />
+            <ArrowButton href="/ios">Learn more</ArrowButton>
           </div>
         </div>
 

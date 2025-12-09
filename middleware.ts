@@ -81,6 +81,10 @@ export async function middleware(request: NextRequest) {
     "/auth/callback",
     "/download",
     "/contact",
+    "/ios",
+    "/android",
+    "/windows",
+    "/pro",
   ];
 
   // Protected routes that require authentication
