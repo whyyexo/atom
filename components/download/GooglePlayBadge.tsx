@@ -11,9 +11,9 @@ export function GooglePlayBadge({ href = "https://play.google.com/store/apps/det
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 min-w-[140px] justify-center hover:bg-gray-50 transition-colors ${className}`}
+      className={`inline-flex items-center gap-2 rounded-lg px-4 py-2.5 min-w-[140px] justify-center hover:bg-gray-50 transition-colors ${className}`}
+      style={{ backgroundColor: '#FFFFFF' }}
     >
-      <span className="text-sm font-semibold leading-tight text-[#000000]">Download</span>
       {/* Google Play Logo - Modern black version */}
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 20.5V3.5C3 2.91 3.34 2.39 3.84 2.15L13.69 12L3.84 21.85C3.34 21.6 3 21.09 3 20.5Z" fill="#000000"/>
@@ -21,6 +21,7 @@ export function GooglePlayBadge({ href = "https://play.google.com/store/apps/det
         <path d="M20.16 10.81C20.5 11.08 20.75 11.5 20.75 12C20.75 12.5 20.53 12.9 20.18 13.18L17.89 14.5L15.39 12L17.89 9.5L20.16 10.81Z" fill="#000000"/>
         <path d="M6.05 2.66L16.81 8.88L14.54 11.15L6.05 2.66Z" fill="#000000"/>
       </svg>
+      <span className="text-sm font-semibold leading-tight" style={{ color: '#000000' }}>Download</span>
     </a>
   );
 }
