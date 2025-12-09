@@ -13,6 +13,7 @@ import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 import { AppleIcon } from "@/components/auth/social-icons";
 import { TextRevealByWord } from "@/components/ui/text-reveal";
+import heroIllustration from "@/components/public/1.avif";
 
 const features = [
   {
@@ -43,6 +44,7 @@ export function LandingPageClient() {
     <PublicLayout>
       <HeroSection />
       <TextRevealSection />
+      <DownloadPromoSection />
       <FeaturesSection />
       <ShowcaseSection />
       <FeatureHighlightsSection />
@@ -378,13 +380,58 @@ function TextRevealSection() {
               </p>
               
               {/* Second phrase - revealed on scroll, centered, directly below */}
-              <div className="w-full flex justify-center -mt-4">
+              <div className="w-full flex justify-center mt-6">
                 <TextRevealByWord text="It's about finally feeling in control of your time." />
               </div>
             </div>
           </div>
         </div>
         <div className="h-[120vh]" aria-hidden="true" />
+      </div>
+    </section>
+  );
+}
+
+function DownloadPromoSection() {
+  return (
+    <section className="relative py-24 bg-gradient-to-br from-[#fdfdfd] via-[#f7f8fa] to-[#eef0f3] overflow-hidden">
+      <div className="absolute -left-16 top-10 w-72 h-72 rounded-full bg-black/10 blur-3xl pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-6 relative z-10">
+          <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#000000]">
+            A calm system that keeps you moving.
+          </h3>
+          <p className="text-lg font-light text-[#333333] leading-relaxed max-w-xl">
+            Built on neuroscience and ergonomics to remove friction, keep focus steady, and make every action effortless.
+          </p>
+          <button className="inline-flex items-center gap-3 rounded-full bg-black text-white px-5 py-3 text-sm font-semibold shadow-md hover:opacity-90 transition">
+            <span className="flex items-center gap-2 text-white/90">
+              <AppleIcon className="w-4 h-4" />
+              <span>Download</span>
+            </span>
+            <span className="text-white/60">/</span>
+            <span className="flex items-center gap-2 text-white/90">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5Z" fill="#00D9FF" />
+                <path d="M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12Z" fill="#00F076" />
+                <path d="M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81Z" fill="#FFD23F" />
+                <path d="M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" fill="#FF3A44" />
+              </svg>
+              <span>Download</span>
+            </span>
+          </button>
+        </div>
+
+        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.06)] bg-white shadow-[0_20px_60px_-35px_rgba(0,0,0,0.35)]">
+          <Image
+            src={heroIllustration}
+            alt="Atom interface illustration"
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            priority
+          />
+        </div>
       </div>
     </section>
   );

@@ -357,23 +357,23 @@ function ScrollRevealSection() {
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0.3, 0.7], [0, 1]);
-  const y = useTransform(scrollYProgress, [0.3, 0.7], [50, 0]);
+  const opacity = useTransform(scrollYProgress, [0.2, 0.6], [0, 1]);
+  const y = useTransform(scrollYProgress, [0.2, 0.6], [80, 0]);
 
   return (
     <section ref={ref} className="relative py-48 bg-white overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 lg:px-12 text-center">
-        <div className="space-y-8">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+        <div className="md:sticky md:top-24 text-center space-y-6">
           <motion.p
             className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1]"
             initial={{ opacity: 1 }}
           >
             Productivity isn't about doing more.
           </motion.p>
-          
+
           <motion.p
             style={{ opacity, y }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1] mt-6"
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1] mt-12"
           >
             It's about designing an environment where your brain never wastes energy.
           </motion.p>
@@ -386,8 +386,8 @@ function ScrollRevealSection() {
 // Gradient Download + Illustration Section
 function DownloadIllustrationSection() {
   return (
-    <section className="relative py-28 bg-gradient-to-br from-[#fdfdfd] via-[#f7f7f9] to-[#f1f2f4] overflow-hidden">
-      <div className="absolute -left-16 top-10 w-72 h-72 rounded-full bg-black/8 blur-3xl pointer-events-none" />
+    <section className="relative py-28 bg-gradient-to-br from-[#fdfdfd] via-[#f8f8fa] to-[#eef0f3] overflow-hidden">
+      <div className="absolute -left-16 top-6 w-80 h-80 rounded-full bg-black/10 blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 relative z-10">
           <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#000000]">
