@@ -24,9 +24,11 @@ export function PremiumNavbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
+    // Check on mount
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

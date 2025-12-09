@@ -421,16 +421,9 @@ function DownloadPromoSection() {
             sizes="(min-width: 1024px) 50vw, 100vw"
             priority
           />
-          {/* Static light effect on border corner */}
-          <div 
-            className="absolute -top-[1px] -left-[1px] w-48 h-48 pointer-events-none z-10"
-            style={{
-              background: 'radial-gradient(circle 100px at 0% 0%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 20%, rgba(255,255,255,0.3) 40%, rgba(255,255,255,0.1) 60%, transparent 80%)',
-              borderRadius: '15px 0 0 0',
-            }}
-          />
-          {/* Static border highlight on top and left edges */}
+          {/* White line on border - top edge */}
           <div className="absolute -top-[1px] left-0 w-32 h-[1px] bg-gradient-to-r from-white via-white/60 to-transparent pointer-events-none z-10" />
+          {/* White line on border - left edge */}
           <div className="absolute top-0 -left-[1px] w-[1px] h-32 bg-gradient-to-b from-white via-white/60 to-transparent pointer-events-none z-10" />
         </div>
       </div>
