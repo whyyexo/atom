@@ -41,15 +41,15 @@ const staggerContainer = {
 // Hero Section
 function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center bg-white overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0C0C0D] overflow-hidden">
       <div className="absolute inset-0 opacity-5">
         <svg width="100%" height="100%" className="absolute inset-0">
           <defs>
             <pattern id="neural-network" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <circle cx="50" cy="50" r="2" fill="#0071e3" />
-              <line x1="50" y1="50" x2="150" y2="50" stroke="#0071e3" strokeWidth="0.5" />
-              <line x1="50" y1="50" x2="50" y2="150" stroke="#0071e3" strokeWidth="0.5" />
-              <line x1="50" y1="50" x2="150" y2="150" stroke="#0071e3" strokeWidth="0.5" />
+              <circle cx="50" cy="50" r="2" fill="#0A84FF" />
+              <line x1="50" y1="50" x2="150" y2="50" stroke="#0A84FF" strokeWidth="0.5" />
+              <line x1="50" y1="50" x2="50" y2="150" stroke="#0A84FF" strokeWidth="0.5" />
+              <line x1="50" y1="50" x2="150" y2="150" stroke="#0A84FF" strokeWidth="0.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#neural-network)" />
@@ -65,14 +65,14 @@ function HeroSection() {
         >
           <motion.h1
             variants={fadeInUp}
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.1]"
           >
             Engineered for the way<br />your brain actually works.
           </motion.h1>
           
           <motion.p
             variants={fadeInUp}
-            className="text-xl sm:text-2xl font-light text-[#333333] max-w-3xl mx-auto leading-relaxed"
+            className="text-xl sm:text-2xl font-light text-[#C9C9C9] max-w-3xl mx-auto leading-relaxed"
           >
             Atom is built using cognitive science, attention research, and behavioral design.
             <br />
@@ -90,7 +90,7 @@ function AtomPrincipleSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 bg-white">
+    <section ref={ref} className="py-32 bg-[#0C0C0D]">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <motion.div
           initial="hidden"
@@ -99,10 +99,10 @@ function AtomPrincipleSection() {
           className="grid lg:grid-cols-2 gap-16 items-center"
         >
           <motion.div variants={fadeInUp} className="space-y-6">
-            <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#000000]">
+            <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white">
               The Atom Principle
             </h2>
-            <div className="space-y-4 text-lg font-light text-[#333333] leading-relaxed">
+            <div className="space-y-4 text-lg font-light text-[#C9C9C9] leading-relaxed">
               <p>
                 Atom is not a productivity app. It is a cognitive interface.
               </p>
@@ -205,10 +205,10 @@ function ProductivityLawsSection() {
           variants={fadeInUp}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#000000] mb-4">
+          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
             The 6 Productivity Laws
           </h2>
-          <p className="text-lg font-light text-[#333333] max-w-2xl mx-auto">
+          <p className="text-lg font-light text-[#C9C9C9] max-w-2xl mx-auto">
             Core principles that govern every design decision in Atom
           </p>
         </motion.div>
@@ -225,15 +225,15 @@ function ProductivityLawsSection() {
               <motion.div
                 key={law.id}
                 variants={fadeInUp}
-                className="bg-white rounded-xl border border-[rgba(0,0,0,0.08)] p-8 shadow-sm hover:shadow-md transition-all"
+                className="bg-[#1A1A1D] rounded-xl border border-[#2A2A2E] p-8 shadow-sm hover:shadow-md transition-all"
               >
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${law.color} flex items-center justify-center mb-6`}>
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-[#000000] mb-3">
+                <h3 className="text-xl font-semibold text-white mb-3">
                   Law {law.id} — {law.title}
                 </h3>
-                <p className="text-base font-light text-[#333333] mb-4 leading-relaxed">
+                <p className="text-base font-light text-[#C9C9C9] mb-4 leading-relaxed">
                   {law.description}
                 </p>
                 <p className="text-sm font-light text-[#666666] leading-relaxed">
@@ -297,7 +297,7 @@ function CaseStudiesSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-32 bg-white">
+    <section ref={ref} className="py-32 bg-[#0C0C0D]">
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <motion.div
           initial="hidden"
@@ -305,10 +305,10 @@ function CaseStudiesSection() {
           variants={fadeInUp}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-[#000000] mb-4">
+          <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-4">
             Why Atom Does It This Way
           </h2>
-          <p className="text-lg font-light text-[#333333] max-w-2xl mx-auto">
+          <p className="text-lg font-light text-[#C9C9C9] max-w-2xl mx-auto">
             Micro-case-studies documenting the scientific reasoning behind every design decision
           </p>
         </motion.div>
@@ -323,19 +323,19 @@ function CaseStudiesSection() {
             <motion.div
               key={index}
               variants={fadeInUp}
-              className="bg-[#f5f5f7] rounded-xl border border-[rgba(0,0,0,0.08)] p-8 hover:shadow-md transition-all"
+              className="bg-[#1A1A1D] rounded-xl border border-[#2A2A2E] p-8 hover:shadow-md transition-all"
             >
-              <h3 className="text-xl font-semibold text-[#000000] mb-4">
+              <h3 className="text-xl font-semibold text-white mb-4">
                 {study.title}
               </h3>
-              <p className="text-base font-light text-[#333333] mb-4 leading-relaxed">
+              <p className="text-base font-light text-[#C9C9C9] mb-4 leading-relaxed">
                 {study.explanation}
               </p>
               <div className="flex flex-wrap gap-2">
                 {study.references.map((ref, refIndex) => (
                   <span
                     key={refIndex}
-                    className="text-xs font-medium text-[#0071e3] bg-white px-3 py-1 rounded-full border border-[rgba(0,113,227,0.2)]"
+                    className="text-xs font-medium text-[#0A84FF] bg-[#121214] px-3 py-1 rounded-full border border-[#2A2A2E]"
                   >
                     {ref}
                   </span>
@@ -365,7 +365,7 @@ function ScrollRevealSection() {
       <div className="max-w-6xl mx-auto px-6 lg:px-12">
         <div className="md:sticky md:top-24 text-center space-y-6">
           <motion.p
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.1]"
             initial={{ opacity: 1 }}
           >
             Productivity isn't about doing more.

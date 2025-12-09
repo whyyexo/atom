@@ -49,7 +49,7 @@ export function PremiumNavbar() {
               alt="Atom"
               width={60}
               height={16}
-              className="h-4 w-auto invert transition-transform duration-200 group-hover:scale-110 select-none"
+              className="h-4 w-auto invert transition-transform duration-300 ease-out group-hover:scale-110 select-none"
               draggable="false"
               priority
             />
