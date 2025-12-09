@@ -171,7 +171,7 @@ export default function IOSPage() {
         <div className="relative w-full max-w-7xl mx-auto px-6">
           {/* Background images - Left and Right */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 opacity-30">
+            <div className="absolute left-0 top-[52%] -translate-y-1/2 opacity-30">
               <Image
                 src={activityViewImage}
                 alt="Activity View Left"
@@ -180,7 +180,7 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-30">
+            <div className="absolute right-0 top-[52%] -translate-y-1/2 opacity-30">
               <Image
                 src={activityViewImage}
                 alt="Activity View Right"
@@ -193,13 +193,18 @@ export default function IOSPage() {
           
           {/* Main centered image */}
           <div className="relative z-10 flex justify-center">
-            <Image
-              src={phoneMakeupImage}
-              alt="Phone Makeup"
-              width={450}
-              height={920}
-              className="object-contain"
-            />
+            <div className="relative">
+              {/* Reflection effect line on top */}
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent z-20" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent z-20" />
+              <Image
+                src={phoneMakeupImage}
+                alt="Phone Makeup"
+                width={450}
+                height={920}
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
       </section>
