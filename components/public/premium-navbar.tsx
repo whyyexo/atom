@@ -43,13 +43,14 @@ export function PremiumNavbar() {
       >
         <nav className="mx-auto flex h-full max-w-[1180px] items-center justify-between px-6 lg:px-12">
           {/* Left: Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center group">
             <Image
               src="/ATOM_noir.png"
               alt="Atom"
               width={60}
               height={16}
-              className="h-5 w-auto invert"
+              className="h-4 w-auto invert transition-transform duration-200 group-hover:scale-110 select-none"
+              draggable="false"
               priority
             />
           </Link>
@@ -60,7 +61,7 @@ export function PremiumNavbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white/80 hover:text-white transition-colors duration-200"
+                className="text-white/80 hover:text-[#FFFFFF] transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -72,7 +73,7 @@ export function PremiumNavbar() {
             {/* Contact Us Link */}
             <Link
               href="/contact"
-              className="hidden text-sm font-normal text-white/80 hover:text-white transition-colors duration-200 md:block"
+              className="hidden text-sm font-normal text-white/80 hover:text-[#FFFFFF] transition-colors duration-200 md:block"
             >
               Contact us
             </Link>
