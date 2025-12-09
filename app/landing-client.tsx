@@ -13,6 +13,7 @@ import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
 import { AppleIcon } from "@/components/auth/social-icons";
 import { TextRevealByWord } from "@/components/ui/text-reveal";
+import { ArrowButton } from "@/components/ui/arrow-button";
 import heroIllustration from "@/components/public/1.avif";
 
 const features = [
@@ -397,41 +398,36 @@ function DownloadPromoSection() {
     <section className="relative py-24 bg-[#0C0C0D] overflow-hidden">
       <div className="absolute -left-20 top-12 w-96 h-96 rounded-full bg-[#0A84FF]/8 blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-4 relative z-10 text-left">
+        <div className="space-y-2 relative z-10 text-left">
           <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
             Made for iOS
           </h3>
-          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: '#B5B9C0' }}>
+          <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight" style={{ color: '#B5B9C0', opacity: 0.7 }}>
             Made to feel right.
           </h3>
           <div className="flex items-center gap-3 pt-2">
             <AppStoreBadge className="px-5 py-3" />
-            <Link
-              href="/about"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-white/80 transition-colors"
-            >
-              <span>Learn more</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </Link>
+            <ArrowButton href="/about">Learn more</ArrowButton>
           </div>
         </div>
 
         {/* Outer container with gradient border effect - creates the light border */}
         <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl"
           style={{
-            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.3), transparent)',
+            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.4), transparent)',
             padding: '1px',
           }}
         >
           {/* Inner card with actual border */}
           <div className="relative w-full h-full rounded-[15px] border border-[#2A2A2E] bg-transparent overflow-hidden">
+            {/* Light effect on border corner - white glow on the border itself */}
+            <div 
+              className="absolute -top-[1px] -left-[1px] w-48 h-48 pointer-events-none z-10"
+              style={{
+                background: 'radial-gradient(circle 100px at 0% 0%, rgba(255,255,255,1) 0%, rgba(255,255,255,0.8) 15%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.2) 50%, transparent 70%)',
+                borderRadius: '15px 0 0 0',
+              }}
+            />
             <Image
               src={heroIllustration}
               alt="Atom interface illustration"
