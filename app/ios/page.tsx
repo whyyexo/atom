@@ -161,8 +161,9 @@ export default function IOSPage() {
         <div className="relative w-full max-w-7xl mx-auto px-6 py-8">
           {/* Main centered image container */}
           <div className="relative flex justify-center items-center">
-            {/* Background images - Left and Right - positioned to overlap 5% behind center image */}
-            <div className="absolute left-0 opacity-30 pointer-events-none z-0" style={{ top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Background images - Left and Right - positioned next to center image with 5% overlap behind */}
+            {/* Left image: positioned at left edge of center image (50% - 225px) minus its width (200px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% - 225px - 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Left"
@@ -171,7 +172,8 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-            <div className="absolute right-0 opacity-30 pointer-events-none z-0" style={{ top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Right image: positioned at right edge of center image (50% + 225px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% + 225px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Right"
@@ -189,8 +191,8 @@ export default function IOSPage() {
               <Image
                 src={phoneMakeupImage}
                 alt="Phone Makeup"
-                width={450}
-                height={920}
+                width={400}
+                height={820}
                 className="object-contain"
               />
             </div>
