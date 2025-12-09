@@ -408,35 +408,54 @@ function DownloadPromoSection() {
             <AppStoreBadge className="px-5 py-3" />
             <Link
               href="/about"
-              className="inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold text-white border border-[#2A2A2E] bg-transparent hover:bg-white/5 transition-colors"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-white/80 transition-colors"
             >
-              <span>About</span>
+              <span>Learn more</span>
               <svg
                 className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-x-1"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M5 12h14M13 6l6 6-6 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </Link>
           </div>
         </div>
 
-        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] overflow-hidden rounded-2xl border border-[#2A2A2E] bg-transparent shadow-[0_20px_60px_-35px_rgba(0,0,0,0.45)]">
-          {/* Light effect on border top-left only */}
-          <div className="pointer-events-none absolute inset-0 rounded-2xl">
-            <div className="absolute top-0 left-0 h-px w-32 bg-gradient-to-r from-white via-white/60 to-transparent" />
-            <div className="absolute top-0 left-0 w-px h-32 bg-gradient-to-b from-white via-white/60 to-transparent" />
+        {/* Outer container with gradient border effect */}
+        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] rounded-2xl p-[1px]"
+          style={{
+            background: 'radial-gradient(circle 230px at 0% 0%, rgba(255,255,255,0.3), transparent)'
+          }}
+        >
+          {/* Inner card with border and light effect */}
+          <div className="relative w-full h-full rounded-[15px] border border-[#2A2A2E] bg-transparent overflow-hidden">
+            {/* Light ray effect on top-left corner */}
+            <div 
+              className="absolute top-0 left-0 w-[220px] h-[45px] rounded-full opacity-40"
+              style={{
+                background: '#c7c7c7',
+                boxShadow: '0 0 50px #fff',
+                filter: 'blur(10px)',
+                transform: 'rotate(40deg)',
+                transformOrigin: '10%',
+              }}
+            />
+            
+            {/* Light lines on borders */}
+            <div className="absolute top-[10%] left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#888888] to-transparent" />
+            <div className="absolute left-[10%] top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[#747474] to-transparent" />
+            
+            <Image
+              src={heroIllustration}
+              alt="Atom interface illustration"
+              fill
+              className="object-cover rounded-[15px]"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+            />
           </div>
-          <Image
-            src={heroIllustration}
-            alt="Atom interface illustration"
-            fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            priority
-          />
         </div>
       </div>
     </section>
