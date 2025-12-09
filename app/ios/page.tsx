@@ -158,12 +158,12 @@ export default function IOSPage() {
         </div>
         
         {/* Images section */}
-        <div className="relative w-full max-w-7xl mx-auto px-6 py-8">
+        <div className="relative w-full max-w-7xl mx-auto px-6 py-4">
           {/* Main centered image container */}
           <div className="relative flex justify-center items-center">
-            {/* Background images - Left and Right - positioned next to center image with 5% overlap behind */}
-            {/* Left image: positioned at left edge of center image (50% - 200px) minus its width (200px) */}
-            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% - 200px - 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Background images - Left and Right - positioned next to center image with more overlap behind */}
+            {/* Left image: positioned at left edge of center image (50% - 190px) minus its width (200px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% - 190px - 200px)', top: '50%', transform: 'translateY(calc(-50% + 10%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Left"
@@ -172,8 +172,8 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-            {/* Right image: positioned at right edge of center image (50% + 200px) */}
-            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% + 200px)', top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
+            {/* Right image: positioned at right edge of center image (50% + 190px) */}
+            <div className="absolute opacity-30 pointer-events-none z-0" style={{ left: 'calc(50% + 190px)', top: '50%', transform: 'translateY(calc(-50% + 10%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Right"
@@ -191,8 +191,8 @@ export default function IOSPage() {
               <Image
                 src={phoneMakeupImage}
                 alt="Phone Makeup"
-                width={400}
-                height={820}
+                width={380}
+                height={780}
                 className="object-contain"
               />
             </div>
@@ -201,7 +201,7 @@ export default function IOSPage() {
       </section>
 
       {/* SECTION 2 — Quick Entry (Text left + Image right) */}
-      <section className="py-32 bg-[#0C0C0D]">
+      <section className="py-20 bg-[#0C0C0D]">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
