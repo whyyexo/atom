@@ -64,26 +64,26 @@ function HeroSection() {
           transition={{ duration: 0.8 }}
           className="mx-auto max-w-4xl"
         >
-          <h1 className="text-5xl font-semibold leading-tight tracking-tight text-[#000000] sm:text-6xl lg:text-7xl">
+          <h1 className="text-5xl font-semibold leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">
             Work Smarter. Stay Focused. with a{" "}
-            <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">
               science based
             </span>{" "}
             productivity app.
           </h1>
-          <p className="mt-8 text-base font-light leading-relaxed text-[#333333] sm:text-lg">
-            <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">Reclaim hours</span> every week with an <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">intelligent workspace</span> powered by <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">science</span> — tasks, notes, and your <span className="bg-gradient-to-r from-[#0071e3] to-[#0077ed] bg-clip-text text-transparent">AI assistant</span>, all working seamlessly together. Built for builders, operators, and relentless achievers.
+          <p className="mt-8 text-base font-light leading-relaxed text-[#C9C9C9] sm:text-lg">
+            <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">Reclaim hours</span> every week with an <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">intelligent workspace</span> powered by <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">science</span> — tasks, notes, and your <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">AI assistant</span>, all working seamlessly together. Built for builders, operators, and relentless achievers.
           </p>
           <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button
-              className="rounded-full bg-[#0071e3] px-8 py-3 text-base font-normal text-white hover:bg-[#0077ed] border-0"
+              className="rounded-full bg-[#0A84FF] px-8 py-3 text-base font-normal text-white hover:bg-[#379BFF] border-0"
               asChild
             >
               <Link href="/download">Get Started</Link>
             </Button>
             <Button
               variant="outline"
-              className="rounded-full border border-[rgba(0,0,0,0.08)] bg-transparent px-8 py-3 text-base font-normal text-[#000000] hover:bg-[rgba(0,0,0,0.04)]"
+              className="rounded-full border border-[#2A2A2E] bg-transparent px-8 py-3 text-base font-normal text-white hover:bg-[#1A1A1D]"
               asChild
             >
               <Link href="#showcase">View Demo</Link>
@@ -158,8 +158,8 @@ function MacMockup() {
     <div className="mx-auto w-full">
       {/* Title Section */}
       <div className="mb-8 text-center">
-        <h2 className="text-2xl font-semibold text-[#000000]">Engineered for clarity</h2>
-        <p className="mt-2 text-base font-light text-[#666666]">One system, designed for deeper focus.</p>
+        <h2 className="text-2xl font-semibold text-white">Engineered for clarity</h2>
+        <p className="mt-2 text-base font-light text-[#8A8A8A]">One system, designed for deeper focus.</p>
       </div>
 
       {/* Mac Screen - Just the rectangle, larger, no support - 140% width centered */}
@@ -293,14 +293,14 @@ function MacMockup() {
 
           {/* Product Mockup Center */}
           <div className="absolute inset-4 top-16 flex items-center justify-center select-none">
-            <div className="h-full w-full max-w-2xl rounded-xl bg-white/90 shadow-xl backdrop-blur-sm">
+            <div className="h-full w-full max-w-2xl rounded-xl bg-[#1A1A1D]/90 shadow-xl backdrop-blur-sm border border-[#2A2A2E]">
               <div className="flex h-full items-center justify-center p-8">
                 <div className="text-center">
                   {(() => {
                     const Icon = selectedFeature.icon;
-                    return <Icon className="mx-auto h-16 w-16 text-[#a8d5ff]" />;
+                    return <Icon className="mx-auto h-16 w-16 text-[#0A84FF]" />;
                   })()}
-                  <h3 className="mt-4 text-xl font-semibold text-[#000000] select-none">{selectedFeature.name}</h3>
+                  <h3 className="mt-4 text-xl font-semibold text-white select-none">{selectedFeature.name}</h3>
                 </div>
               </div>
             </div>
@@ -329,8 +329,8 @@ function MacMockup() {
                       <Icon
                         className={`w-4 h-4 transition-all duration-200 ${
                           isActive 
-                            ? "text-[#a8d5ff] drop-shadow-sm" 
-                            : "text-[#666666]/70 dark:text-[#999999]/70"
+                            ? "text-[#0A84FF] drop-shadow-sm" 
+                            : "text-[#8A8A8A]/70"
                         }`}
                       />
                     </motion.div>
@@ -359,8 +359,8 @@ function MacMockup() {
         className="mt-8 text-center"
       >
         <p className="text-lg leading-relaxed">
-          <span className="font-semibold text-[#000000]">{selectedFeature.name}.</span>{" "}
-          <span className="font-light text-[#666666]">{selectedFeature.description}</span>
+          <span className="font-semibold text-white">{selectedFeature.name}.</span>{" "}
+          <span className="font-light text-[#8A8A8A]">{selectedFeature.description}</span>
         </p>
       </motion.div>
     </div>
@@ -369,13 +369,13 @@ function MacMockup() {
 
 function TextRevealSection() {
   return (
-    <section className="relative w-full bg-white py-32" id="text-reveal-section">
+    <section className="relative w-full bg-[#0C0C0D] py-32" id="text-reveal-section">
       <div className="relative min-h-[120vh]">
         <div className="sticky top-0 flex items-center justify-center min-h-screen">
           <div className="w-full max-w-5xl mx-auto px-4">
             <div className="flex flex-col items-center justify-center">
               {/* First phrase - always visible, bigger, single line */}
-              <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-[#000000] text-center whitespace-nowrap mb-0">
+              <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-white text-center whitespace-nowrap mb-0">
                 It's not about working faster.
               </p>
               
@@ -394,35 +394,24 @@ function TextRevealSection() {
 
 function DownloadPromoSection() {
   return (
-    <section className="relative py-24 bg-gradient-to-br from-[#fdfdfd] via-[#f7f8fa] to-[#eef0f3] overflow-hidden">
-      <div className="absolute -left-16 top-10 w-72 h-72 rounded-full bg-black/10 blur-3xl pointer-events-none" />
+    <section className="relative py-24 bg-gradient-to-br from-[#121214] via-[#1A1A1D] to-[#0C0C0D] overflow-hidden">
+      <div className="absolute -left-16 top-10 w-72 h-72 rounded-full bg-black/20 blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6 relative z-10">
-          <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#000000]">
+          <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
             A calm system that keeps you moving.
           </h3>
-          <p className="text-lg font-light text-[#333333] leading-relaxed max-w-xl">
+          <p className="text-lg font-light text-[#C9C9C9] leading-relaxed max-w-xl">
             Built on neuroscience and ergonomics to remove friction, keep focus steady, and make every action effortless.
           </p>
-          <button className="inline-flex items-center gap-3 rounded-full bg-black text-white px-5 py-3 text-sm font-semibold shadow-md hover:opacity-90 transition">
-            <span className="flex items-center gap-2 text-white/90">
-              <AppleIcon className="w-4 h-4" />
-              <span>Download</span>
-            </span>
-            <span className="text-white/60">/</span>
-            <span className="flex items-center gap-2 text-white/90">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5Z" fill="#00D9FF" />
-                <path d="M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12Z" fill="#00F076" />
-                <path d="M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81Z" fill="#FFD23F" />
-                <path d="M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" fill="#FF3A44" />
-              </svg>
-              <span>Download</span>
-            </span>
-          </button>
+          <div className="flex items-center gap-3">
+            <AppStoreBadge />
+            <span className="text-[#8A8A8A]">/</span>
+            <GooglePlayBadge />
+          </div>
         </div>
 
-        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.06)] bg-white shadow-[0_20px_60px_-35px_rgba(0,0,0,0.35)]">
+        <div className="relative h-[260px] sm:h-[300px] lg:h-[340px] overflow-hidden rounded-2xl border border-[#2A2A2E] bg-[#1A1A1D] shadow-[0_20px_60px_-35px_rgba(0,0,0,0.5)]">
           <Image
             src={heroIllustration}
             alt="Atom interface illustration"
@@ -439,7 +428,7 @@ function DownloadPromoSection() {
 
 function FeaturesSection() {
   return (
-    <section id="features" className="bg-white px-6 py-32 lg:px-12">
+    <section id="features" className="bg-[#0C0C0D] px-6 py-32 lg:px-12">
       <div className="mx-auto max-w-[1180px]">
         <div className="grid gap-20 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, index) => (
@@ -452,9 +441,9 @@ function FeaturesSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="space-y-4"
             >
-              <div className="mb-6 h-12 w-12 rounded-lg border border-[rgba(0,0,0,0.08)] bg-white"></div>
-              <h3 className="text-2xl font-semibold text-[#000000]">{feature.title}</h3>
-              <p className="text-base font-light leading-relaxed text-[#333333]">
+              <div className="mb-6 h-12 w-12 rounded-lg border border-[#2A2A2E] bg-[#1A1A1D]"></div>
+              <h3 className="text-2xl font-semibold text-white">{feature.title}</h3>
+              <p className="text-base font-light leading-relaxed text-[#C9C9C9]">
                 {feature.description}
               </p>
             </motion.div>
@@ -467,7 +456,7 @@ function FeaturesSection() {
 
 function FeatureHighlightsSection() {
   return (
-    <section className="bg-white px-6 py-32 lg:px-12">
+    <section className="bg-[#0C0C0D] px-6 py-32 lg:px-12">
       <div className="mx-auto max-w-[1180px]">
         <div className="space-y-32">
           {[
@@ -493,8 +482,8 @@ function FeatureHighlightsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="max-w-2xl space-y-6"
             >
-              <h3 className="text-4xl font-semibold text-[#000000]">{item.title}</h3>
-              <p className="text-lg font-light leading-relaxed text-[#333333]">{item.text}</p>
+              <h3 className="text-4xl font-semibold text-white">{item.title}</h3>
+              <p className="text-lg font-light leading-relaxed text-[#C9C9C9]">{item.text}</p>
             </motion.div>
           ))}
         </div>
@@ -505,7 +494,7 @@ function FeatureHighlightsSection() {
 
 function ShowcaseSection() {
   return (
-    <section id="showcase" className="bg-white px-6 py-32 lg:px-12">
+    <section id="showcase" className="bg-[#0C0C0D] px-6 py-32 lg:px-12">
       <div className="mx-auto max-w-[1180px]">
         <motion.div
           initial="hidden"
@@ -515,8 +504,8 @@ function ShowcaseSection() {
           transition={{ duration: 0.8 }}
           className="w-full"
         >
-          <div className="mx-auto w-full max-w-6xl rounded-lg bg-[#f5f5f5] shadow-[0_20px_60px_rgba(0,0,0,0.06)]">
-            <div className="aspect-video flex items-center justify-center text-[#999999]">
+          <div className="mx-auto w-full max-w-6xl rounded-lg bg-[#1A1A1D] shadow-[0_20px_60px_rgba(0,0,0,0.3)] border border-[#2A2A2E]">
+            <div className="aspect-video flex items-center justify-center text-[#8A8A8A]">
               Product Screenshot
             </div>
           </div>
@@ -642,7 +631,7 @@ function PricingSection() {
   }, []);
 
   return (
-    <section id="pricing" className="bg-white px-6 py-32 lg:px-12">
+    <section id="pricing" className="bg-[#0C0C0D] px-6 py-32 lg:px-12">
       <div className="mx-auto max-w-[1180px]">
         <motion.div
           initial="hidden"
@@ -650,29 +639,29 @@ function PricingSection() {
           viewport={{ once: true, amount: 0.2 }}
           variants={subtleFade}
           transition={{ duration: 0.6 }}
-          className="rounded-xl flex flex-col justify-between border border-[rgba(0,0,0,0.08)] p-1 bg-white"
+          className="rounded-xl flex flex-col justify-between border border-[#2A2A2E] p-1 bg-[#121214]"
         >
           <div className="flex flex-col gap-4 md:flex-row">
             {/* Free Plan */}
-            <div className="flex flex-col justify-between p-6 space-y-4 flex-1 bg-white rounded-xl border border-[rgba(0,0,0,0.08)]">
+            <div className="flex flex-col justify-between p-6 space-y-4 flex-1 bg-[#1A1A1D] rounded-xl border border-[#2A2A2E]">
               <div className="space-y-4">
                 <div>
-                  <h2 className="font-medium text-[#000000]">Free</h2>
-                  <span className="my-3 block text-2xl font-semibold text-[#000000]">$0 / mo</span>
-                  <p className="text-sm font-light text-[#333333]">Everything you need to experience the Atom ecosystem.</p>
+                  <h2 className="font-medium text-white">Free</h2>
+                  <span className="my-3 block text-2xl font-semibold text-white">$0 / mo</span>
+                  <p className="text-sm font-light text-[#C9C9C9]">Everything you need to experience the Atom ecosystem.</p>
                 </div>
                 <Button
                   asChild
-                  className="w-full rounded-full border border-[rgba(0,0,0,0.08)] bg-transparent text-[#000000] hover:bg-[rgba(0,0,0,0.04)]"
+                  className="w-full rounded-full border border-[#2A2A2E] bg-transparent text-white hover:bg-[#1A1A1D]"
                   variant="outline"
                 >
                   <Link href="/download">Get Started</Link>
                 </Button>
               </div>
-              <ul className="border-t border-[rgba(0,0,0,0.08)] pt-4 list-outside space-y-3 text-sm">
+              <ul className="border-t border-[#2A2A2E] pt-4 list-outside space-y-3 text-sm">
                 {freePlanFeatures.map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-[#333333]">
-                    <Check className="size-3 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <li key={index} className="flex items-start gap-2 text-[#C9C9C9]">
+                    <Check className="size-3 text-[#0A84FF] flex-shrink-0 mt-0.5" />
                     {item}
                   </li>
                 ))}
@@ -680,17 +669,17 @@ function PricingSection() {
             </div>
 
             {/* Pro Plan */}
-            <div className="flex flex-col justify-between p-6 space-y-4 w-full md:w-1/2 bg-white rounded-xl border border-[rgba(0,0,0,0.08)]">
+            <div className="flex flex-col justify-between p-6 space-y-4 w-full md:w-1/2 bg-[#1A1A1D] rounded-xl border border-[#2A2A2E]">
               <div className="grid gap-6 sm:grid-cols-2">
                 <div className="space-y-4">
                   <div>
-                    <h2 className="font-medium text-[#000000]">Pro</h2>
-                    <span className="my-3 block text-2xl font-semibold text-[#000000]">$7 / mo</span>
-                    <p className="text-sm font-light text-[#333333]">Unlock the full power of Atom.</p>
+                    <h2 className="font-medium text-white">Pro</h2>
+                    <span className="my-3 block text-2xl font-semibold text-white">$7 / mo</span>
+                    <p className="text-sm font-light text-[#C9C9C9]">Unlock the full power of Atom.</p>
                   </div>
                   <Button
                     asChild
-                    className="w-full rounded-full bg-[#0071e3] text-white hover:bg-[#0077ed] border-0"
+                    className="w-full rounded-full bg-[#0A84FF] text-white hover:bg-[#379BFF] border-0"
                     variant="default"
                   >
                     <Link href="/download">Upgrade to Pro</Link>
@@ -698,7 +687,7 @@ function PricingSection() {
                 </div>
               </div>
               <div className="relative mt-4">
-                <p className="text-sm font-semibold text-[#000000] text-center relative z-10">
+                <p className="text-sm font-semibold text-white text-center relative z-10">
                   Includes everything in Free, plus:
                 </p>
                 {isScrolling && (
@@ -730,23 +719,23 @@ function PricingSection() {
                       viewport={{ once: true }}
                       variants={subtleFade}
                       transition={{ duration: 0.4, delay: index * 0.05 }}
-                      className="group rounded-lg p-3 border border-[rgba(0,0,0,0.15)] bg-[rgba(0,0,0,0.02)] hover:border-[rgba(0,0,0,0.25)] transition-all relative"
+                      className="group rounded-lg p-3 border border-[#2A2A2E] bg-[#121214] hover:border-[#2A2A2E]/80 transition-all relative"
                     >
                       <div className="flex items-start justify-between mb-2">
-                        <h4 className="text-xs font-semibold text-[#000000]">
+                        <h4 className="text-xs font-semibold text-white">
                           {category.title}
                         </h4>
                         <Link 
                           href={category.href}
                           className="flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ml-2"
                         >
-                          <ArrowUpRight className="w-3.5 h-3.5 text-[rgba(0,0,0,0.25)] hover:text-[#000000] transition-colors" />
+                          <ArrowUpRight className="w-3.5 h-3.5 text-[#8A8A8A] hover:text-white transition-colors" />
                         </Link>
                       </div>
                       <ul className="space-y-1.5">
                         {category.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-start gap-2 text-xs text-[#333333]">
-                            <Check className="size-3 flex-shrink-0 mt-0.5 text-blue-600" />
+                          <li key={featureIndex} className="flex items-start gap-2 text-xs text-[#C9C9C9]">
+                            <Check className="size-3 flex-shrink-0 mt-0.5 text-[#0A84FF]" />
                             <span>{feature}</span>
                           </li>
                         ))}
@@ -763,7 +752,7 @@ function PricingSection() {
                     exit={{ opacity: 0 }}
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 w-[80%]"
                   >
-                    <div className="relative w-full h-10 rounded-full backdrop-blur-sm bg-white/10 border border-[rgba(0,0,0,0.1)] flex items-center justify-center shadow-lg">
+                    <div className="relative w-full h-10 rounded-full backdrop-blur-sm bg-[#1A1A1D]/50 border border-[#2A2A2E] flex items-center justify-center shadow-lg">
                       <motion.div
                         animate={{
                           y: [0, 6, 0],
@@ -774,7 +763,7 @@ function PricingSection() {
                           ease: "easeInOut",
                         }}
                       >
-                        <ChevronDown className="w-5 h-5 text-[#000000]" />
+                        <ChevronDown className="w-5 h-5 text-white" />
                       </motion.div>
                     </div>
                   </motion.div>
@@ -785,13 +774,13 @@ function PricingSection() {
         </motion.div>
 
         {/* Donation Section */}
-        <div className="mt-12 flex items-center justify-center gap-3 border-t border-[#e5e5e5] pt-6">
-          <Heart className="h-4 w-4 text-[#000000]" />
-          <p className="text-sm font-light text-[#000000]">
-            <span className="text-[#0071e3]">2%</span> of all revenue is donated to{" "}
+        <div className="mt-12 flex items-center justify-center gap-3 border-t border-[#2A2A2E] pt-6">
+          <Heart className="h-4 w-4 text-white" />
+          <p className="text-sm font-light text-white">
+            <span className="text-[#0A84FF]">2%</span> of all revenue is donated to{" "}
             <Link
               href="/impact"
-              className="text-[#0071e3] underline decoration-[#0071e3] underline-offset-2 hover:text-[#0077ed] transition-colors"
+              className="text-[#0A84FF] underline decoration-[#0A84FF] underline-offset-2 hover:text-[#379BFF] transition-colors"
             >
               social and educational organizations
             </Link>
