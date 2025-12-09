@@ -112,47 +112,30 @@ export default function IOSPage() {
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-[#0C0C0D]">
         <div className="absolute inset-0 z-0">
-          {/* Abstract zigzag shape with blue glow behind */}
-          <svg className="absolute inset-0 w-full h-full opacity-40" style={{ zIndex: 1 }}>
-            <defs>
-              <linearGradient id="blueGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0A84FF" stopOpacity="0.6" />
-                <stop offset="50%" stopColor="#0A84FF" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#0A84FF" stopOpacity="0.1" />
-              </linearGradient>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-                <feMerge>
-                  <feMergeNode in="coloredBlur"/>
-                  <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-              </filter>
-            </defs>
-            <path
-              d="M0,200 Q200,100 400,200 T800,200 T1200,200 T1600,200"
-              fill="none"
-              stroke="url(#blueGlow)"
-              strokeWidth="4"
-              filter="url(#glow)"
-              transform="translate(0, 300)"
-            />
-            <path
-              d="M0,400 Q200,300 400,400 T800,400 T1200,400 T1600,400"
-              fill="none"
-              stroke="url(#blueGlow)"
-              strokeWidth="4"
-              filter="url(#glow)"
-              transform="translate(0, 200)"
-            />
-            <path
-              d="M0,300 Q200,200 400,300 T800,300 T1200,300 T1600,300"
-              fill="none"
-              stroke="url(#blueGlow)"
-              strokeWidth="4"
-              filter="url(#glow)"
-              transform="translate(0, 400)"
-            />
-          </svg>
+          {/* Large abstract shape with blue glow behind the phone */}
+          <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 5 }}>
+            <svg width="800" height="800" viewBox="0 0 800 800" className="opacity-30">
+              <defs>
+                <radialGradient id="blueGlowGradient" cx="50%" cy="50%">
+                  <stop offset="0%" stopColor="#0A84FF" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#0A84FF" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#0A84FF" stopOpacity="0" />
+                </radialGradient>
+                <filter id="glowFilter">
+                  <feGaussianBlur stdDeviation="20" result="coloredBlur"/>
+                  <feMerge>
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+              {/* Large abstract geometric shapes */}
+              <ellipse cx="400" cy="400" rx="300" ry="200" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" transform="rotate(-25 400 400)" />
+              <ellipse cx="400" cy="400" rx="250" ry="180" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" transform="rotate(45 400 400)" opacity="0.6" />
+              <polygon points="400,200 500,500 300,500" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.5" />
+              <circle cx="400" cy="400" r="150" fill="url(#blueGlowGradient)" filter="url(#glowFilter)" opacity="0.4" />
+            </svg>
+          </div>
           
           <Image
             src={heroPhoneImage}
