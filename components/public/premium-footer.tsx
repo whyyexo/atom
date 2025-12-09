@@ -7,7 +7,7 @@ export function PremiumFooter() {
     <footer className="bg-[#0C0C0D] text-white px-6 py-16 lg:px-12">
       {/* Top separator line (centered, fading edges) */}
       <div className="flex justify-center pb-10">
-        <div className="h-px w-40 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+        <div className="h-px w-80 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
       </div>
 
       <div className="mx-auto max-w-[1180px]">
