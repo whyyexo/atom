@@ -157,13 +157,13 @@ export default function IOSPage() {
       <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
         <div className="relative z-20 text-center px-6 max-w-4xl mx-auto mb-16">
           <p className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider mb-4">
-            Notes
+            Atom Notes
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-6">
-            Notes that think with you.
+            Intelligence that feels native.
           </h2>
           <p className="text-lg font-light text-[#C9C9C9] leading-relaxed max-w-2xl mx-auto">
-            Atom Notes on iOS combines speed, structure, and clarity so every idea becomes action, naturally.
+            Optimized for iOS, Atom AI understands your habits, anticipates your needs, and organizes your ideas before you even think of them.
           </p>
         </div>
         
