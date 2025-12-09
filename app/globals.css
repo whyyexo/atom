@@ -148,6 +148,29 @@ body {
   @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
 }
 
+/* --- Palette override mappings (transitional) ---
+   Ensures legacy utility classes align to NeuroFocus palette
+   until components are fully migrated to tokenized colors.
+*/
+:root .bg-white {
+  background-color: #121214 !important; /* Neural Graphite */
+}
+
+:root .bg-\[\#f5f5f7\] {
+  background-color: #1A1A1D !important; /* Dark Carbon */
+}
+
+:root .bg-\[\#fdfdfd\] {
+  background-color: #121214 !important;
+}
+
+:root .bg-\[\#f8f8fa\],
+:root .bg-\[\#f7f7f9\],
+:root .bg-\[\#eef0f3\] {
+  background-color: #1A1A1D !important;
+}
+
+
 @keyframes shimmer {
   0% {
     transform: translateX(-100%);
