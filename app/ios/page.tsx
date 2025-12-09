@@ -6,6 +6,7 @@ import { PublicLayout } from "@/components/public/public-layout";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from "@/components/ui/button";
+import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import iosHeadImage from "@/components/public/IOS_HEAD.webp";
 import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.svg";
 import activityViewImage from "@/components/public/Activity View (1).svg";
@@ -130,18 +131,7 @@ export default function IOSPage() {
             Experience productivity that feels native, fast, and effortless.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="https://apps.apple.com/app/atom"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg px-8 py-3 text-base font-semibold transition-colors hover:bg-gray-50"
-              style={{ backgroundColor: '#FFFFFF' }}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#000000">
-                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C1.79 15.25 4.23 7.59 9.2 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-              </svg>
-              <span style={{ color: '#000000' }}>Download on the App Store</span>
-            </a>
+            <AppStoreBadge className="px-8 py-3" />
             <Button
               variant="outline"
               className="rounded-full border border-[#2A2A2E] bg-transparent px-8 py-3 text-base font-normal text-white hover:bg-[#1A1A1D]"
@@ -157,7 +147,7 @@ export default function IOSPage() {
       <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
         <div className="relative z-20 text-center px-6 max-w-4xl mx-auto mb-16">
           <p className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider mb-4">
-            Atom Notes
+            Atom AI
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-6">
             Intelligence that feels native.
@@ -168,10 +158,11 @@ export default function IOSPage() {
         </div>
         
         {/* Images section */}
-        <div className="relative w-full max-w-7xl mx-auto px-6">
-          {/* Background images - Left and Right */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="absolute left-0 top-[52%] -translate-y-1/2 opacity-30">
+        <div className="relative w-full max-w-7xl mx-auto px-6 py-8">
+          {/* Main centered image container */}
+          <div className="relative flex justify-center items-center">
+            {/* Background images - Left and Right - positioned to overlap 5% behind center image */}
+            <div className="absolute left-0 opacity-30 pointer-events-none z-0" style={{ top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Left"
@@ -180,7 +171,7 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-            <div className="absolute right-0 top-[52%] -translate-y-1/2 opacity-30">
+            <div className="absolute right-0 opacity-30 pointer-events-none z-0" style={{ top: '50%', transform: 'translateY(calc(-50% + 5%))' }}>
               <Image
                 src={activityViewImage}
                 alt="Activity View Right"
@@ -189,14 +180,12 @@ export default function IOSPage() {
                 className="object-contain"
               />
             </div>
-          </div>
-          
-          {/* Main centered image */}
-          <div className="relative z-10 flex justify-center">
-            <div className="relative">
+            
+            {/* Main centered image - higher z-index */}
+            <div className="relative z-20">
               {/* Reflection effect line on top */}
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent z-20" />
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent z-20" />
+              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent z-30" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent z-30" />
               <Image
                 src={phoneMakeupImage}
                 alt="Phone Makeup"
