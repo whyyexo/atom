@@ -282,7 +282,7 @@ export default function IOSPage() {
       <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src={iosHeadImage}
+            src={heroPhoneImage}
             alt="Tasks background"
             fill
             className="object-cover object-center opacity-20"
