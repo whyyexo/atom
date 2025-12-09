@@ -15,12 +15,13 @@ import {
   Gauge,
   Network,
   TrendingUp,
-  Download,
   ExternalLink,
 } from "lucide-react";
+import Image from "next/image";
 import { PublicLayout } from "@/components/public/public-layout";
 import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import { GooglePlayBadge } from "@/components/download/GooglePlayBadge";
+import heroIllustration from "@/components/public/1.avif";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -357,7 +358,7 @@ function ScrollRevealSection() {
   });
 
   const opacity = useTransform(scrollYProgress, [0.3, 0.7], [0, 1]);
-  const y = useTransform(scrollYProgress, [0.3, 0.7], [30, 0]);
+  const y = useTransform(scrollYProgress, [0.3, 0.7], [50, 0]);
 
   return (
     <section ref={ref} className="relative py-48 bg-white overflow-hidden">
@@ -372,10 +373,60 @@ function ScrollRevealSection() {
           
           <motion.p
             style={{ opacity, y }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1]"
+            className="text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-[#000000] leading-[1.1] mt-6"
           >
             It's about designing an environment where your brain never wastes energy.
           </motion.p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// Gradient Download + Illustration Section
+function DownloadIllustrationSection() {
+  return (
+    <section className="relative py-28 bg-gradient-to-br from-[#fdfdfd] via-[#f7f7f9] to-[#f1f2f4] overflow-hidden">
+      <div className="absolute -left-16 top-10 w-72 h-72 rounded-full bg-black/8 blur-3xl pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-6 relative z-10">
+          <h3 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#000000]">
+            Designed to stay out of your way.
+          </h3>
+          <p className="text-lg font-light text-[#333333] leading-relaxed max-w-xl">
+            A calm, science-built workspace that protects focus and keeps every action within effortless reach.
+          </p>
+          <button className="inline-flex items-center gap-3 rounded-full bg-black text-white px-5 py-3 text-sm font-semibold shadow-md hover:opacity-90 transition">
+            <span className="flex items-center gap-2 text-white/90">
+              {/* Apple logo */}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C1.79 15.25 4.23 7.59 9.2 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+              </svg>
+              <span>Download</span>
+            </span>
+            <span className="text-white/60">/</span>
+            <span className="flex items-center gap-2 text-white/90">
+              {/* Google Play triangle */}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5Z" fill="#00D9FF" />
+                <path d="M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12Z" fill="#00F076" />
+                <path d="M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81Z" fill="#FFD23F" />
+                <path d="M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z" fill="#FF3A44" />
+              </svg>
+              <span>Download</span>
+            </span>
+          </button>
+        </div>
+
+        <div className="relative h-[280px] sm:h-[320px] lg:h-[360px] overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.06)] bg-white shadow-[0_20px_60px_-35px_rgba(0,0,0,0.35)]">
+          <Image
+            src={heroIllustration}
+            alt="Atom interface illustration"
+            fill
+            className="object-cover"
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            priority
+          />
         </div>
       </div>
     </section>
@@ -559,6 +610,7 @@ export function SciencePageClient() {
         <ProductivityLawsSection />
         <CaseStudiesSection />
         <ScrollRevealSection />
+        <DownloadIllustrationSection />
         <AtomLabSection />
         <FinalCTASection />
       </div>
