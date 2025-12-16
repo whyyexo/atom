@@ -7,10 +7,13 @@ import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { label: "Product", href: "/product" },
-  { label: "Features", href: "/features" },
+  { label: "iOS", href: "/ios" },
+  { label: "Windows", href: "/windows" },
   { label: "Pricing", href: "/pricing" },
+  { label: "Science", href: "/science" },
   { label: "Docs", href: "/docs" },
-  { label: "Login", href: "/login" },
+  { label: "Contact", href: "/contact" },
+  { label: "Download", href: "/download" },
 ];
 
 export function PublicNavigation() {

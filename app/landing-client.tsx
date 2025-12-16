@@ -56,8 +56,23 @@ export function LandingPageClient() {
 
 function HeroSection() {
   return (
-    <section className="flex min-h-[90vh] flex-col items-center justify-center px-6 pt-20 pb-32 text-center lg:px-12">
-      <div className="mx-auto max-w-[1180px]">
+    <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20 pb-32 text-center lg:px-12 overflow-hidden">
+      {/* Spline 3D Background */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <iframe 
+          src="https://my.spline.design/retrofuturismbganimation-6xNTLS0QyPemMULoEJkQRiqU/" 
+          frameBorder="0" 
+          width="100%" 
+          height="100%"
+          className="absolute inset-0 w-full h-full"
+          style={{ pointerEvents: 'none' }}
+        />
+      </div>
+      
+      {/* Overlay for better text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0C0C0D]/60 via-[#0C0C0D]/40 to-[#0C0C0D]/60 z-[1]" />
+      
+      <div className="relative z-10 mx-auto max-w-[1180px] w-full">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -66,45 +81,34 @@ function HeroSection() {
           className="mx-auto max-w-4xl"
         >
           <h1 className="text-5xl font-semibold leading-tight tracking-tight text-white sm:text-6xl lg:text-7xl">
-            Work Smarter. Stay Focused. with a{" "}
-            <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">
-              science based
-            </span>{" "}
-            productivity app.
+            A calmer way to manage your life.
           </h1>
-          <p className="mt-8 text-base font-light leading-relaxed text-[#C9C9C9] sm:text-lg">
-            <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">Reclaim hours</span> every week with an <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">intelligent workspace</span> powered by <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">science</span> — tasks, notes, and your <span className="bg-gradient-to-r from-[#0A84FF] to-[#379BFF] bg-clip-text text-transparent">AI assistant</span>, all working seamlessly together. Built for builders, operators, and relentless achievers.
+          <p className="mt-8 text-base font-light leading-relaxed text-[#C9C9C9] sm:text-lg max-w-2xl mx-auto">
+            A thoughtfully designed system of productivity tools, built to work with the human brain.
           </p>
-          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              className="rounded-full bg-[#0A84FF] px-8 py-3 text-base font-normal text-white hover:bg-[#379BFF] border-0"
-              asChild
-            >
-              <Link href="/download">Get Started</Link>
-            </Button>
-            <Button
-              variant="outline"
-              className="rounded-full border border-[#2A2A2E] bg-transparent px-8 py-3 text-base font-normal text-white hover:bg-[#1A1A1D]"
-              asChild
-            >
-              <Link href="#showcase">View Demo</Link>
-            </Button>
-          </div>
-          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <AppStoreBadge />
-            <GooglePlayBadge />
-          </div>
-        </motion.div>
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={subtleFade}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-24 w-full"
-        >
-          <MacMockup />
         </motion.div>
       </div>
+
+      {/* Premium Scroll Indicator */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+          className="flex flex-col items-center gap-2"
+        >
+          <div className="w-[2px] h-12 bg-gradient-to-b from-white/80 via-white/40 to-transparent rounded-full" />
+          <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
