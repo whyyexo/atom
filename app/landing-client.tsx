@@ -84,7 +84,9 @@ function HeroSection() {
             A calmer way to manage your life.
           </h1>
           <p className="mt-8 text-base font-light leading-relaxed text-[#C9C9C9] sm:text-lg max-w-2xl mx-auto">
-            A thoughtfully designed system of productivity tools, built to work with the human brain.
+            A thoughtfully designed system of productivity tools
+            <br />
+            Built to work with the human brain.
           </p>
         </motion.div>
       </div>
