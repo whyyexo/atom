@@ -15,8 +15,6 @@ const navLinks = [
   { label: "Pricing", href: "/pricing" },
   { label: "Science", href: "/science" },
   { label: "Docs", href: "/docs" },
-  { label: "Contact", href: "/contact" },
-  { label: "Download", href: "/download" },
 ];
 
 export function PremiumNavbar() {
@@ -75,6 +73,20 @@ export function PremiumNavbar() {
 
           {/* Right: Actions */}
           <div className="flex items-center gap-4">
+            {/* Contact Us Link */}
+            <Link
+              href="/contact"
+              className="hidden text-sm font-normal text-white/80 hover:text-[#FFFFFF] transition-colors duration-200 md:block"
+            >
+              Contact us
+            </Link>
+            {/* Download Button */}
+            <Link
+              href="/download"
+              className="hidden rounded-full bg-[#0A84FF] px-6 py-2 text-sm font-normal text-white hover:bg-[#379BFF] active:bg-[#006FE8] transition-all duration-200 md:block"
+            >
+              Download
+            </Link>
 
             {/* Mobile menu button */}
             <button
@@ -149,6 +161,20 @@ export function PremiumNavbar() {
                       {link.label}
                     </Link>
                   ))}
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-lg font-normal text-white/80 hover:text-white transition-colors"
+                  >
+                    Contact us
+                  </Link>
+                  <Link
+                    href="/download"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="mt-4 rounded-full bg-[#0071e3] px-6 py-3 text-base font-normal text-white hover:bg-[#0077ed] transition-colors text-center"
+                  >
+                    Download
+                  </Link>
                 </nav>
               </div>
             </motion.div>
