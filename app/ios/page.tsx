@@ -77,11 +77,11 @@ function InteractiveImageSection() {
                 onClick={() => setSelectedIndex(index)}
                 className={`relative p-6 rounded-2xl transition-all text-left ${
                   isSelected
-                    ? "bg-[#0A84FF]/10"
-                    : "bg-[#1A1A1D] border border-transparent hover:border-[#2A2A2E]/30"
+                    ? "bg-[#1A1A1D] border border-[#2A2A2E]"
+                    : "bg-[#0C0C0D] border border-transparent hover:border-[#2A2A2E]"
                 }`}
                 style={{
-                  boxShadow: isSelected ? '0 10px 25px -5px rgba(10, 132, 255, 0.15)' : 'none',
+                  boxShadow: isSelected ? '0 0 0 1px rgba(42, 42, 46, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.2)' : 'none',
                 }}
               >
                 <Icon
@@ -357,9 +357,12 @@ export default function IOSPage() {
       {/* SECTION 1 — Notes (Full-width centered) */}
       <section className="relative py-32 bg-[#0C0C0D] overflow-hidden">
         <div className="relative z-20 text-center px-6 max-w-4xl mx-auto mb-16">
-          <p className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider mb-4">
-            Atom AI
-          </p>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Sparkles className="h-4 w-4 text-[#0A84FF]" />
+            <p className="text-sm font-medium text-[#0A84FF] uppercase tracking-wider">
+              Atom AI
+            </p>
+          </div>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white mb-6">
             Intelligence that feels native.
           </h2>
