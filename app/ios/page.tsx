@@ -72,21 +72,20 @@ function InteractiveImageSection() {
             const Icon = item.icon;
             const isSelected = index === selectedIndex;
             return (
-              <motion.button
+              <button
                 key={item.id}
                 onClick={() => setSelectedIndex(index)}
-                className={`relative p-6 rounded-2xl border transition-all text-left ${
+                className={`relative p-6 rounded-2xl transition-all text-left ${
                   isSelected
-                    ? "border-[#0A84FF] bg-[#0A84FF]/10"
-                    : "border-[#2A2A2E] bg-[#1A1A1D] hover:border-[#2A2A2E]/80"
+                    ? "bg-[#0A84FF]/10"
+                    : "bg-[#1A1A1D] border border-transparent hover:border-[#2A2A2E]/30"
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                style={{
+                  boxShadow: isSelected ? '0 10px 25px -5px rgba(10, 132, 255, 0.15)' : 'none',
+                }}
               >
                 <Icon
-                  className={`h-8 w-8 mb-4 ${
-                    isSelected ? "text-[#0A84FF]" : "text-[#8A8A8A]"
-                  }`}
+                  className="h-8 w-8 mb-4 text-[#8A8A8A]"
                 />
                 <h3
                   className={`text-lg font-semibold mb-2 ${
@@ -98,7 +97,7 @@ function InteractiveImageSection() {
                 <p className="text-sm font-light text-[#8A8A8A] leading-relaxed">
                   {item.description}
                 </p>
-              </motion.button>
+              </button>
             );
           })}
         </div>
