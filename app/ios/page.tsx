@@ -115,12 +115,18 @@ function IOSDownloadBar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
       
-      // Show bar when scrolling down and past a certain point
-      if (currentScrollY > 300 && currentScrollY > lastScrollY) {
-        setIsVisible(true);
-      } else if (currentScrollY < lastScrollY || currentScrollY < 100) {
+      // Check if we're at the bottom of the page (within 50px)
+      const isAtBottom = currentScrollY + windowHeight >= documentHeight - 50;
+      
+      // Hide if at bottom, at top, or scrolling up
+      if (isAtBottom || currentScrollY < 100 || currentScrollY < lastScrollY) {
         setIsVisible(false);
+      } else if (currentScrollY > 300 && currentScrollY > lastScrollY) {
+        // Show when scrolling down past 300px
+        setIsVisible(true);
       }
       
       setLastScrollY(currentScrollY);
@@ -147,7 +153,17 @@ function IOSDownloadBar() {
                 <p className="text-sm text-[#8A8A8A]">Download on the App Store</p>
               </div>
             </div>
-            <AppStoreBadge className="px-6 py-2" />
+            <a
+              href="https://apps.apple.com/app/atom"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full px-6 py-2 bg-[#0A84FF] hover:bg-[#379BFF] transition-colors text-white font-semibold"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C1.79 15.25 4.23 7.59 9.2 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+              <span>Download</span>
+            </a>
           </div>
         </motion.div>
       )}
