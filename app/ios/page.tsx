@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { PublicLayout } from "@/components/public/public-layout";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,7 +11,149 @@ import { AppStoreBadge } from "@/components/download/AppStoreBadge";
 import heroPhoneImage from "@/components/public/3D_phone.png";
 import phoneMakeupImage from "@/components/public/PHONE-MAKEUP-main.png";
 import activityViewImage from "@/components/public/Activity View (1).svg";
-import { Lightbulb, Sparkles, Tag, Target, Calendar, Zap } from 'lucide-react';
+import { Lightbulb, Sparkles, Tag, Target, Calendar, Zap, BookOpen, Library, FileText, PenTool, ClipboardList, Layers } from 'lucide-react';
+import { motion, AnimatePresence } from "framer-motion";
+
+// Interactive Image Selector Section
+function InteractiveImageSection() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  
+  const items = [
+    {
+      id: 1,
+      title: "Smart Capture",
+      description: "Instantly capture thoughts and ideas with intelligent categorization.",
+      icon: PenTool,
+      image: phoneMakeupImage,
+    },
+    {
+      id: 2,
+      title: "Organized Views",
+      description: "Access your content through beautifully organized views and filters.",
+      icon: ClipboardList,
+      image: activityViewImage,
+    },
+    {
+      id: 3,
+      title: "Seamless Workflow",
+      description: "Everything flows together in a unified, intuitive interface.",
+      icon: Layers,
+      image: heroPhoneImage,
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-[#0C0C0D]">
+      <div className="max-w-6xl mx-auto px-6 lg:px-12">
+        {/* Large Image */}
+        <div className="mb-12 relative h-[600px] rounded-3xl border border-[#2A2A2E] bg-[#1A1A1D] overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={items[selectedIndex].image}
+                alt={items[selectedIndex].title}
+                fill
+                className="object-contain p-8"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Selection Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {items.map((item, index) => {
+            const Icon = item.icon;
+            const isSelected = index === selectedIndex;
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => setSelectedIndex(index)}
+                className={`relative p-6 rounded-2xl border transition-all text-left ${
+                  isSelected
+                    ? "border-[#0A84FF] bg-[#0A84FF]/10"
+                    : "border-[#2A2A2E] bg-[#1A1A1D] hover:border-[#2A2A2E]/80"
+                }`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Icon
+                  className={`h-8 w-8 mb-4 ${
+                    isSelected ? "text-[#0A84FF]" : "text-[#8A8A8A]"
+                  }`}
+                />
+                <h3
+                  className={`text-lg font-semibold mb-2 ${
+                    isSelected ? "text-white" : "text-[#C9C9C9]"
+                  }`}
+                >
+                  {item.title}
+                </h3>
+                <p className="text-sm font-light text-[#8A8A8A] leading-relaxed">
+                  {item.description}
+                </p>
+              </motion.button>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// iOS Download Bar Component
+function IOSDownloadBar() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show bar when scrolling down and past a certain point
+      if (currentScrollY > 300 && currentScrollY > lastScrollY) {
+        setIsVisible(true);
+      } else if (currentScrollY < lastScrollY || currentScrollY < 100) {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
+  return (
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed bottom-0 left-0 right-0 z-50 bg-[#0C0C0D] border-t border-[#2A2A2E] px-6 py-4 shadow-[0_-4px_24px_rgba(0,0,0,0.5)]"
+        >
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="text-white">
+                <h3 className="text-lg font-semibold">Get Atom for iOS</h3>
+                <p className="text-sm text-[#8A8A8A]">Download on the App Store</p>
+              </div>
+            </div>
+            <AppStoreBadge className="px-6 py-2" />
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 // Grid component for Section 3 - Notes features
 function NotesFeaturesGrid() {
@@ -259,9 +402,12 @@ export default function IOSPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div className="space-y-2">
-                <h3 className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider">
-                  Quick Entry
-                </h3>
+                <div className="flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-[#0A84FF]" />
+                  <h3 className="text-sm font-medium text-[#0A84FF] uppercase tracking-wider">
+                    Quick Entry
+                  </h3>
+                </div>
                 <h4 className="text-2xl font-semibold text-white">
                   Capture anything in a heartbeat.
                 </h4>
@@ -282,6 +428,9 @@ export default function IOSPage() {
           </div>
         </div>
       </section>
+
+      {/* Interactive Image Section */}
+      <InteractiveImageSection />
 
       {/* SECTION 3 — Grid of 3 blocks */}
       <NotesFeaturesGrid />
@@ -317,9 +466,12 @@ export default function IOSPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <div className="space-y-2">
-                <h3 className="text-sm font-medium text-[#8A8A8A] uppercase tracking-wider">
-                  Flow Engine
-                </h3>
+                <div className="flex items-center gap-2">
+                  <Library className="h-4 w-4 text-[#0A84FF]" />
+                  <h3 className="text-sm font-medium text-[#0A84FF] uppercase tracking-wider">
+                    Flow Engine
+                  </h3>
+                </div>
                 <h4 className="text-2xl font-semibold text-white">
                   Your day organizes itself.
                 </h4>
@@ -343,6 +495,9 @@ export default function IOSPage() {
 
       {/* SECTION 6 — Grid of 3 blocks */}
       <TasksFeaturesGrid />
+
+      {/* iOS Download Bar */}
+      <IOSDownloadBar />
     </PublicLayout>
   );
 }
